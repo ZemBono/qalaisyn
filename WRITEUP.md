@@ -10,7 +10,7 @@ Most Kazakhs text in Latin letters and drop the special Kazakh letters (ә, ғ, 
 **User:** Gulnar, 62, from a village in Turkistan region. Her phone has no Kazakh keyboard, and she texts a clinic chatbot at night.
 
 ## What we added
-Our own idea (not a suggested project). Our own data and question: (1) a generator that simulates four real typing styles, so we never need anyone's private chats; (2) stress tests that ask *when does it break?* (typos and spellings the model was never designed for); (3) real messages written and corrected by a native speaker.
+Our own idea (not a suggested project). Our own data and question: (1) a generator that simulates four real typing styles, so we never need anyone's private chats; (2) stress tests that ask *when does it break?* (typos and spellings the model was never designed for); (3) a transfer test on a second language, Kyrgyz.
 
 ## How it works
 **Data:** 1.5M sentences from Kazakh Wikipedia and 4k from Tatoeba for training. Held-out tests: 623 everyday Tatoeba sentences and FLORES-200 news sentences, each with a professional English translation, turned into 4 chat styles. Tuning used only FLORES `dev`; no test sentence was seen in training.
@@ -28,8 +28,6 @@ Our own idea (not a suggested project). Our own data and question: (1) a generat
 **Honest notes.** On clean news text, a simple dictionary is already as good as our model. Our advantage appears on everyday and messy messages, which is what real chats look like. Typo search costs about 1.5 points of word errors on perfectly clean text; we accept that cost because it adds 15 chrF points on unseen spellings.
 **Where it fails:** н/ң and і/ы/и (both choices are often real words, and a bigram has short memory), and true ambiguity like *ot* = от "fire" / өт "pass". Some "errors" are actually typos in the reference (*қагаз*, *сатыл ал*), which Qalaisyn fixed to *қағаз*, *сатып ал*, so our scores are slightly pessimistic.
 **Transfer:** the same code, trained only on Kyrgyz Wikipedia, recovers **97%** of the lost meaning for Kyrgyz (word errors 3.3% vs. 6.3% for the dictionary).
-**Native-speaker check:** see notebook section 9.
-
 ## What we'd do next
 1. Use longer context (trigrams or a small neural re-ranker) for н/ң and і/ы/и.
 2. Add more languages (Uzbek, Azerbaijani) and offer Qalaisyn as a plug-in for public-service chatbots.

@@ -315,8 +315,9 @@ md("""
 md("""
 ## 9 · Native-speaker check
 
-Our team member (a native Kazakh speaker) wrote real messages exactly the way they text friends, plus the correct
-Cyrillic version. These messages were never seen during development.
+A native Kazakh speaker on our team writes real messages exactly the way they text friends, plus the correct
+Cyrillic version (`data/real/real_messages.csv`). These messages are never used during development; the cell below
+scores whatever is in the file.
 """)
 code("""
 real = Path("data/real/real_messages.csv")
