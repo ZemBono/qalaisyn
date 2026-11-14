@@ -7,7 +7,8 @@
 Most Kazakhs text in Latin letters without the special Kazakh letters (*qalaisyn* instead of *қалайсың*).
 A translator loses **75%** of the meaning of such messages. **Qalaisyn** restores standard Kazakh in front of any
 translator or chatbot and recovers **98%** of the lost meaning on held-out everyday sentences
-(86% vs. 54% for a dictionary baseline on messy, unseen spellings).
+(86% vs. 54% for a dictionary baseline on messy, unseen spellings). The same code, trained on Kyrgyz Wikipedia,
+recovers 97% for Kyrgyz.
 
 ![main result](figures/main_test_tatoeba.png)
 

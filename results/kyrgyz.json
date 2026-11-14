@@ -1,0 +1,49 @@
+{
+  "train_sentences": 677030,
+  "wer": {
+    "B1 rules": 0.5275090115727566,
+    "B2 dictionary": 0.06346044393853159,
+    "M1 Qalaisyn": 0.03282109656611649,
+    "M2 Qalaisyn+typos": 0.04686017833428192,
+    "B0 raw chat": 0.9735344336937962
+  },
+  "chrf": {
+    "gold": 47.248570779723956,
+    "B0 raw chat": 20.760120830595064,
+    "B2 dictionary": 46.30423627793475,
+    "M2 Qalaisyn+typos": 46.453519760544424
+  },
+  "recovered": 0.9699849926776981,
+  "examples": [
+    {
+      "chat": "al murun diabet oorusu menen oorugan al emi azir oorudan aiikkan 4 ailik chichkan bar dep koshumchaladi",
+      "ours": "ал мурун диабет оорусу менен ооруган ал эми азыр оорудан айыккан 4 айлык чычкан бар деп кошумчалайт",
+      "gold": "ал мурун диабет оорусу менен ооруган ал эми азыр оорудан айыккан 4 айлык чычкан бар деп кошумчалады"
+    },
+    {
+      "chat": "al murun diabet oorusu menen oorugan al emi azyr oorudan ayykkan 4 aylyk chychkan bar dep kowumchalady",
+      "ours": "ал мурун диабет оорусу менен ооруган ал эми азыр оорудан айыккан 4 айлык чычкан бар деп кошумчалайт",
+      "gold": "ал мурун диабет оорусу менен ооруган ал эми азыр оорудан айыккан 4 айлык чычкан бар деп кошумчалады"
+    },
+    {
+      "chat": "kanadanyn diabet assotsiatsiyasynyn ilimii jana klinikalyk bolumunun toragasy jana jangy shotlandiyanyn galifeks shaaryndagy dalhauzi universitetinin meditsina ilimderinin professoru doktor ehud ur bul izildoonun bashtalyshy gana ekenin eskertti",
+      "ours": "канаданын диабет ассоциациясынын илимий жана клиникалык бөлүмүнүн төрагасы жана жаңы шотландиянын галифэкс шаарындагы далхаузы университетинин медицина илимдеринин профессору доктор ехуд ур бул изилдөөнүн башталышы гана экенин эскертти",
+      "gold": "канаданын диабет ассоциациясынын илимий жана клиникалык бөлүмүнүн төрагасы жана жаңы шотландиянын галифекс шаарындагы далхаузи университетинин медицина илимдеринин профессору доктор эхуд ур бул изилдөөнүн башталышы гана экенин эскертти"
+    },
+    {
+      "chat": "kanadanyn diabet assotsiatsiyasynyn ilimii zhana klinikalyk bolumunun toragasy zhana zhany wotlandiyanyn galifeks waaryndagy dalhauzi universitetinin meditsina ilimderinin professoru doktor ehud ur bul izildoonun bawtalywy gana ekenin eskertti",
+      "ours": "канаданын диабет ассоциациясынын илимий жана клиникалык бөлүмүнүн төрагасы жана жаңы шотландиянын галифэкс шаарындагы далхаузы университетинин медицина илимдеринин профессору доктор ехуд ур бул изилдөөнүн башталышы гана экенин эскертти",
+      "gold": "канаданын диабет ассоциациясынын илимий жана клиникалык бөлүмүнүн төрагасы жана жаңы шотландиянын галифекс шаарындагы далхаузи университетинин медицина илимдеринин профессору доктор эхуд ур бул изилдөөнүн башталышы гана экенин эскертти"
+    },
+    {
+      "chat": "al diabetti ayyktyruu mumkunchulugunon ayrym ekspertterdey ele kumon sanayt jana bul natyyjalardyn 1 tiptegi diabet menen oorugan adamdarga tiewesi jok ekenin belgileyt",
+      "ours": "ал диабетти айыктыруу мүмкүнчүлүгүнөн айрым эксперттердин эле күмөн санайт жана бул натыйжалардын 1 типтеги диабет менен ооруган адамдарга тиешеси жок экенин белгилейт",
+      "gold": "ал диабетти айыктыруу мүмкүнчүлүгүнөн айрым эксперттердей эле күмөн санайт жана бул натыйжалардын 1 типтеги диабет менен ооруган адамдарга тиешеси жок экенин белгилейт"
+    },
+    {
+      "chat": "al diabetti aiyktyruu mumkunchulugunon airym ekspertterdei ele kumon sanait jana bul natyijalardyn 1 tiptegi diabet menen oorugan adamdarga tieshesi jok ekenin belgileit",
+      "ours": "ал диабетти айыктыруу мүмкүнчүлүгүнөн айрым эксперттердин эле күмөн санайт жана бул натыйжалардын 1 типтеги диабет менен ооруган адамдарга тиешеси жок экенин белгилейт",
+      "gold": "ал диабетти айыктыруу мүмкүнчүлүгүнөн айрым эксперттердей эле күмөн санайт жана бул натыйжалардын 1 типтеги диабет менен ооруган адамдарга тиешеси жок экенин белгилейт"
+    }
+  ]
+}

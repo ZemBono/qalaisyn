@@ -11,7 +11,7 @@ img = base64.b64encode((ROOT / "figures/main_test_tatoeba.png").read_bytes()).de
 body = markdown.markdown(md, extensions=["tables"])
 # put the chart right after "What we built"
 body = body.replace("<h2>What we added</h2>",
-                    f'<img src="data:image/png;base64,{img}" style="width:52%;display:block;margin:2px auto">'
+                    f'<img src="data:image/png;base64,{img}" style="width:46%;display:block;margin:0 auto">'
                     "<h2>What we added</h2>", 1)
 html = f"""<!doctype html><html><head><meta charset="utf-8"><style>
 @page {{ size: A4; margin: 11mm 12mm; }}

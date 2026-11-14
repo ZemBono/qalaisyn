@@ -44,6 +44,8 @@ chat-style Kazakh back into standard Kazakh.
 | Meaning lost when a translator reads chat-style Kazakh | **{lost:.0%}** (chrF {t['all|gold']:.1f} → {t['all|B0 raw chat']:.1f}) |
 | Meaning recovered by Qalaisyn — everyday sentences | **{rec(t):.0%}** |
 | Meaning recovered by Qalaisyn — news sentences | **{rec(f):.0%}** |
+| Messy messages with unseen spellings — dictionary vs. Qalaisyn | **{rec(chrf['test_tatoeba_unseen-habits'], 'all', 'B2 dictionary'):.0%} vs. {rec(chrf['test_tatoeba_unseen-habits']):.0%}** |
+| Same code on Kyrgyz (no changes) | **{json.loads((ROOT / 'results/kyrgyz.json').read_text(encoding='utf-8'))['recovered']:.0%}** recovered |
 
 *This project is a prototype. It is not a product for medical, financial or emergency use.*
 
@@ -261,6 +263,22 @@ display(Image("figures/messy_messages.png", width=760))
 """)
 
 md("""
+### 7b · Does it transfer to another language? Kyrgyz
+
+Kyrgyz shares the letters ң, ө, ү with Kazakh, and Kyrgyz speakers also text in Latin. We ran **exactly the same code**
+with no changes, trained only on Kyrgyz Wikipedia, and tested on FLORES-200 Kyrgyz (300 sentences × 2 writing styles).
+""")
+writefile("src/kyrgyz.py")
+code("""
+ky = json.loads(Path("results/kyrgyz.json").read_text(encoding="utf-8"))   # produced by: python src/kyrgyz.py
+print(f"Kyrgyz training sentences: {ky['train_sentences']:,}")
+display(pd.DataFrame({"word error rate": ky["wer"]}).style.format("{:.1%}"))
+display(pd.DataFrame({"chrF": ky["chrf"]}).style.format("{:.1f}"))
+print(f"Meaning recovered for Kyrgyz: {ky['recovered']:.0%}")
+display(pd.DataFrame(ky["examples"]))
+""")
+
+md("""
 ## 8 · Where it fails, and why
 """)
 writefile("src/analysis.py")
@@ -347,7 +365,8 @@ md("""
 
 **Next steps**
 1. A longer context model (word trigrams or a small neural model) for the н/ң and і/ы/и cases.
-2. The same method for Kyrgyz and Uzbek (only the letter table changes), and a plug-in for chatbots of public services.
+2. More languages (Kyrgyz already works with zero code changes, section 7b; Uzbek, Azerbaijani next) and a plug-in
+   for chatbots of public services.
 
 **Sources and tools**
 * Data: [Tatoeba](https://tatoeba.org) (CC BY 2.0 FR) · [FLORES-200](https://github.com/facebookresearch/flores) (CC BY-SA 4.0) ·
