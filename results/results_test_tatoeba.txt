@@ -20,7 +20,7 @@ test_tatoeba: 2492 messages, 3s
   M1 Qalaisyn|minimal          WER 0.028
   M1 Qalaisyn|mixed            WER 0.022
   M1 Qalaisyn|typical          WER 0.027
-  M2 Qalaisyn+typos|careful    WER 0.030
+  M2 Qalaisyn+typos|careful    WER 0.029
   M2 Qalaisyn+typos|minimal    WER 0.042
   M2 Qalaisyn+typos|mixed      WER 0.037
   M2 Qalaisyn+typos|typical    WER 0.042

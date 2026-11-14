@@ -17,6 +17,19 @@ ROOT = Path(__file__).resolve().parents[1]
 
 def build(rows, kind):
     out = []
+    if kind == "cyr-typos-15":     # Russian-keyboard Cyrillic + 15% thumb typos
+        from chatify import chatify_cyr
+        seen = set()
+        for r in rows:
+            if r["id"] in seen:
+                continue
+            seen.add(r["id"])
+            rr = dict(r)
+            rr["chat"] = add_typos(chatify_cyr(r["kaz"], "ru-keyboard", random.Random(f"c-{r['id']}")), 0.15,
+                                   random.Random(f"{kind}-{r['id']}"))
+            rr["profile"] = kind
+            out.append(rr)
+        return out
     for r in rows:
         if r["profile"] != "typical" and kind != "unseen-habits":
             continue
@@ -41,7 +54,7 @@ if __name__ == "__main__":
                  QalaisynRestorer(lex, fuzzy=True, name="M2 Qalaisyn+typos")]
     base = load(name)
     results = {}
-    for kind in ["typos-5", "typos-15", "unseen-habits"]:
+    for kind in ["typos-5", "typos-15", "unseen-habits", "cyr-typos-15"]:
         rows = build(base, kind)
         table, outs = evaluate(restorers, rows, f"{name}_{kind}")
         results[kind] = {k: v for k, v in table.items() if "|" not in k}

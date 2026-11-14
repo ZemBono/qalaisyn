@@ -6,9 +6,9 @@
 ---
 
 ### 0:00–0:15 · Problem (на экране: сообщение латиницей)
-> "Imagine a grandmother in a Kazakh village texting a clinic chatbot at night: *balamnyn qyzuy 39 koterildi ne isteu kerek*. Any Kazakh person understands it. AI doesn't, because it only learned 'proper' Kazakh, and almost nobody texts that way."
+> "Imagine a grandmother in a Kazakh village texting a clinic chatbot at night on a phone with a Russian keyboard: *баламнын кызуы 39 котерилди*. Any Kazakh person understands it. AI often doesn't, because it learned only 'proper' Kazakh with letters like қ, ң, ө — and most phones can't easily type them."
 
-*(Представьте бабушку из аула, которая ночью пишет в чат-бот поликлиники. Любой казах поймёт. ИИ нет: он учился только на «правильном» казахском, а так почти никто не пишет.)*
+*(Представьте бабушку из аула, которая ночью пишет в чат-бот поликлиники с телефона с русской раскладкой. Любой казах поймёт. ИИ часто нет: он учился на «правильном» казахском с буквами қ, ң, ө, а на большинстве телефонов их неудобно набирать.)*
 
 ### 0:15–1:15 · Demo (на экране: демо-страница)
 1. Вставить пример 1 (температура) → нажать Translate.

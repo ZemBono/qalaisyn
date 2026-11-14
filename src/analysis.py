@@ -58,7 +58,7 @@ def by_length(data, model=MODEL):
 
 
 if __name__ == "__main__":
-    data = rows("test_tatoeba") + rows("test_flores")
+    data = rows("test_tatoeba") + rows("test_flores") + rows("test_tatoeba_cyr") + rows("test_flores_cyr")
     rates, conf = letter_errors(data)
     print("Per-letter error rate (M2, clean test sets):")
     for l, (r, n) in sorted(rates.items(), key=lambda x: -x[1][0]):

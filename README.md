@@ -4,13 +4,14 @@
 
 > AI understands Kazakh only when it is written "properly" — and almost nobody texts that way.
 
-Most Kazakhs text in Latin letters without the special Kazakh letters (*qalaisyn* instead of *қалайсың*).
-A translator loses **75%** of the meaning of such messages. **Qalaisyn** restores standard Kazakh in front of any
-translator or chatbot and recovers **98%** of the lost meaning on held-out everyday sentences
-(86% vs. 54% for a dictionary baseline on messy, unseen spellings). The same code, trained on Kyrgyz Wikipedia,
-recovers 97% for Kyrgyz.
+Most phones in Kazakhstan have a Russian keyboard, so people type *калайсын* instead of *қалайсың* (others type
+*qalaisyn* in Latin). **Qalaisyn** is a layer that sits inside any chatbot, translator or keyboard, like autocorrect,
+and restores standard Kazakh; when unsure it shows suggestions instead of silently guessing.
+On held-out data it fixes Russian-keyboard text (47% of words misspelled → 3.6%) and recovers 94% of the meaning a
+translator loses (98% for Latin); on messy messages with typos it recovers 87% vs. 67% for a dictionary baseline.
+Only 5% of words become suggestions, and they contain 59% of its mistakes. The same code recovers 97% for Kyrgyz.
 
-![main result](figures/main_test_tatoeba.png)
+![messy messages](figures/messy_messages.png)
 
 * **Notebook with all results:** [`Qalaisyn.ipynb`](Qalaisyn.ipynb)
 * **One-page write-up:** [`WRITEUP.md`](WRITEUP.md) / `WRITEUP.pdf`
@@ -21,7 +22,10 @@ recovers 97% for Kyrgyz.
 | `src/chatify.py` | simulates four chat typing styles, typos and unseen spellings |
 | `src/build_data.py` | builds training text and held-out test sets |
 | `src/restore.py` | B1 rules, B2 dictionary, M1/M2 Qalaisyn (candidates + habit model + bigram LM + Viterbi + char 5-gram + typo search) |
+| `src/build_cyr.py` | Russian-keyboard / partial-keyboard Cyrillic test sets |
 | `src/eval_restore.py`, `src/stress.py` | word/char error rates, stress tests |
+| `src/confidence.py` | per-word confidence (forward-backward), suggestions, calibration |
+| `src/kyrgyz.py` | transfer test on Kyrgyz |
 | `src/eval_translate.py` | NLLB-200 translation + chrF |
 | `src/analysis.py`, `src/charts.py` | failure analysis and figures |
 | `src/app.py` | Gradio demo |
@@ -30,10 +34,11 @@ recovers 97% for Kyrgyz.
 ```bash
 pip install numpy pandas scikit-learn sacrebleu matplotlib pyarrow torch transformers==4.46.3 sentencepiece gradio==5.9.1
 # download raw data: see the setup cell in Qalaisyn.ipynb
-python src/build_data.py
-python src/eval_restore.py test_tatoeba && python src/eval_restore.py test_flores
+python src/build_data.py && python src/build_cyr.py
+for s in test_tatoeba test_flores test_tatoeba_cyr test_flores_cyr; do python src/eval_restore.py $s; done
 python src/stress.py test_tatoeba && python src/stress.py test_flores
-python src/eval_translate.py test_tatoeba test_flores test_tatoeba_typos-5 test_tatoeba_typos-15 test_tatoeba_unseen-habits test_flores_typos-15 test_flores_unseen-habits
+python src/eval_translate.py test_tatoeba test_flores test_tatoeba_cyr test_flores_cyr test_tatoeba_typos-5 test_tatoeba_typos-15 test_tatoeba_unseen-habits test_tatoeba_cyr-typos-15 test_flores_typos-15 test_flores_unseen-habits
+python src/confidence.py && python src/kyrgyz.py
 python src/analysis.py && python src/charts.py
 python src/app.py --share
 ```

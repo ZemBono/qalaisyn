@@ -60,7 +60,13 @@ def chat_variants(tok: str, limit: int = 32) -> list[str]:
                 break
         if opts is None:
             ch = tok[i]
-            opts, step = _SINGLE.get(ch, [ch]), 1
+            if ch in _SINGLE:
+                opts = _SINGLE[ch]
+            elif ch in CANON:          # Cyrillic input (e.g. typed on a Russian keyboard)
+                opts = [CANON[ch]]
+            else:
+                opts = [ch]
+            step = 1
         results = [r + o for r in results for o in opts][:limit]
         i += step
     return results
@@ -108,7 +114,14 @@ def strict_ok(tok: str, word: str) -> bool:
     for lat, cyr in STRICT.items():
         if t.count(lat) > word.count(cyr):
             return False
+    for cyr in "әғқңөұүһі":                 # a Kazakh letter that was typed must stay
+        if t.count(cyr) > word.count(cyr):
+            return False
     return True
+
+
+# Which typed characters show that the writer *can* type a given Kazakh letter.
+MARKERS = {"қ": "qқ", "ә": "äә", "ө": "öө", "ү": "üү", "ғ": "ğғ", "ң": "ñң", "ұ": "ұ", "і": "і", "һ": "һ"}
 
 
 class Lexicon:
@@ -202,6 +215,8 @@ CHAR_OPTS = {
     "f": "ф", "-": "-",
 }
 STRICT_SKEL = {"q": "қ", "ä": "ә", "ö": "ө", "ü": "ү", "ğ": "ғ", "ñ": "ң", "ı": "ы", "ş": "ш"}
+# Cyrillic typed on a Russian keyboard: which Kazakh letters each Russian letter may stand for
+CYR_OPTS = {"а": "аә", "г": "гғ", "к": "кқ", "н": "нң", "о": "оө", "у": "уұү", "х": "хһ", "и": "иі", "ы": "ыі"}
 
 
 class CharLM:
@@ -256,7 +271,9 @@ class CharLM:
                 i += 2
                 continue
             ch = t[i]
-            if ch in STRICT_SKEL:
+            if ch in CYR_OPTS:
+                slots.append(list(CYR_OPTS[ch]))
+            elif ch in STRICT_SKEL:
                 slots.append([STRICT_SKEL[ch]])
             elif ch == "y":
                 slots.append(["ы", "й", "и"])
@@ -325,19 +342,25 @@ class QalaisynRestorer:
         if fuzzy and not hasattr(lex, "del_index"):
             lex.build_fuzzy()
 
-    def _channel(self, tok, word, uses_q):
-        """Typing-habit model: if this writer uses 'q' for қ, a plain 'k' is probably к."""
-        if not uses_q:
+    def _channel(self, tok, word, habits):
+        """Typing-habit model: if this writer can type қ (as 'q' or 'қ') somewhere in the message,
+        a plain 'k'/'к' elsewhere is probably really к. Same for the other Kazakh letters."""
+        if not habits:
             return 0.0
         t = clean_token(tok)
-        extra_q = word.count("қ") - t.count("q")
-        return self.habit_penalty * max(0, extra_q)
+        pen = 0.0
+        for s in habits:
+            extra = word.count(s) - sum(t.count(m) for m in MARKERS[s])
+            if extra > 0:
+                pen += self.habit_penalty * extra
+        return pen
 
     def restore(self, text: str, explain: bool = False):
         toks = text.split()
         if not toks:
             return ""
-        uses_q = "q" in text.lower()
+        low = text.lower()
+        uses_q = {s for s, marks in MARKERS.items() if any(m in low for m in marks)}
         lattice = []
         for tok in toks:
             if tok.isdigit():
@@ -372,4 +395,41 @@ class QalaisynRestorer:
             best = new
         final = max(best.items(), key=lambda kv: kv[1][0] + self.lex.logp("</s>", kv[0]))
         words = final[1][1]
+        if explain:
+            return words, lattice
         return " ".join(words)
+
+    # ------------------------------------------------------------ confidence & suggestions
+    def restore_with_confidence(self, text: str, top_k: int = 3):
+        """Viterbi answer + for every word the probability that it is right
+        (forward-backward over the same candidate lattice) and the top-k alternatives."""
+        toks = text.split()
+        if not toks:
+            return []
+        words, lattice = self.restore(text, explain=True)
+
+        def lse(xs):
+            m = max(xs)
+            return m + math.log(sum(math.exp(x - m) for x in xs))
+
+        # forward
+        fwd = [{"<s>": 0.0}]
+        for opts in lattice:
+            cur = {}
+            for w, ch in opts:
+                cur[w] = ch + lse([s + self.lex.logp(w, p) for p, s in fwd[-1].items()])
+            fwd.append(cur)
+        end = {w: s + self.lex.logp("</s>", w) for w, s in fwd[-1].items()}
+        z = lse(list(end.values()))
+        # backward
+        bwd = [None] * len(lattice)
+        bwd[-1] = {w: self.lex.logp("</s>", w) for w, _ in lattice[-1]}
+        for i in range(len(lattice) - 2, -1, -1):
+            nxt = lattice[i + 1]
+            bwd[i] = {w: lse([ch + self.lex.logp(v, w) + bwd[i + 1][v] for v, ch in nxt]) for w, _ in lattice[i]}
+        out = []
+        for i, (tok, w) in enumerate(zip(toks, words)):
+            post = {v: math.exp(fwd[i + 1][v] + bwd[i][v] - z) for v, _ in lattice[i]}
+            alts = sorted(post.items(), key=lambda kv: -kv[1])[:top_k]
+            out.append({"typed": tok, "word": w, "confidence": post.get(w, 0.0), "alternatives": alts})
+        return out

@@ -7,7 +7,7 @@ import markdown
 
 ROOT = Path(__file__).parent
 md = (ROOT / "WRITEUP.md").read_text(encoding="utf-8")
-img = base64.b64encode((ROOT / "figures/main_test_tatoeba.png").read_bytes()).decode()
+img = base64.b64encode((ROOT / "figures/messy_messages.png").read_bytes()).decode()
 body = markdown.markdown(md, extensions=["tables"])
 # put the chart right after "What we built"
 body = body.replace("<h2>What we added</h2>",

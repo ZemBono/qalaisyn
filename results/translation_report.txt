@@ -7,11 +7,21 @@
   typical  gold 60.8  B0 15.2  B1 40.8  B2 58.7  M1 60.4  M2 60.0  | recovered 99%
 
 == test_flores (1200 messages) chrF ==
-  all      gold 52.7  B0 20.1  B1 39.8  B2 51.9  M1 52.2  M2 51.8  | recovered 98%
-  careful  gold 52.7  B0 19.6  B1 45.8  B2 52.3  M1 52.3  M2 52.0  | recovered 99%
+  all      gold 52.7  B0 20.1  B1 39.8  B2 51.9  M1 52.3  M2 51.8  | recovered 99%
+  careful  gold 52.7  B0 19.6  B1 45.8  B2 52.3  M1 52.4  M2 52.1  | recovered 99%
   minimal  gold 52.7  B0 20.5  B1 34.8  B2 51.7  M1 52.0  M2 51.7  | recovered 98%
-  mixed    gold 52.7  B0 20.3  B1 39.6  B2 51.8  M1 52.3  M2 51.6  | recovered 99%
+  mixed    gold 52.7  B0 20.3  B1 39.6  B2 51.8  M1 52.4  M2 51.6  | recovered 99%
   typical  gold 52.7  B0 19.9  B1 39.1  B2 52.0  M1 52.3  M2 51.8  | recovered 99%
+
+== test_tatoeba_cyr (1246 messages) chrF ==
+  all      gold 60.8  B0 45.2  B1 45.9  B2 59.4  M1 60.4  M2 59.9  | recovered 97%
+  partial  gold 60.8  B0 50.1  B1 50.9  B2 59.8  M1 60.4  M2 60.0  | recovered 96%
+  ru-keyboard gold 60.8  B0 40.2  B1 40.9  B2 58.9  M1 60.3  M2 59.7  | recovered 98%
+
+== test_flores_cyr (600 messages) chrF ==
+  all      gold 52.7  B0 42.3  B1 42.5  B2 52.2  M1 52.4  M2 52.0  | recovered 97%
+  partial  gold 52.7  B0 45.6  B1 45.9  B2 52.4  M1 52.6  M2 52.3  | recovered 98%
+  ru-keyboard gold 52.7  B0 39.1  B1 39.1  B2 52.1  M1 52.2  M2 51.8  | recovered 96%
 
 == test_tatoeba_typos-5 (623 messages) chrF ==
   all      gold 60.8  B0 14.7  B1 39.1  B2 56.9  M1 58.5  M2 59.3  | recovered 95%
@@ -24,6 +34,10 @@
 == test_tatoeba_unseen-habits (623 messages) chrF ==
   all      gold 60.8  B0 14.2  B1 31.4  B2 39.3  M1 43.0  M2 54.4  | recovered 62%
   unseen-habits gold 60.8  B0 14.2  B1 31.4  B2 39.3  M1 43.0  M2 54.4  | recovered 62%
+
+== test_tatoeba_cyr-typos-15 (623 messages) chrF ==
+  all      gold 60.8  B0 36.0  B1 36.9  B2 52.6  M1 55.2  M2 57.6  | recovered 78%
+  cyr-typos-15 gold 60.8  B0 36.0  B1 36.9  B2 52.6  M1 55.2  M2 57.6  | recovered 78%
 
 == test_flores_typos-15 (300 messages) chrF ==
   all      gold 52.7  B0 19.9  B1 35.8  B2 48.2  M1 49.3  M2 50.4  | recovered 89%

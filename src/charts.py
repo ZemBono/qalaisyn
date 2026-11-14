@@ -44,12 +44,14 @@ def main_chart(name="test_tatoeba", title="Everyday sentences (Tatoeba, 623 sent
 
 
 def messy_chart():
-    conds = [("test_tatoeba", "all", "Clean chat"), ("test_tatoeba_typos-5", "typos-5", "5% typos"),
-             ("test_tatoeba_typos-15", "typos-15", "15% typos"),
-             ("test_tatoeba_unseen-habits", "unseen-habits", "Unseen spellings\n(ae, kh, kk)")]
+    conds = [("test_tatoeba_cyr", "all", "Russian keyboard"),
+             ("test_tatoeba_cyr-typos-15", "cyr-typos-15", "Russian keyboard\n+ 15% typos"),
+             ("test_tatoeba", "all", "Latin chat"),
+             ("test_tatoeba_typos-15", "typos-15", "Latin\n+ 15% typos"),
+             ("test_tatoeba_unseen-habits", "unseen-habits", "Latin, unseen\nspellings (ae, kk)")]
     models = [("B0 raw chat", "Chat as typed", BAD), ("B2 dictionary", "Dictionary", MID),
               ("M1 Qalaisyn", "Qalaisyn (context only)", "#7cc6b0"), ("M2 Qalaisyn+typos", "Qalaisyn + typo search", GOOD)]
-    fig, ax = plt.subplots(figsize=(9.5, 5.4), dpi=160)
+    fig, ax = plt.subplots(figsize=(10.5, 5.4), dpi=160)
     w = 0.2
     for j, (k, lab, col) in enumerate(models):
         xs, ys = [], []
@@ -60,7 +62,7 @@ def messy_chart():
         ax.bar(xs, ys, width=w, color=col, label=lab)
     gold = chrf["test_tatoeba"]["all|gold"]
     ax.axhline(gold, color=MUTED, ls="--", lw=1)
-    ax.text(3.45, gold + 0.8, "proper Kazakh", color="#6b7280", fontsize=9, ha="right")
+    ax.text(len(conds) - 0.55, gold + 0.8, "proper Kazakh", color="#6b7280", fontsize=9, ha="right")
     ax.set_xticks(range(len(conds)))
     ax.set_xticklabels([c[2] for c in conds])
     ax.set_ylabel("Translation quality (chrF)")
@@ -84,7 +86,33 @@ def letters_chart():
     plt.close(fig)
 
 
+def confidence_chart():
+    c = json.loads((R / "confidence.json").read_text(encoding="utf-8"))
+    names = [("test_tatoeba_cyr", "Russian keyboard"), ("test_tatoeba", "Latin chat")]
+    fig, ax = plt.subplots(figsize=(8, 4.2), dpi=160)
+    for j, (n, lab) in enumerate(names):
+        a = c[n]["at_threshold"]
+        vals = [a["flagged_share"] * 100, a["errors_caught"] * 100]
+        xs = [0 + (j - 0.5) * 0.36, 1 + (j - 0.5) * 0.36]
+        bars = ax.bar(xs, vals, width=0.34, color=[MUTED, GOOD] if j == 0 else ["#c4c8cf", "#7cc6b0"], label=lab)
+        for b, v in zip(bars, vals):
+            ax.text(b.get_x() + b.get_width() / 2, v + 1.5, f"{v:.0f}%", ha="center", fontsize=11, weight="bold", color=INK)
+    ax.set_xticks([0, 1])
+    ax.set_xticklabels(["words shown as a suggestion\n(Qalaisyn is unsure)", "of all Qalaisyn's mistakes\nthat are among them"])
+    ax.set_ylim(0, 100)
+    ax.set_ylabel("%")
+    ax.set_title("Qalaisyn asks only when unsure — and that is where its mistakes are", loc="left", fontsize=12.5,
+                 weight="bold", color=INK)
+    ax.legend(frameon=False, fontsize=9)
+    fig.tight_layout()
+    fig.savefig(FIG / "confidence.png")
+    plt.close(fig)
+
+
 if __name__ == "__main__":
+    print("recovered cyr", main_chart("test_tatoeba_cyr", "Everyday sentences typed on a Russian keyboard (Tatoeba, 623 x 2 styles)"))
+    if (R / "confidence.json").exists():
+        confidence_chart()
     print("recovered tatoeba", main_chart())
     print("recovered flores", main_chart("test_flores", "News-style sentences (FLORES-200, 300 sentences x 4 writing styles)"))
     messy_chart()

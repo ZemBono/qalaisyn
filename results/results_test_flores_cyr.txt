@@ -1,0 +1,16 @@
+test_flores_cyr: 2024 messages, 37s
+  B0 raw chat      WER 0.498  CER 0.094
+  B1 rules         WER 0.482  CER 0.090
+  B2 dictionary    WER 0.029  CER 0.005
+  M1 Qalaisyn      WER 0.016  CER 0.002
+  M2 Qalaisyn+typos WER 0.025  CER 0.004
+  B0 raw chat|partial          WER 0.367
+  B0 raw chat|ru-keyboard      WER 0.629
+  B1 rules|partial             WER 0.353
+  B1 rules|ru-keyboard         WER 0.612
+  B2 dictionary|partial        WER 0.023
+  B2 dictionary|ru-keyboard    WER 0.035
+  M1 Qalaisyn|partial          WER 0.013
+  M1 Qalaisyn|ru-keyboard      WER 0.018
+  M2 Qalaisyn+typos|partial    WER 0.021
+  M2 Qalaisyn+typos|ru-keyboard WER 0.028

@@ -1,0 +1,16 @@
+test_tatoeba_cyr: 1246 messages, 1s
+  B0 raw chat      WER 0.469  CER 0.108
+  B1 rules         WER 0.454  CER 0.101
+  B2 dictionary    WER 0.051  CER 0.012
+  M1 Qalaisyn      WER 0.022  CER 0.004
+  M2 Qalaisyn+typos WER 0.036  CER 0.008
+  B0 raw chat|partial          WER 0.334
+  B0 raw chat|ru-keyboard      WER 0.603
+  B1 rules|partial             WER 0.321
+  B1 rules|ru-keyboard         WER 0.588
+  B2 dictionary|partial        WER 0.045
+  B2 dictionary|ru-keyboard    WER 0.057
+  M1 Qalaisyn|partial          WER 0.020
+  M1 Qalaisyn|ru-keyboard      WER 0.024
+  M2 Qalaisyn+typos|partial    WER 0.033
+  M2 Qalaisyn+typos|ru-keyboard WER 0.039

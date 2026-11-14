@@ -15,6 +15,12 @@ def rec(d, g="all", m="M2 Qalaisyn+typos"):
 
 
 lost = 1 - t["all|B0 raw chat"] / t["all|gold"]
+tc = chrf["test_tatoeba_cyr"]
+fc = chrf["test_flores_cyr"]
+lost_c = 1 - tc["all|B0 raw chat"] / tc["all|gold"]
+conf = json.loads((ROOT / "results/confidence.json").read_text(encoding="utf-8"))
+cc = conf["test_tatoeba_cyr"]["at_threshold"]
+ky = json.loads((ROOT / "results/kyrgyz.json").read_text(encoding="utf-8"))
 
 nb = nbf.v4.new_notebook()
 cells = []
@@ -38,42 +44,49 @@ md(f"""
 
 > **AI understands Kazakh only when it is written "properly" — and almost nobody texts that way.**
 
-Most Kazakhs text in Latin letters without the special Kazakh letters: *"qalaisyn"* instead of *"қалайсың"*.
-Translation and chatbot models are trained on standard Cyrillic Kazakh, so they lose most of the meaning of
-real messages. **Qalaisyn** is a small, fast AI layer that sits in front of any translator or chatbot and turns
-chat-style Kazakh back into standard Kazakh.
+Most phones in Kazakhstan have a **Russian keyboard**, so people drop the Kazakh-only letters
+(ә ғ қ ң ө ұ ү һ і) and type *"калайсын"* instead of *"қалайсың"*; others text in Latin (*"qalaisyn"*).
+Translation and chatbot models are trained on standard Kazakh, so they misread real messages.
+**Qalaisyn** is a small, fast AI layer that sits in front of any translator or chatbot — like autocorrect inside a
+keyboard — and turns chat-style Kazakh back into standard Kazakh. When it is unsure, it says so and offers suggestions.
 
-| Headline result (held-out test data) | |
-|---|---|
-| Meaning lost when a translator reads chat-style Kazakh | **{lost:.0%}** (chrF {t['all|gold']:.1f} → {t['all|B0 raw chat']:.1f}) |
-| Meaning recovered by Qalaisyn — everyday sentences | **{rec(t):.0%}** |
-| Meaning recovered by Qalaisyn — news sentences | **{rec(f):.0%}** |
-| Messy messages with unseen spellings — dictionary vs. Qalaisyn | **{rec(chrf['test_tatoeba_unseen-habits'], 'all', 'B2 dictionary'):.0%} vs. {rec(chrf['test_tatoeba_unseen-habits']):.0%}** |
-| Same code on Kyrgyz (no changes) | **{json.loads((ROOT / 'results/kyrgyz.json').read_text(encoding='utf-8'))['recovered']:.0%}** recovered |
+| Headline result (held-out test data, translator: NLLB-200) | Russian keyboard | Latin chat |
+|---|---|---|
+| Meaning lost when a translator reads the message as typed | **{lost_c:.0%}** | **{lost:.0%}** |
+| Meaning recovered by Qalaisyn — everyday sentences | **{rec(tc):.0%}** | **{rec(t):.0%}** |
+| Meaning recovered by Qalaisyn — news sentences | **{rec(fc):.0%}** | **{rec(f):.0%}** |
+| Messy messages (15% typos) — dictionary vs. Qalaisyn | **{rec(chrf['test_tatoeba_cyr-typos-15'], 'all', 'B2 dictionary'):.0%} vs. {rec(chrf['test_tatoeba_cyr-typos-15']):.0%}** | **{rec(chrf['test_tatoeba_typos-15'], 'all', 'B2 dictionary'):.0%} vs. {rec(chrf['test_tatoeba_typos-15']):.0%}** |
+| Words shown as suggestions · share of its mistakes they contain | **{cc['flagged_share']:.0%} · {cc['errors_caught']:.0%}** | **{conf['test_tatoeba']['at_threshold']['flagged_share']:.0%} · {conf['test_tatoeba']['at_threshold']['errors_caught']:.0%}** |
+| Same code on Kyrgyz (no changes, Latin) | | **{ky['recovered']:.0%}** recovered |
 
 *This project is a prototype. It is not a product for medical, financial or emergency use.*
 
 **Contents:** 1 · The problem → 2 · Data → 3 · Simulating chat writing → 4 · Models → 5 · Restoration results →
-6 · Does the meaning survive? (translation) → 7 · Messy messages (stress tests) → 8 · Where it fails →
-9 · Native-speaker check → 10 · Try it → 11 · Limitations, next steps, sources.
+6 · Does the meaning survive? (translation) → 7 · Messy messages (stress tests) → 7b · Kyrgyz →
+7c · Knowing when it is unsure (suggestions) → 8 · Where it fails → 9 · Native-speaker check → 10 · Try it →
+11 · Limitations, next steps, sources.
 All source code is in the collapsed *Setup · Source code* section.
 """)
 
 md("""
 ## 1 · The problem — and who it is for
 
-**User:** Gulnar, 62, from a village in Turkistan region. Her phone has no Kazakh keyboard, so she writes in Latin
-letters. One night her grandson has a fever and she texts the clinic's chatbot:
+**User:** Gulnar, 62, from a village in Turkistan region. Her phone has only a Russian keyboard. One night her
+grandson has a fever and she texts the clinic's chatbot:
 
-> *balamnyn qyzuy 39 koterildi ne isteu kerek* — "my child's temperature rose to 39, what should I do"
+> *баламнын кызуы 39 котерилди не истеу керек* — "my child's temperature rose to 39, what should I do"
+> (standard Kazakh: *баламның қызуы 39 көтерілді не істеу керек*)
 
 Banks, clinics and e-government services in Kazakhstan increasingly put AI first in line. If the AI cannot read
 how people really write, the people who write "the way they text" get worse help — or none.
 The same pattern exists for Uzbek, Kyrgyz, Azerbaijani, Turkish, Vietnamese, Yoruba and many other languages whose
 special letters get dropped on phones.
 
-**What goes in:** a chat-style Kazakh message. **What comes out:** standard Cyrillic Kazakh that any downstream AI
-(translator, chatbot, search) can understand.
+**What goes in:** a Kazakh message as people type it (Russian keyboard or Latin). **What comes out:** standard
+Kazakh that any downstream AI (translator, chatbot, search) can understand, plus suggestions for words it is unsure about.
+
+**Where it lives:** not an app people download, but a layer inside other services (a bank's support chatbot, a
+clinic bot, e-government, translators, a phone keyboard), like autocorrect.
 """)
 
 code("""
@@ -131,34 +144,44 @@ md("""
 ## 3 · Simulating how people really type
 
 We cannot use other people's private chats, so we **simulate writers**. Each simulated writer has a profile of
-typing habits (how they spell қ, ә, ш …) and keeps the same habit inside one message, like real people do:
+typing habits and keeps the same habit inside one message, like real people do.
 
+**Cyrillic (the most common case):**
+* **ru-keyboard** — a Russian keyboard: қ→к, ә→а, ө→о, ң→н, ұ/ү→у, ғ→г, һ→х, і→и (sometimes ы or Latin i)
+* **partial** — has a Kazakh keyboard but types only some Kazakh letters
+
+**Latin:**
 * **careful** — close to the official Latin alphabet (q, ä, ö, ü)
-* **typical** — q for қ, but drops the other special letters (the most common chat style)
+* **typical** — q for қ, but drops the other special letters
 * **minimal** — plain ASCII only, k for both к and қ
 * **mixed** — switches habits inside a message
 
 Real messages from a native speaker are tested separately in section 9.
 """)
+writefile("src/build_cyr.py")
 code("""
 import random
-from chatify import chatify, PROFILE_NAMES
+from chatify import chatify, chatify_cyr, PROFILE_NAMES, CYR_PROFILES
 for s in ["Баламның қызуы 39 көтерілді, не істеу керек?", "Картадан ақша кетіп қалды, мен ештеңе сатып алған жоқпын."]:
     print(s)
+    for p in CYR_PROFILES:
+        print(f"   {p:12s} -> {chatify_cyr(s, p, random.Random(3))}")
     for p in PROFILE_NAMES:
-        print(f"   {p:8s} -> {chatify(s, p, random.Random(3))}")
+        print(f"   {p:12s} -> {chatify(s, p, random.Random(3))}")
+if not (P / "test_tatoeba_cyr.jsonl").exists():
+    import build_cyr
 """)
 
 md("""
 ## 4 · Models
 
-Restoring the letters is a guessing game that needs context: is `k` **к** or **қ**? is `a` **а** or **ә**? is `i`
-**і**, **и** or **ы**? is `n` **н** or **ң**? We compare five systems, from doing nothing to ours:
+Restoring the letters is a guessing game that needs context: is `к`/`k` **к** or **қ**? is `а`/`a` **а** or **ә**?
+is `и`/`i` **и** or **і**? is `н`/`n` **н** or **ң**? We compare five systems, from doing nothing to ours:
 
 | Code | System | Idea |
 |---|---|---|
 | B0 | *raw chat* | give the chat text to the translator unchanged (size of the problem) |
-| B1 | *letter rules* | every Latin letter → its most common Cyrillic letter |
+| B1 | *letter rules* | every Latin letter → its most common Cyrillic letter (for Cyrillic input this changes almost nothing) |
 | B2 | *dictionary* | every word → the most frequent Kazakh word that matches its letters (a strong simple baseline) |
 | M1 | **Qalaisyn** | candidate words + typing-habit model + **word bigram language model** decoded with **Viterbi** over the whole sentence; unknown words are restored by a **character 5-gram model** |
 | M2 | **Qalaisyn + typo search** | M1, plus: if a word is unknown or rare, also consider real words one edit away (symmetric-delete index) |
@@ -177,9 +200,10 @@ lex.build_fuzzy()
 print(f"vocabulary {len(lex.uni):,} words · {len(lex.bi):,} word pairs · {time.time()-t0:.0f}s")
 RESTORERS = [RuleRestorer(), DictRestorer(lex), QalaisynRestorer(lex),
              QalaisynRestorer(lex, fuzzy=True, name="M2 Qalaisyn+typos")]
-msg = "balamnyn qyzuy 39 koterildi ne isteu kerek"
-for r in RESTORERS:
-    print(f"{r.name:18s} {r.restore(msg)}")
+for msg in ["баламнын кызуы 39 котерилди не истеу керек", "balamnyn qyzuy 39 koterildi ne isteu kerek"]:
+    print(msg)
+    for r in RESTORERS:
+        print(f"   {r.name:18s} {r.restore(msg)}")
 """)
 
 md("""
@@ -190,7 +214,7 @@ md("""
 code("""
 import pandas as pd
 tables = {}
-for name in ["test_tatoeba", "test_flores"]:
+for name in ["test_tatoeba_cyr", "test_flores_cyr", "test_tatoeba", "test_flores"]:
     tab, _ = evaluate(RESTORERS, load(name), name)
     tables[name] = tab
     df = pd.DataFrame({k: v for k, v in tab.items() if "|" not in k}).T.sort_index()
@@ -222,7 +246,7 @@ code("""
 chrf = json.loads(Path("results/translation_chrf.json").read_text())
 conds = ["gold", "B0 raw chat", "B1 rules", "B2 dictionary", "M1 Qalaisyn", "M2 Qalaisyn+typos"]
 out = []
-for name in ["test_tatoeba", "test_flores"]:
+for name in ["test_tatoeba_cyr", "test_flores_cyr", "test_tatoeba", "test_flores"]:
     d = chrf[name]
     row = {c: d[f"all|{c}"] for c in conds}
     row["recovered (M2)"] = (row["M2 Qalaisyn+typos"] - row["B0 raw chat"]) / (row["gold"] - row["B0 raw chat"])
@@ -231,13 +255,13 @@ display(pd.DataFrame(out).style.format({c: "{:.1f}" for c in conds} | {"recovere
 """)
 code("""
 from IPython.display import Image, display
+display(Image("figures/main_test_tatoeba_cyr.png", width=760))
 display(Image("figures/main_test_tatoeba.png", width=760))
-display(Image("figures/main_test_flores.png", width=760))
 """)
 code("""
-# Side by side: what the translator produced before and after Qalaisyn
-tr_rows = [json.loads(l) for l in open("data/processed/translated_test_tatoeba.jsonl", encoding="utf-8")]
-ex = [r for r in tr_rows if r["profile"] == "typical"][5:13]
+# Side by side: what the translator produced before and after Qalaisyn (Russian-keyboard messages)
+tr_rows = [json.loads(l) for l in open("data/processed/translated_test_tatoeba_cyr.jsonl", encoding="utf-8")]
+ex = [r for r in tr_rows if r["profile"] == "ru-keyboard" and r["chat"] != r["gold"]][5:13]
 display(pd.DataFrame([{"chat message": r["chat"], "translation as typed": r["en|B0 raw chat"],
                        "translation after Qalaisyn": r["en|M2 Qalaisyn+typos"], "professional": r["eng"]} for r in ex]))
 """)
@@ -248,7 +272,8 @@ md("""
 Our clean simulation could be *too easy*, because the test messages follow the same habits the model knows. So we
 asked our own question: **when does Qalaisyn break?**
 
-* **typos-5 / typos-15:** 5% / 15% of words get a thumb typo (dropped, doubled or swapped letter)
+* **typos-5 / typos-15:** 5% / 15% of words get a thumb typo (dropped, doubled or swapped letter);
+  tested on Latin and on Russian-keyboard messages (`cyr-typos-15`)
 * **unseen spellings:** a writer with habits the model was never designed for: `ae` for ә, `oe` for ө, `kh` for х, `kk` for қ
 
 This test exposed a weakness of M1, which led to M2 (typo search). The cost: M2 is slightly worse on perfectly
@@ -258,7 +283,7 @@ writefile("src/stress.py")
 code("""
 from stress import build
 stress_rows = []
-for kind in ["typos-5", "typos-15", "unseen-habits"]:
+for kind in ["cyr-typos-15", "typos-5", "typos-15", "unseen-habits"]:
     tab, outs = evaluate(RESTORERS, build(load("test_tatoeba"), kind), f"test_tatoeba_{kind}")
     for k, v in tab.items():
         if "|" not in k: stress_rows.append({"condition": kind, "model": k, "WER": v["WER"]})
@@ -284,19 +309,69 @@ display(pd.DataFrame(ky["examples"]))
 """)
 
 md("""
+### 7c · Knowing when it is unsure — suggestions instead of silent mistakes
+
+**Why.** Every model makes mistakes; the dangerous ones are *silent* mistakes. In a clinic or bank chat, a wrong
+word should not be changed without anyone noticing. But asking the user about every word would be annoying.
+
+**How.** For every word, Qalaisyn computes the probability that its choice is right, using the **forward-backward
+algorithm** over the same candidate lattice and language model (it sums over *all* possible sentences, not just
+the best one). If the probability is below a threshold, the word is shown as a **suggestion with 2–3 options**,
+like autocorrect on a phone, instead of being changed silently. A chatbot can also skip asking and use both
+options itself; asking the person makes sense only for important messages (money, health).
+
+**Threshold.** Chosen on FLORES `dev` only: the threshold that catches the most mistakes while flagging at most
+~6% of words.
+
+**How we measure it (held-out test sets):** how many words get flagged (should be few), what share of all mistakes
+fall among the flagged words (should be high), and whether the right word is among the suggestions.
+""")
+writefile("src/confidence.py")
+code("""
+conf = json.loads(Path("results/confidence.json").read_text(encoding="utf-8"))   # produced by: python src/confidence.py
+print("threshold chosen on dev:", conf["threshold"])
+rows = []
+for name, label in [("test_tatoeba_cyr", "Russian keyboard, everyday"), ("test_flores_cyr", "Russian keyboard, news"),
+                    ("test_tatoeba", "Latin chat, everyday")]:
+    a = conf[name]["at_threshold"]
+    rows.append({"test": label, "words": a["words"], "word error rate": a["error_rate"],
+                 "words shown as suggestions": a["flagged_share"], "mistakes among them": a["errors_caught"],
+                 "right word among the suggestions": a["fixed_by_top3_among_flagged_errors"],
+                 "error rate of the words it is sure about": a["error_rate_unflagged"]})
+display(pd.DataFrame(rows).set_index("test").style.format({c: "{:.1%}" for c in rows[0] if c not in ("test", "words")}))
+print("Is the confidence honest? (Russian keyboard, everyday)")
+display(pd.DataFrame(conf["test_tatoeba_cyr"]["calibration"]).style.format({"actually_correct": "{:.1%}"}))
+display(Image("figures/confidence.png", width=640))
+q = RESTORERS[-1]
+for m in ["erekshe atap ot", "салем калайсын ертен мектепке барасын ба"]:
+    print(m)
+    for w in q.restore_with_confidence(m):
+        flag = "  <- suggestion: " + " / ".join(f"{a} {p:.0%}" for a, p in w["alternatives"] if p > 0.03) if w["confidence"] < conf["threshold"] else ""
+        print(f"   {w['typed']:12s} -> {w['word']:12s} {w['confidence']:.0%}{flag}")
+""")
+md(f"""
+**Result.** On Russian-keyboard messages Qalaisyn shows only **{cc['flagged_share']:.0%} of words** as suggestions,
+and those words contain **{cc['errors_caught']:.0%} of all its mistakes**; for
+**{cc['fixed_by_top3_among_flagged_errors']:.0%}** of them the right word is among the suggestions. Words it is sure
+about are wrong only **{cc['error_rate_unflagged']:.1%}** of the time. The confidence is also honest: words rated
+above 99% are right about 99% of the time. Honest limit: about 4 in 10 mistakes are still made with high confidence
+(mostly н/ң and і/и pairs where both words exist).
+""")
+
+md("""
 ## 8 · Where it fails, and why
 """)
 writefile("src/analysis.py")
 code("""
 import analysis
-data = analysis.rows("test_tatoeba") + analysis.rows("test_flores")
+data = sum((analysis.rows(n) for n in ["test_tatoeba", "test_flores", "test_tatoeba_cyr", "test_flores_cyr"]), [])
 rates, conf = analysis.letter_errors(data)
 display(pd.DataFrame([{"correct letter": a, "Qalaisyn wrote": b, "times": n} for (a, b), n in conf.most_common(8)]))
 order = ["1-4 words", "5-8 words", "9-15 words", "16+ words"]
 bl = analysis.by_length(data)
 display(pd.DataFrame({"word error rate": {k: bl[k] for k in order}}).style.format("{:.1%}"))
 display(Image("figures/letters.png", width=640))
-fails = analysis.failures(analysis.rows("test_tatoeba"), n=40)
+fails = analysis.failures(analysis.rows("test_tatoeba_cyr"), n=40)
 display(pd.DataFrame([{"chat": x["chat"], "ours": x["ours"], "reference": x["gold"],
                        "wrong words (reference, ours)": x["wrong"]} for x in fails[::4]]))
 """)
@@ -342,22 +417,23 @@ Restore and translate any message. Run `python src/app.py --share` for the inter
 code("""
 from IPython.display import Image, display
 display(Image("figures/demo.jpg", width=620))
+display(Image("figures/demo_suggestions.jpg", width=620))   # dotted words = not sure, with suggestions
 """)
 code("""
 import warnings; warnings.filterwarnings("ignore")
 from eval_translate import Translator
 TR = Translator()
 qal = RESTORERS[-1]
-for m in ["balamnyn qyzuy 39 koterildi ne isteu kerek",
-          "kartadan aqsha ketip qaldy men eshtene satyp algan joqpyn",
-          "ajeme jedel jardem kerek uige keliniz"]:
+for m in ["баламнын кызуы 39 котерилди не истеу керек",
+          "ажеме жедел жардем керек уйге келиниз",
+          "kartadan aqsha ketip qaldy men eshtene satyp algan joqpyn"]:
     fixed = qal.restore(m)
     before, after = TR.translate([m, fixed])
     print(f"chat:   {m}\\n  AI as typed:  {before}\\n  Qalaisyn:     {fixed}\\n  AI after:     {after}\\n")
 """)
 
 md("""
-*Note on example 2:* Qalaisyn restored every word correctly, but the translator dropped the first half of the sentence
+*Note on the last example:* Qalaisyn restored every word correctly, but the translator dropped the first half of the sentence
 ("money disappeared from my card"). That is a limit of the translation model, not of the restoration — and a reminder
 that chrF also measures the translator's own mistakes, which are the same for every system we compare.
 """)

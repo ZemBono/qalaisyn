@@ -1,0 +1,117 @@
+{
+  "threshold": 0.9,
+  "test_tatoeba": {
+    "at_threshold": {
+      "threshold": 0.9,
+      "words": 10030,
+      "error_rate": 0.03429710867397807,
+      "flagged_share": 0.051246261216350945,
+      "errors_caught": 0.5581395348837209,
+      "error_rate_unflagged": 0.015973097940311057,
+      "fixed_by_top3_among_flagged_errors": 0.7239583333333334
+    },
+    "calibration": [
+      {
+        "confidence": "0.00-0.50",
+        "words": 70,
+        "actually_correct": 0.4
+      },
+      {
+        "confidence": "0.50-0.70",
+        "words": 158,
+        "actually_correct": 0.689873417721519
+      },
+      {
+        "confidence": "0.70-0.90",
+        "words": 286,
+        "actually_correct": 0.6468531468531469
+      },
+      {
+        "confidence": "0.90-0.99",
+        "words": 931,
+        "actually_correct": 0.9323308270676691
+      },
+      {
+        "confidence": "0.99-1.00",
+        "words": 8585,
+        "actually_correct": 0.9896330809551543
+      }
+    ]
+  },
+  "test_tatoeba_cyr": {
+    "at_threshold": {
+      "threshold": 0.9,
+      "words": 5020,
+      "error_rate": 0.03227091633466136,
+      "flagged_share": 0.050199203187251,
+      "errors_caught": 0.5864197530864198,
+      "error_rate_unflagged": 0.014052013422818792,
+      "fixed_by_top3_among_flagged_errors": 0.7473684210526316
+    },
+    "calibration": [
+      {
+        "confidence": "0.00-0.50",
+        "words": 34,
+        "actually_correct": 0.4117647058823529
+      },
+      {
+        "confidence": "0.50-0.70",
+        "words": 80,
+        "actually_correct": 0.675
+      },
+      {
+        "confidence": "0.70-0.90",
+        "words": 138,
+        "actually_correct": 0.644927536231884
+      },
+      {
+        "confidence": "0.90-0.99",
+        "words": 466,
+        "actually_correct": 0.9356223175965666
+      },
+      {
+        "confidence": "0.99-1.00",
+        "words": 4302,
+        "actually_correct": 0.9913993491399349
+      }
+    ]
+  },
+  "test_flores_cyr": {
+    "at_threshold": {
+      "threshold": 0.9,
+      "words": 13176,
+      "error_rate": 0.0230722525804493,
+      "flagged_share": 0.04644808743169399,
+      "errors_caught": 0.6151315789473685,
+      "error_rate_unflagged": 0.009312320916905445,
+      "fixed_by_top3_among_flagged_errors": 0.7379679144385026
+    },
+    "calibration": [
+      {
+        "confidence": "0.00-0.50",
+        "words": 81,
+        "actually_correct": 0.32098765432098764
+      },
+      {
+        "confidence": "0.50-0.70",
+        "words": 165,
+        "actually_correct": 0.6606060606060606
+      },
+      {
+        "confidence": "0.70-0.90",
+        "words": 366,
+        "actually_correct": 0.7923497267759563
+      },
+      {
+        "confidence": "0.90-0.99",
+        "words": 1313,
+        "actually_correct": 0.9565879664889566
+      },
+      {
+        "confidence": "0.99-1.00",
+        "words": 11251,
+        "actually_correct": 0.9946671406986046
+      }
+    ]
+  }
+}

@@ -1,4 +1,4 @@
-test_flores: 4048 messages, 78s
+test_flores: 4048 messages, 75s
   B0 raw chat      WER 0.983  CER 0.892
   B1 rules         WER 0.548  CER 0.106
   B2 dictionary    WER 0.040  CER 0.008
@@ -16,11 +16,11 @@ test_flores: 4048 messages, 78s
   B2 dictionary|minimal        WER 0.043
   B2 dictionary|mixed          WER 0.041
   B2 dictionary|typical        WER 0.041
-  M1 Qalaisyn|careful          WER 0.021
+  M1 Qalaisyn|careful          WER 0.020
   M1 Qalaisyn|minimal          WER 0.023
-  M1 Qalaisyn|mixed            WER 0.023
+  M1 Qalaisyn|mixed            WER 0.024
   M1 Qalaisyn|typical          WER 0.022
-  M2 Qalaisyn+typos|careful    WER 0.029
+  M2 Qalaisyn+typos|careful    WER 0.028
   M2 Qalaisyn+typos|minimal    WER 0.031
-  M2 Qalaisyn+typos|mixed      WER 0.031
+  M2 Qalaisyn+typos|mixed      WER 0.032
   M2 Qalaisyn+typos|typical    WER 0.029

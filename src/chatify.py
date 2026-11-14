@@ -98,6 +98,37 @@ def chatify(text: str, profile: str = "typical", rng: random.Random | None = Non
     return re.sub(r"\s+", " ", s).strip()
 
 
+# ---------------------------------------------------------------- Cyrillic chat styles
+# The most common case in Kazakhstan: Cyrillic typed on a *Russian* keyboard, so the
+# Kazakh-only letters are replaced by the closest Russian ones.
+RU_KEYBOARD = {
+    "ә": [("а", 1.0)], "ғ": [("г", 1.0)], "қ": [("к", 1.0)], "ң": [("н", 1.0)],
+    "ө": [("о", 1.0)], "ұ": [("у", 1.0)], "ү": [("у", 1.0)], "һ": [("х", 1.0)],
+    "і": [("и", 0.75), ("ы", 0.1), ("i", 0.15)],   # some type Latin i for і
+}
+CYR_PROFILES = ["ru-keyboard", "partial"]
+
+
+def chatify_cyr(text: str, profile: str = "ru-keyboard", rng: random.Random | None = None) -> str:
+    """Cyrillic chat style. ru-keyboard: every Kazakh letter replaced.
+    partial: the writer has a Kazakh keyboard but keeps only some letters (per-letter habit)."""
+    rng = rng or random.Random(0)
+    text = normalize_cyr(text)
+    keep = {ch: (profile == "partial" and rng.random() < 0.5) for ch in RU_KEYBOARD}
+    habits, out = {}, []
+    for ch in text:
+        if ch in RU_KEYBOARD and not keep[ch]:
+            if ch not in habits:
+                habits[ch] = _pick(RU_KEYBOARD[ch], rng)
+            out.append(habits[ch])
+        else:
+            out.append(ch)
+    s = "".join(out)
+    if rng.random() < 0.3:
+        s = s.replace("-", " ")
+    return re.sub(r"\s+", " ", s).strip()
+
+
 UNSEEN = {"ә": "ae", "ө": "oe", "ү": "ue", "х": "kh", "қ": "kk", "ғ": "gg"}
 
 
