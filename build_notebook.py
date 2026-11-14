@@ -22,13 +22,17 @@ md = lambda s: cells.append(nbf.v4.new_markdown_cell(s.strip()))  # noqa: E731
 code = lambda s: cells.append(nbf.v4.new_code_cell(s.strip()))  # noqa: E731
 
 
+SOURCES = []
+
+
 def writefile(path):
-    src = (ROOT / path).read_text(encoding="utf-8")
-    code(f"%%writefile {path}\n{src}")
+    """Source files are collected into one collapsible section 0 so the story reads without code walls."""
+    if path not in SOURCES:
+        SOURCES.append(path)
 
 
 md(f"""
-# Qalaisyn 🇰🇿 — making AI understand Kazakh the way people actually text
+# Qalaisyn — making AI understand Kazakh the way people actually text
 
 **Track:** AI + Languages · **Veritas AI International High School Hackathon 2026**
 
@@ -51,7 +55,8 @@ chat-style Kazakh back into standard Kazakh.
 
 **Contents:** 1 · The problem → 2 · Data → 3 · Simulating chat writing → 4 · Models → 5 · Restoration results →
 6 · Does the meaning survive? (translation) → 7 · Messy messages (stress tests) → 8 · Where it fails →
-9 · Native-speaker check → 10 · Try it → 11 · Limitations, next steps, sources
+9 · Native-speaker check → 10 · Try it → 11 · Limitations, next steps, sources.
+All source code is in the collapsed *Setup · Source code* section.
 """)
 
 md("""
@@ -81,7 +86,7 @@ ROOT = Path(".").resolve()
 sys.path.insert(0, str(ROOT / "src"))
 if IN_COLAB:
     subprocess.run("pip -q install sacrebleu pyarrow transformers==4.46.3 sentencepiece", shell=True)
-print("Colab:", IN_COLAB, "| working dir:", ROOT)
+print("Running on Colab:", IN_COLAB)
 """)
 
 md("""
@@ -286,8 +291,10 @@ code("""
 import analysis
 data = analysis.rows("test_tatoeba") + analysis.rows("test_flores")
 rates, conf = analysis.letter_errors(data)
-print("Most common confusions (correct -> ours):", [(a, b, n) for (a, b), n in conf.most_common(8)])
-print("Word error rate by message length:", {k: f"{v:.1%}" for k, v in sorted(analysis.by_length(data).items())})
+display(pd.DataFrame([{"correct letter": a, "Qalaisyn wrote": b, "times": n} for (a, b), n in conf.most_common(8)]))
+order = ["1-4 words", "5-8 words", "9-15 words", "16+ words"]
+bl = analysis.by_length(data)
+display(pd.DataFrame({"word error rate": {k: bl[k] for k in order}}).style.format("{:.1%}"))
 display(Image("figures/letters.png", width=640))
 fails = analysis.failures(analysis.rows("test_tatoeba"), n=40)
 display(pd.DataFrame([{"chat": x["chat"], "ours": x["ours"], "reference": x["gold"],
@@ -378,7 +385,19 @@ md("""
 *This project is a prototype and is not medical or financial advice.*
 """)
 
+# ---- insert the collapsible source-code section right after the setup cell
+setup_idx = next(i for i, c in enumerate(cells) if "IN_COLAB = " in c.source)
+head = nbf.v4.new_markdown_cell(
+    "## Setup · Source code (collapsed — click to expand)\n\n"
+    "All code of the project. Each cell writes one file into `src/`; the sections below import it. "
+    "Files: " + ", ".join(f"`{p}`" for p in SOURCES) + ".")
+head["id"] = "source-code"
+src_cells = [head] + [nbf.v4.new_code_cell(f"%%writefile {p}\n{(ROOT / p).read_text(encoding='utf-8').strip()}")
+                      for p in SOURCES]
+cells[setup_idx + 1:setup_idx + 1] = src_cells
+
 nb["cells"] = cells
+nb["metadata"]["colab"] = {"collapsed_sections": ["source-code"], "provenance": []}
 nb["metadata"]["kernelspec"] = {"name": "qalaisyn", "display_name": "Python (Qalaisyn)", "language": "python"}
 nbf.write(nb, ROOT / "Qalaisyn.ipynb")
 print("written Qalaisyn.ipynb with", len(cells), "cells")

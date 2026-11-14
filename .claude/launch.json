@@ -1,0 +1,17 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "preview-files",
+      "runtimeExecutable": "C:\\Users\\zhasb\\Projects\\Qalaisyn\\.venv\\Scripts\\python.exe",
+      "runtimeArgs": ["-m", "http.server", "8765", "--directory", "C:\\Users\\zhasb\\Projects\\Qalaisyn\\preview"],
+      "port": 8765
+    },
+    {
+      "name": "qalaisyn-demo",
+      "runtimeExecutable": "C:\\Users\\zhasb\\Projects\\Qalaisyn\\.venv\\Scripts\\python.exe",
+      "runtimeArgs": ["C:\\Users\\zhasb\\Projects\\Qalaisyn\\src\\app.py"],
+      "port": 7860
+    }
+  ]
+}
