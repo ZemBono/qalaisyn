@@ -11,6 +11,8 @@ VID = ROOT / "demo_video" / "Qalaisyn_demo_full.mp4"
 OUT = ROOT / "demo_video" / "Qalaisyn_demo_final.mp4"
 FF = imageio_ffmpeg.get_ffmpeg_exe()
 START_PAD = 0.3      # start speaking a moment after the segment begins
+# extra delay (s) for lines whose "after" part must wait for the result to appear on screen (checked frame by frame)
+OFFSETS = {9: 1.2, 10: 3.2, 12: 0.7}
 
 
 def duration(p):
@@ -35,11 +37,12 @@ def main():
         if clip is None:
             report.append(f"{i:02d}: file missing"); continue
         d = duration(clip)
-        room = (L[i][0] if i < len(L) else b) - a - START_PAD - 0.15
+        off = OFFSETS.get(i, 0.0)
+        room = (L[i][0] if i < len(L) else b) - a - START_PAD - off - 0.15
         tempo = min(1.25, d / room) if d > room else 1.0
         n = len(inputs) // 2
         inputs += ["-i", str(clip)]
-        delay = int((a + START_PAD) * 1000)
+        delay = int((a + START_PAD + off) * 1000)
         chain = f"[{n}:a]aresample=48000,aformat=channel_layouts=mono"
         if tempo > 1.0:
             chain += f",atempo={tempo:.3f}"
