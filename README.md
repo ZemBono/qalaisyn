@@ -9,6 +9,8 @@ Most phones in Kazakhstan have a Russian keyboard, so people type *калайс�
 **Qalaisyn** is an engine that sits inside those systems, like a spell-checker inside a keyboard, and restores
 standard Kazakh (Cyrillic or the new Latin alphabet) before the AI reads the message. When unsure, it shows
 suggestions instead of guessing silently. About 7 ms per message, 1.3 GB of memory.
+Kazakhstan is also gradually switching to a new Latin alphabet (approved in 2021, planned by 2031), so for years
+people will mix Cyrillic, Latin and Russian letters; Qalaisyn reads all three and outputs either official script.
 
 On held-out data (Russian keyboard): words misspelled 47% → 3.5% (dictionary baseline 5.8%); messages with every word
 right 88% vs 80% (+9 pts, 95% CI +7…+11), with typos 74% vs 49%. 6% of words become suggestions and they contain 63%
