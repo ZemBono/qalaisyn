@@ -1,0 +1,18 @@
+QALAISYN — главные ссылки
+
+Сайт (живое демо):        https://zembono.github.io/qalaisyn/
+Ноутбук для формы (Code): https://colab.research.google.com/github/ZemBono/qalaisyn/blob/main/Qalaisyn.ipynb
+Видео (YouTube):          https://youtu.be/P67_lnXsvtE
+Код на GitHub:            https://github.com/ZemBono/qalaisyn
+Форма хакатона:           https://airtable.com/appypCyHN77hElIcS/shrXA5VBFdugmoXl6
+Дедлайн:                  понедельник 16 ноября, 09:59 по Казахстану
+
+Файлы в этом архиве:
+  WRITEUP.pdf                 — описание на 1 страницу (загрузить в форму, поле Write-up)
+  ОТПРАВКА_ЖЮРИ.md            — что вставлять в каждое поле формы + текст Credits
+  VIDEO_SCRIPT.md             — сценарий видео на 2 минуты и как записать
+  ОБЪЯСНЕНИЕ.md               — как всё устроено простыми словами (для ответов жюри)
+  ДЛЯ_ДРУГА_ОБЪЯСНЕНИЕ.md     — объяснение проекта для друга
+  Qalaisyn.ipynb              — ноутбук с результатами (тот же, что по ссылке)
+  сайт/                       — копия сайта (онлайн-версия по ссылке выше)
+(.md файлы открываются Блокнотом)
