@@ -8,6 +8,7 @@ Most phones in Kazakhstan have a Russian keyboard, so people drop the Kazakh-onl
 ## What we built
 **Qalaisyn** is not an app people download. It is a small AI layer that sits inside any chatbot, translator or keyboard, like autocorrect. **In:** *баламнын кызуы 39 котерилди не истеу керек*. **Out:** *баламның қызуы 39 көтерілді не істеу керек* ("my child's temperature rose to 39, what should I do"), which the AI now understands. When unsure, it **shows suggestions** (*ot* → **от** 73% · өт 27%) instead of silently guessing.
 **User:** Gulnar, 62, from a village in Turkistan region, texting a clinic chatbot at night from a phone with only a Russian keyboard.
+**Where it is used every day:** bank, airline and delivery support chats, clinic bots, e-government. Live example: an airline bot's translator reads *ушак кешигип жатыр ма* as "is there a rumor going on?"; after Qalaisyn, "is the plane running late?". A bank bot reads *кредит толей алмай журмин комектесиниздер* as "non-credited commetticines"; after Qalaisyn, "I can't pay my loan, please help".
 
 ## What we added
 Our own idea (not a suggested project). Our own data and questions: (1) a generator that simulates six real typing styles (Russian keyboard, partial Kazakh keyboard, four Latin styles), so we never need anyone's private chats; (2) stress tests that ask *when does it break?*; (3) calibrated confidence and suggestions; (4) a transfer test on Kyrgyz.

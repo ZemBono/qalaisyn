@@ -11,11 +11,11 @@ img = base64.b64encode((ROOT / "figures/messy_messages.png").read_bytes()).decod
 body = markdown.markdown(md, extensions=["tables"])
 # put the chart right after "What we built"
 body = body.replace("<h2>What we added</h2>",
-                    f'<img src="data:image/png;base64,{img}" style="width:46%;display:block;margin:0 auto">'
+                    f'<img src="data:image/png;base64,{img}" style="width:40%;display:block;margin:0 auto">'
                     "<h2>What we added</h2>", 1)
 html = f"""<!doctype html><html><head><meta charset="utf-8"><style>
 @page {{ size: A4; margin: 11mm 12mm; }}
-body {{ font-family: 'Segoe UI', Arial, sans-serif; font-size: 8.7pt; line-height: 1.3; color: #1f2937; }}
+body {{ font-family: 'Segoe UI', Arial, sans-serif; font-size: 8.5pt; line-height: 1.28; color: #1f2937; }}
 h1 {{ font-size: 15pt; margin: 0 0 2px; color: #0b5d4b; }}
 h2 {{ font-size: 10.5pt; margin: 8px 0 2px; color: #0f9d74; border-bottom: 1px solid #e5e7eb; }}
 p {{ margin: 2px 0 4px; }}

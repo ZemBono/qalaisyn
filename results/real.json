@@ -1,0 +1,1664 @@
+{
+ "n": 60,
+ "checked_by_native": 0,
+ "wer": {
+  "B1 rules": 0.5338645418326693,
+  "B1 rules|ru-keyboard": 0.5555555555555556,
+  "B2 dictionary": 0.07569721115537849,
+  "B2 dictionary|ru-keyboard": 0.06944444444444445,
+  "M1 Qalaisyn": 0.043824701195219126,
+  "M1 Qalaisyn|ru-keyboard": 0.037037037037037035,
+  "M2 Qalaisyn+typos": 0.08366533864541832,
+  "M2 Qalaisyn+typos|ru-keyboard": 0.0787037037037037,
+  "B0 raw chat": 0.5896414342629482,
+  "B0 raw chat|ru-keyboard": 0.5555555555555556,
+  "B1 rules|latin": 0.3684210526315789,
+  "B2 dictionary|latin": 0.05263157894736842,
+  "M1 Qalaisyn|latin": 0.05263157894736842,
+  "M2 Qalaisyn+typos|latin": 0.0,
+  "B0 raw chat|latin": 1.0,
+  "B1 rules|partial": 0.4444444444444444,
+  "B2 dictionary|partial": 0.2222222222222222,
+  "M1 Qalaisyn|partial": 0.1111111111111111,
+  "M2 Qalaisyn+typos|partial": 0.2222222222222222,
+  "B0 raw chat|partial": 0.6666666666666666,
+  "B1 rules|code-switch": 0.42857142857142855,
+  "B2 dictionary|code-switch": 0.14285714285714285,
+  "M1 Qalaisyn|code-switch": 0.14285714285714285,
+  "M2 Qalaisyn+typos|code-switch": 0.2857142857142857,
+  "B0 raw chat|code-switch": 0.42857142857142855
+ },
+ "chrf": {
+  "gold": 44.62536413477775,
+  "B0 raw chat": 31.05498795501342,
+  "B2 dictionary": 41.78880813116807,
+  "M2 Qalaisyn+typos": 44.11912181632648
+ },
+ "outputs": [
+  {
+   "id": 1,
+   "profile": "ru-keyboard",
+   "kaz": "сәлем қалайсың, не істеп жатырсың",
+   "gold": "сәлем қалайсың не істеп жатырсың",
+   "chat": "салем калайсын не истеп жатырсын",
+   "eng": "hi, how are you, what are you doing",
+   "checked": false,
+   "B1 rules": "салем калайсын не истеп жатырсын",
+   "B2 dictionary": "сәлем қалайсың не істеп жатырсың",
+   "M1 Qalaisyn": "сәлем қалайсың не істеп жатырсың",
+   "M2 Qalaisyn+typos": "сәлем қалайсың не істеп жатырсың",
+   "B0 raw chat": "салем калайсын не истеп жатырсын",
+   "unsure": [
+    {
+     "typed": "салем",
+     "ours": "сәлем",
+     "alts": [
+      [
+       "сәлем",
+       0.8851901135259526
+      ],
+      [
+       "салем",
+       0.09511865833528865
+      ],
+      [
+       "салэм",
+       0.019691228138758166
+      ]
+     ]
+    },
+    {
+     "typed": "калайсын",
+     "ours": "қалайсың",
+     "alts": [
+      [
+       "қалайсың",
+       0.8524678111587988
+      ],
+      [
+       "қалайсын",
+       0.07376609442060082
+      ],
+      [
+       "калайсың",
+       0.07376609442060082
+      ]
+     ]
+    }
+   ],
+   "en|gold": "greetings what are you doing",
+   "en|B0 raw chat": "what is the request for a greeting",
+   "en|B2 dictionary": "greetings what are you doing",
+   "en|M2 Qalaisyn+typos": "greetings what are you doing"
+  },
+  {
+   "id": 2,
+   "profile": "ru-keyboard",
+   "kaz": "әжеке кешке үйде боласыз ба",
+   "gold": "әжеке кешке үйде боласыз ба",
+   "chat": "ажеке кешке уйде боласызба",
+   "eng": "grandma, will you be at home in the evening",
+   "checked": false,
+   "B1 rules": "ажеке кешке уйде боласызба",
+   "B2 dictionary": "ажеке кешке үйде боласызба",
+   "M1 Qalaisyn": "әжеке кешке үйде боласызба",
+   "M2 Qalaisyn+typos": "жеке кешке үйде боласызба",
+   "B0 raw chat": "ажеке кешке уйде боласызба",
+   "unsure": [],
+   "en|gold": "will you be home for grandma 's evening",
+   "en|B0 raw chat": "will you be home for the evening",
+   "en|B2 dictionary": "will you be home for the evening",
+   "en|M2 Qalaisyn+typos": "will you be home for a private evening"
+  },
+  {
+   "id": 3,
+   "profile": "ru-keyboard",
+   "kaz": "мен сабақтан кейін кешігіп келем",
+   "gold": "мен сабақтан кейін кешігіп келем",
+   "chat": "мен сабактан кейин кешигип келем",
+   "eng": "I will come late after classes",
+   "checked": false,
+   "B1 rules": "мен сабактан кейин кешигип келем",
+   "B2 dictionary": "мен сабақтан кейін кешігіп келем",
+   "M1 Qalaisyn": "мен сабақтан кейін кешігіп келем",
+   "M2 Qalaisyn+typos": "мен сабақтан кейін кешігіп келем",
+   "B0 raw chat": "мен сабактан кейин кешигип келем",
+   "unsure": [],
+   "en|gold": "I 'm late after class",
+   "en|B0 raw chat": "I 'm late after class",
+   "en|B2 dictionary": "I 'm late after class",
+   "en|M2 Qalaisyn+typos": "I 'm late after class"
+  },
+  {
+   "id": 4,
+   "profile": "ru-keyboard",
+   "kaz": "ертең сабақ нешеде басталады",
+   "gold": "ертең сабақ нешеде басталады",
+   "chat": "ертен сабак нешеде басталады",
+   "eng": "what time do classes start tomorrow",
+   "checked": false,
+   "B1 rules": "ертен сабак нешеде басталады",
+   "B2 dictionary": "ертең сабақ нешеде басталады",
+   "M1 Qalaisyn": "ертең сабақ нешеде басталады",
+   "M2 Qalaisyn+typos": "ертең сабақ нешеде басталады",
+   "B0 raw chat": "ертен сабак нешеде басталады",
+   "unsure": [],
+   "en|gold": "What time will the class start tomorrow ?",
+   "en|B0 raw chat": "how early does the lesson start",
+   "en|B2 dictionary": "What time will the class start tomorrow ?",
+   "en|M2 Qalaisyn+typos": "What time will the class start tomorrow ?"
+  },
+  {
+   "id": 5,
+   "profile": "ru-keyboard",
+   "kaz": "үй тапсырманы жіберші",
+   "gold": "үй тапсырманы жіберші",
+   "chat": "уй тапсырманы жиберши",
+   "eng": "send me the homework",
+   "checked": false,
+   "B1 rules": "уй тапсырманы жиберши",
+   "B2 dictionary": "үй тапсырманы жіберші",
+   "M1 Qalaisyn": "үй тапсырманы жіберші",
+   "M2 Qalaisyn+typos": "үй тапсырманы жіберді",
+   "B0 raw chat": "уй тапсырманы жиберши",
+   "unsure": [
+    {
+     "typed": "жиберши",
+     "ours": "жіберді",
+     "alts": [
+      [
+       "жіберді",
+       0.8911823832581787
+      ],
+      [
+       "жіберші",
+       0.07169662138232942
+      ],
+      [
+       "жіберіп",
+       0.027166607461786795
+      ]
+     ]
+    }
+   ],
+   "en|gold": "send home assignment",
+   "en|B0 raw chat": "send the home task",
+   "en|B2 dictionary": "send home assignment",
+   "en|M2 Qalaisyn+typos": "sent home task"
+  },
+  {
+   "id": 6,
+   "profile": "ru-keyboard",
+   "kaz": "балада қызу бар 38 не береміз",
+   "gold": "балада қызу бар 38 не береміз",
+   "chat": "балада кызу бар 38 не беремиз",
+   "eng": "the child has a fever of 38, what should we give",
+   "checked": false,
+   "B1 rules": "балада кызу бар 38 не беремиз",
+   "B2 dictionary": "балада қызу бар 38 не береміз",
+   "M1 Qalaisyn": "балада қызу бар 38 не береміз",
+   "M2 Qalaisyn+typos": "балада қызу бар 38 не береміз",
+   "B0 raw chat": "балада кызу бар 38 не беремиз",
+   "unsure": [],
+   "en|gold": "We give a baby with a fever 38",
+   "en|B0 raw chat": "38 or give a fever in the child",
+   "en|B2 dictionary": "We give a baby with a fever 38",
+   "en|M2 Qalaisyn+typos": "We give a baby with a fever 38"
+  },
+  {
+   "id": 7,
+   "profile": "ru-keyboard",
+   "kaz": "ертеңге дәрігерге жазылуға бола ма",
+   "gold": "ертеңге дәрігерге жазылуға бола ма",
+   "chat": "ертенге дарыгерге жазылуга болама",
+   "eng": "can I make a doctor's appointment for tomorrow",
+   "checked": false,
+   "B1 rules": "ертенге дарыгерге жазылуга болама",
+   "B2 dictionary": "ертеңге дәрігерге жазылуға болама",
+   "M1 Qalaisyn": "ертеңге дәрігерге жазылуға болама",
+   "M2 Qalaisyn+typos": "ертеңге дәрігерге жазылуға болмақ",
+   "B0 raw chat": "ертенге дарыгерге жазылуга болама",
+   "unsure": [
+    {
+     "typed": "болама",
+     "ours": "болмақ",
+     "alts": [
+      [
+       "болмақ",
+       0.4947727320800431
+      ],
+      [
+       "болмас",
+       0.21853798636388821
+      ],
+      [
+       "болама",
+       0.11534384501470556
+      ]
+     ]
+    }
+   ],
+   "en|gold": "can you see a doctor tomorrow ?",
+   "en|B0 raw chat": "Do not register for early treatment",
+   "en|B2 dictionary": "Do not register for doctor tomorrow",
+   "en|M2 Qalaisyn+typos": "to see a doctor tomorrow"
+  },
+  {
+   "id": 8,
+   "profile": "ru-keyboard",
+   "kaz": "жақын жерде дәріхана бар ма",
+   "gold": "жақын жерде дәріхана бар ма",
+   "chat": "жакын жерде дарихана бар ма",
+   "eng": "is there a pharmacy nearby",
+   "checked": false,
+   "B1 rules": "жакын жерде дарихана бар ма",
+   "B2 dictionary": "жақын жерде дәріхана бар ма",
+   "M1 Qalaisyn": "жақын жерде дәріхана бар ма",
+   "M2 Qalaisyn+typos": "жақын жерде дәріхана бар ма",
+   "B0 raw chat": "жакын жерде дарихана бар ма",
+   "unsure": [],
+   "en|gold": "is there a pharmacy nearby",
+   "en|B0 raw chat": "Do you have a pharmacy nearby ?",
+   "en|B2 dictionary": "is there a pharmacy nearby",
+   "en|M2 Qalaisyn+typos": "is there a pharmacy nearby"
+  },
+  {
+   "id": 9,
+   "profile": "ru-keyboard",
+   "kaz": "үшінші күн басым қатты ауырып тұр",
+   "gold": "үшінші күн басым қатты ауырып тұр",
+   "chat": "ушинши кун басым катты ауырып тур",
+   "eng": "my head has been hurting badly for three days",
+   "checked": false,
+   "B1 rules": "ушинши кун басым катты ауырып тур",
+   "B2 dictionary": "үшінші күн басым қатты ауырып тұр",
+   "M1 Qalaisyn": "үшінші күн басым қатты ауырып тұр",
+   "M2 Qalaisyn+typos": "үшінші күн басым қатты ауырып тұр",
+   "B0 raw chat": "ушинши кун басым катты ауырып тур",
+   "unsure": [],
+   "en|gold": "third day is very sick",
+   "en|B0 raw chat": "press the main letter of the uchinchi kung",
+   "en|B2 dictionary": "third day is very sick",
+   "en|M2 Qalaisyn+typos": "third day is very sick"
+  },
+  {
+   "id": 10,
+   "profile": "ru-keyboard",
+   "kaz": "картадан ақша шешіліп кетіпті, мен ешнәрсе алмадым",
+   "gold": "картадан ақша шешіліп кетіпті мен ешнәрсе алмадым",
+   "chat": "картадан акша шешилип кетипти мен ешнарсе алмадым",
+   "eng": "money was taken from my card, I did not buy anything",
+   "checked": false,
+   "B1 rules": "картадан акша шешилип кетипти мен ешнарсе алмадым",
+   "B2 dictionary": "картадан ақша шешіліп кетіпті мен ешнәрсе алмадым",
+   "M1 Qalaisyn": "картадан ақша шешіліп кетіпті мен ешнәрсе алмадым",
+   "M2 Qalaisyn+typos": "картадан ақша шешіліп кетіпті мен ешнәрсе алмадым",
+   "B0 raw chat": "картадан акша шешилип кетипти мен ешнарсе алмадым",
+   "unsure": [],
+   "en|gold": "money was removed from the card and I couldn 't get anything",
+   "en|B0 raw chat": "I couldn 't help but get a map out of my head",
+   "en|B2 dictionary": "money was removed from the card and I couldn 't get anything",
+   "en|M2 Qalaisyn+typos": "money was removed from the card and I couldn 't get anything"
+  },
+  {
+   "id": 11,
+   "profile": "ru-keyboard",
+   "kaz": "доставка қанша тұрады",
+   "gold": "доставка қанша тұрады",
+   "chat": "доставка канша турады",
+   "eng": "how much does delivery cost",
+   "checked": false,
+   "B1 rules": "доставка канша турады",
+   "B2 dictionary": "доставка қанша тұрады",
+   "M1 Qalaisyn": "доставка қанша тұрады",
+   "M2 Qalaisyn+typos": "отставка қанша тұрады",
+   "B0 raw chat": "доставка канша турады",
+   "unsure": [
+    {
+     "typed": "доставка",
+     "ours": "отставка",
+     "alts": [
+      [
+       "отставка",
+       0.6114705532326872
+      ],
+      [
+       "доставка",
+       0.38852944676730927
+      ]
+     ]
+    }
+   ],
+   "en|gold": "how much is the delivery cost",
+   "en|B0 raw chat": "delivery is still on hold",
+   "en|B2 dictionary": "how much is the delivery cost",
+   "en|M2 Qalaisyn+typos": "how much is the resignation"
+  },
+  {
+   "id": 12,
+   "profile": "ru-keyboard",
+   "kaz": "қарызыңды қашан қайтарасың",
+   "gold": "қарызыңды қашан қайтарасың",
+   "chat": "карызынды кашан кайтарасын",
+   "eng": "when will you pay back your debt",
+   "checked": false,
+   "B1 rules": "карызынды кашан кайтарасын",
+   "B2 dictionary": "қарызыңды қашан қайтарасың",
+   "M1 Qalaisyn": "қарызыңды қашан қайтарасың",
+   "M2 Qalaisyn+typos": "қарызыңды қашан қайтарасың",
+   "B0 raw chat": "карызынды кашан кайтарасын",
+   "unsure": [],
+   "en|gold": "when will you repay your loan",
+   "en|B0 raw chat": "pay back the loan",
+   "en|B2 dictionary": "when will you repay your loan",
+   "en|M2 Qalaisyn+typos": "when will you repay your loan"
+  },
+  {
+   "id": 13,
+   "profile": "ru-keyboard",
+   "kaz": "банктен біртүрлі смс келді, сенбеймін",
+   "gold": "банктен біртүрлі смс келді сенбеймін",
+   "chat": "банктен биртурли смс келди сенбеймин",
+   "eng": "a strange sms came from the bank, I do not trust it",
+   "checked": false,
+   "B1 rules": "банктен биртурли смс келди сенбеймин",
+   "B2 dictionary": "банктен біртүрлі смс келді сенбеймін",
+   "M1 Qalaisyn": "банктен біртүрлі смс келді сенбеймін",
+   "M2 Qalaisyn+typos": "банктен біртүрлі смс келді сенбеймін",
+   "B0 raw chat": "банктен биртурли смс келди сенбеймин",
+   "unsure": [],
+   "en|gold": "I can 't believe I got some text messages from the bank",
+   "en|B0 raw chat": "I can 't believe a burly text message came from the bank",
+   "en|B2 dictionary": "I can 't believe I got some text messages from the bank",
+   "en|M2 Qalaisyn+typos": "I can 't believe I got some text messages from the bank"
+  },
+  {
+   "id": 14,
+   "profile": "ru-keyboard",
+   "kaz": "егов арқылы анықтаманы қалай алам",
+   "gold": "егов арқылы анықтаманы қалай алам",
+   "chat": "егов аркылы аныктаманы калай алам",
+   "eng": "how do I get a certificate through egov",
+   "checked": false,
+   "B1 rules": "егов аркылы аныктаманы калай алам",
+   "B2 dictionary": "егов арқылы анықтаманы қалай алам",
+   "M1 Qalaisyn": "егов арқылы анықтаманы қалай алам",
+   "M2 Qalaisyn+typos": "егор арқылы анықтаманы қалай алам",
+   "B0 raw chat": "егов аркылы аныктаманы калай алам",
+   "unsure": [
+    {
+     "typed": "егов",
+     "ours": "егор",
+     "alts": [
+      [
+       "егор",
+       0.41204395389772547
+      ],
+      [
+       "его",
+       0.36795513444258615
+      ],
+      [
+       "егов",
+       0.047426737276316196
+      ]
+     ]
+    },
+    {
+     "typed": "алам",
+     "ours": "алам",
+     "alts": [
+      [
+       "алам",
+       0.8350589118775643
+      ],
+      [
+       "әлам",
+       0.07338788502364034
+      ],
+      [
+       "аләм",
+       0.05213446287570489
+      ]
+     ]
+    }
+   ],
+   "en|gold": "How to get a definition using a java",
+   "en|B0 raw chat": "can retrieve the cross-definition",
+   "en|B2 dictionary": "How to get a definition using a java",
+   "en|M2 Qalaisyn+typos": "How do I get a definition using egor"
+  },
+  {
+   "id": 15,
+   "profile": "ru-keyboard",
+   "kaz": "жеке куәлігімді жоғалтып алдым не істеу керек",
+   "gold": "жеке куәлігімді жоғалтып алдым не істеу керек",
+   "chat": "жеке куалигимди жогалтып алдым не истеу керек",
+   "eng": "I lost my ID card, what should I do",
+   "checked": false,
+   "B1 rules": "жеке куалигимди жогалтып алдым не истеу керек",
+   "B2 dictionary": "жеке куалигимди жоғалтып алдым не істеу керек",
+   "M1 Qalaisyn": "жеке куәлігімді жоғалтып алдым не істеу керек",
+   "M2 Qalaisyn+typos": "жеке куәлігімді жоғалтып алдым не істеу керек",
+   "B0 raw chat": "жеке куалигимди жогалтып алдым не истеу керек",
+   "unsure": [],
+   "en|gold": "I lost my ID what to do",
+   "en|B0 raw chat": "I canceled my personal credentials or need to delete them",
+   "en|B2 dictionary": "I lost my personal credentials what to do",
+   "en|M2 Qalaisyn+typos": "I lost my ID what to do"
+  },
+  {
+   "id": 16,
+   "profile": "ru-keyboard",
+   "kaz": "туған күнің құтты болсын бауырым",
+   "gold": "туған күнің құтты болсын бауырым",
+   "chat": "туган кунин кутты болсын бауырым",
+   "eng": "happy birthday, brother",
+   "checked": false,
+   "B1 rules": "туган кунин кутты болсын бауырым",
+   "B2 dictionary": "туған құнын құтты болсын бауырым",
+   "M1 Qalaisyn": "туған күнін құтты болсын бауырым",
+   "M2 Qalaisyn+typos": "туған күнін құтты болсын бауырым",
+   "B0 raw chat": "туган кунин кутты болсын бауырым",
+   "unsure": [],
+   "en|gold": "Happy birthday to you , brother",
+   "en|B0 raw chat": "Happy Birthday to you brother",
+   "en|B2 dictionary": "Happy birthday to you , brother",
+   "en|M2 Qalaisyn+typos": "Happy birthday to you , brother"
+  },
+  {
+   "id": 17,
+   "profile": "ru-keyboard",
+   "kaz": "рахмет ағатай көмектескеніңе",
+   "gold": "рахмет ағатай көмектескеніңе",
+   "chat": "рахмет агатай комектескенинге",
+   "eng": "thanks, big brother, for helping",
+   "checked": false,
+   "B1 rules": "рахмет агатай комектескенинге",
+   "B2 dictionary": "рахмет ағатай комектескенинге",
+   "M1 Qalaisyn": "рахмет ағатай көмектескенінге",
+   "M2 Qalaisyn+typos": "рахмет ағатай көмектескенінге",
+   "B0 raw chat": "рахмет агатай комектескенинге",
+   "unsure": [],
+   "en|gold": "Thank you for your help",
+   "en|B0 raw chat": "Thank you for your interest",
+   "en|B2 dictionary": "Thank you for your support",
+   "en|M2 Qalaisyn+typos": "Thanks for helping me ."
+  },
+  {
+   "id": 18,
+   "profile": "ru-keyboard",
+   "kaz": "кешке шығамыз ба, далаға",
+   "gold": "кешке шығамыз ба далаға",
+   "chat": "кешке шыгамыз ба далага",
+   "eng": "shall we go outside tonight",
+   "checked": false,
+   "B1 rules": "кешке шыгамыз ба далага",
+   "B2 dictionary": "кешке шығамыз ба далаға",
+   "M1 Qalaisyn": "кешке шығамыз ба далаға",
+   "M2 Qalaisyn+typos": "кешке шығамыз ба далаға",
+   "B0 raw chat": "кешке шыгамыз ба далага",
+   "unsure": [
+    {
+     "typed": "шыгамыз",
+     "ours": "шығамыз",
+     "alts": [
+      [
+       "шығамыз",
+       0.7870967741935533
+      ],
+      [
+       "шыгамыз",
+       0.21290322580645185
+      ]
+     ]
+    }
+   ],
+   "en|gold": "Are we going out to the fields tonight ?",
+   "en|B0 raw chat": "we go out for the evening",
+   "en|B2 dictionary": "Are we going out to the fields tonight ?",
+   "en|M2 Qalaisyn+typos": "Are we going out to the fields tonight ?"
+  },
+  {
+   "id": 19,
+   "profile": "ru-keyboard",
+   "kaz": "он минутқа кешігемін күтіп тұрыңдар",
+   "gold": "он минутқа кешігемін күтіп тұрыңдар",
+   "chat": "он минутка кешигемин кутип турындар",
+   "eng": "I will be ten minutes late, wait for me",
+   "checked": false,
+   "B1 rules": "он минутка кешигемин кутип турындар",
+   "B2 dictionary": "оң минутқа кешигемин күтіп тұрыңдар",
+   "M1 Qalaisyn": "он минутқа кешігемін күтіп тұрыңдар",
+   "M2 Qalaisyn+typos": "он минутқа кешігемін күтіп тұрыңдар",
+   "B0 raw chat": "он минутка кешигемин кутип турындар",
+   "unsure": [
+    {
+     "typed": "турындар",
+     "ours": "тұрыңдар",
+     "alts": [
+      [
+       "тұрыңдар",
+       0.759039390530872
+      ],
+      [
+       "тұрындар",
+       0.24096060946913084
+      ]
+     ]
+    }
+   ],
+   "en|gold": "Wait until ten minutes late",
+   "en|B0 raw chat": "ten minutes of ketogenic touring",
+   "en|B2 dictionary": "wait until the right minute",
+   "en|M2 Qalaisyn+typos": "Wait until ten minutes late"
+  },
+  {
+   "id": 20,
+   "profile": "ru-keyboard",
+   "kaz": "дүкеннен не алып келейін",
+   "gold": "дүкеннен не алып келейін",
+   "chat": "дукеннен не алып келейин",
+   "eng": "what should I bring from the shop",
+   "checked": false,
+   "B1 rules": "дукеннен не алып келейин",
+   "B2 dictionary": "дүкеннен не алып келейін",
+   "M1 Qalaisyn": "дүкеннен не алып келейін",
+   "M2 Qalaisyn+typos": "дүкеннен не алып келетін",
+   "B0 raw chat": "дукеннен не алып келейин",
+   "unsure": [],
+   "en|gold": "What to get in the store",
+   "en|B0 raw chat": "What to get from the dock",
+   "en|B2 dictionary": "What to get in the store",
+   "en|M2 Qalaisyn+typos": "what to bring from the store"
+  },
+  {
+   "id": 21,
+   "profile": "ru-keyboard",
+   "kaz": "әжеме жаман болып жатыр жедел жәрдем шақыр",
+   "gold": "әжеме жаман болып жатыр жедел жәрдем шақыр",
+   "chat": "ажеме жаман болып жатыр жедел жардем шакыр",
+   "eng": "grandma is feeling bad, call an ambulance",
+   "checked": false,
+   "B1 rules": "ажеме жаман болып жатыр жедел жардем шакыр",
+   "B2 dictionary": "әжеме жаман болып жатыр жедел жәрдем шәкір",
+   "M1 Qalaisyn": "әжеме жаман болып жатыр жедел жәрдем шақыр",
+   "M2 Qalaisyn+typos": "әжеме жаман болып жатыр жедел жәрдем шақыр",
+   "B0 raw chat": "ажеме жаман болып жатыр жедел жардем шакыр",
+   "unsure": [
+    {
+     "typed": "ажеме",
+     "ours": "әжеме",
+     "alts": [
+      [
+       "әжеме",
+       0.5750479286966473
+      ],
+      [
+       "әжем",
+       0.25577954771056816
+      ],
+      [
+       "ақжем",
+       0.09628943012077087
+      ]
+     ]
+    },
+    {
+     "typed": "болып",
+     "ours": "болып",
+     "alts": [
+      [
+       "болып",
+       0.8781709642503097
+      ],
+      [
+       "бөліп",
+       0.12182032617245048
+      ],
+      [
+       "боліп",
+       6.3905442717798525e-06
+      ]
+     ]
+    },
+    {
+     "typed": "шакыр",
+     "ours": "шақыр",
+     "alts": [
+      [
+       "шақыр",
+       0.6700533470790301
+      ],
+      [
+       "шәкір",
+       0.16846129587617112
+      ],
+      [
+       "шәкир",
+       0.07757503022387413
+      ]
+     ]
+    }
+   ],
+   "en|gold": "Grandma is sick call an ambulance",
+   "en|B0 raw chat": "my grandmother is getting sick",
+   "en|B2 dictionary": "grandmother is getting sick",
+   "en|M2 Qalaisyn+typos": "Grandma is sick call an ambulance"
+  },
+  {
+   "id": 22,
+   "profile": "ru-keyboard",
+   "kaz": "автобус аялдамасы қай жерде",
+   "gold": "автобус аялдамасы қай жерде",
+   "chat": "автобус аялдамасы кай жерде",
+   "eng": "where is the bus stop",
+   "checked": false,
+   "B1 rules": "автобус аялдамасы кай жерде",
+   "B2 dictionary": "автобус аялдамасы қай жерде",
+   "M1 Qalaisyn": "автобус аялдамасы қай жерде",
+   "M2 Qalaisyn+typos": "автобус аялдамасы қай жерде",
+   "B0 raw chat": "автобус аялдамасы кай жерде",
+   "unsure": [],
+   "en|gold": "where is the bus stop",
+   "en|B0 raw chat": "where is the bus stop",
+   "en|B2 dictionary": "where is the bus stop",
+   "en|M2 Qalaisyn+typos": "where is the bus stop"
+  },
+  {
+   "id": 23,
+   "profile": "ru-keyboard",
+   "kaz": "такси келіп тұр шық",
+   "gold": "такси келіп тұр шық",
+   "chat": "такси келип тур шык",
+   "eng": "the taxi is here, come out",
+   "checked": false,
+   "B1 rules": "такси келип тур шык",
+   "B2 dictionary": "такси келіп тұр шық",
+   "M1 Qalaisyn": "такси келіп тұр шық",
+   "M2 Qalaisyn+typos": "такси келіп тұр шық",
+   "B0 raw chat": "такси келип тур шык",
+   "unsure": [],
+   "en|gold": "taxi is coming out",
+   "en|B0 raw chat": "get out of the taxi",
+   "en|B2 dictionary": "taxi is coming out",
+   "en|M2 Qalaisyn+typos": "taxi is coming out"
+  },
+  {
+   "id": 24,
+   "profile": "ru-keyboard",
+   "kaz": "ертең ауа райы қандай болады",
+   "gold": "ертең ауа райы қандай болады",
+   "chat": "ертен ауа райы кандай болады",
+   "eng": "what will the weather be like tomorrow",
+   "checked": false,
+   "B1 rules": "ертен ауа райы кандай болады",
+   "B2 dictionary": "ертең ауа райы қандай болады",
+   "M1 Qalaisyn": "ертең ауа райы қандай болады",
+   "M2 Qalaisyn+typos": "ертең ауа райы қандай болады",
+   "B0 raw chat": "ертен ауа райы кандай болады",
+   "unsure": [],
+   "en|gold": "what will be the weather tomorrow",
+   "en|B0 raw chat": "what will be the weather early",
+   "en|B2 dictionary": "what will be the weather tomorrow",
+   "en|M2 Qalaisyn+typos": "what will be the weather tomorrow"
+  },
+  {
+   "id": 25,
+   "profile": "ru-keyboard",
+   "kaz": "үйде жарық жоқ, сенде бар ма",
+   "gold": "үйде жарық жоқ сенде бар ма",
+   "chat": "уйде жарык жок сенде бар ма",
+   "eng": "there is no electricity at home, do you have it",
+   "checked": false,
+   "B1 rules": "уйде жарык жок сенде бар ма",
+   "B2 dictionary": "үйде жарық жоқ сенде бар ма",
+   "M1 Qalaisyn": "үйде жарық жоқ сенде бар ма",
+   "M2 Qalaisyn+typos": "үйде жарық жоқ сенде бар ма",
+   "B0 raw chat": "уйде жарык жок сенде бар ма",
+   "unsure": [],
+   "en|gold": "Do you have a light in the house ?",
+   "en|B0 raw chat": "Do you have a light at home ?",
+   "en|B2 dictionary": "Do you have a light in the house ?",
+   "en|M2 Qalaisyn+typos": "Do you have a light in the house ?"
+  },
+  {
+   "id": 26,
+   "profile": "ru-keyboard",
+   "kaz": "телефоным бұзылып қалды",
+   "gold": "телефоным бұзылып қалды",
+   "chat": "телефоным бузылып калды",
+   "eng": "my phone broke",
+   "checked": false,
+   "B1 rules": "телефоным бузылып калды",
+   "B2 dictionary": "телефоным бұзылып қалды",
+   "M1 Qalaisyn": "телефоным бұзылып қалды",
+   "M2 Qalaisyn+typos": "телефоны бұзылып қалды",
+   "B0 raw chat": "телефоным бузылып калды",
+   "unsure": [],
+   "en|gold": "my phone is broken",
+   "en|B0 raw chat": "my phone is broken",
+   "en|B2 dictionary": "my phone is broken",
+   "en|M2 Qalaisyn+typos": "phone is broken"
+  },
+  {
+   "id": 27,
+   "profile": "ru-keyboard",
+   "kaz": "кездесуді басқа күнге ауыстырсақ бола ма",
+   "gold": "кездесуді басқа күнге ауыстырсақ бола ма",
+   "chat": "кездесуди баска кунге ауыстырсак бола ма",
+   "eng": "can we move the meeting to another day",
+   "checked": false,
+   "B1 rules": "кездесуди баска кунге ауыстырсак бола ма",
+   "B2 dictionary": "кездесуді басқа күнге ауыстырсақ бола ма",
+   "M1 Qalaisyn": "кездесуді басқа күнге ауыстырсақ бола ма",
+   "M2 Qalaisyn+typos": "кездесуді басқа күнге ауыстырсақ бола ма",
+   "B0 raw chat": "кездесуди баска кунге ауыстырсак бола ма",
+   "unsure": [],
+   "en|gold": "Can we postpone the meeting ?",
+   "en|B0 raw chat": "Can we change the meeting to a regular one ?",
+   "en|B2 dictionary": "Can we postpone the meeting ?",
+   "en|M2 Qalaisyn+typos": "Can we postpone the meeting ?"
+  },
+  {
+   "id": 28,
+   "profile": "ru-keyboard",
+   "kaz": "босағанда хабарлас",
+   "gold": "босағанда хабарлас",
+   "chat": "босаганда хабарлас",
+   "eng": "call me when you are free",
+   "checked": false,
+   "B1 rules": "босаганда хабарлас",
+   "B2 dictionary": "босағанда хабарлас",
+   "M1 Qalaisyn": "босағанда хабарлас",
+   "M2 Qalaisyn+typos": "босағанда хабарлар",
+   "B0 raw chat": "босаганда хабарлас",
+   "unsure": [
+    {
+     "typed": "хабарлас",
+     "ours": "хабарлар",
+     "alts": [
+      [
+       "хабарлар",
+       0.4286963770732643
+      ],
+      [
+       "хабарлау",
+       0.30058184999553494
+      ],
+      [
+       "хабарлас",
+       0.14115061711968824
+      ]
+     ]
+    }
+   ],
+   "en|gold": "report when released",
+   "en|B0 raw chat": "report when released",
+   "en|B2 dictionary": "report when released",
+   "en|M2 Qalaisyn+typos": "messages when released"
+  },
+  {
+   "id": 29,
+   "profile": "ru-keyboard",
+   "kaz": "үйдемін, бәрі жақсы, уайымдама",
+   "gold": "үйдемін бәрі жақсы уайымдама",
+   "chat": "уйдемин бари жаксы уайымдама",
+   "eng": "I am at home, everything is fine, do not worry",
+   "checked": false,
+   "B1 rules": "уйдемин бари жаксы уайымдама",
+   "B2 dictionary": "уйдемин бәрі жақсы уайымдама",
+   "M1 Qalaisyn": "үйдемін бәрі жақсы уайымдама",
+   "M2 Qalaisyn+typos": "үйдемін бәрі жақсы уайымдама",
+   "B0 raw chat": "уйдемин бари жаксы уайымдама",
+   "unsure": [
+    {
+     "typed": "уйдемин",
+     "ours": "үйдемін",
+     "alts": [
+      [
+       "үйдемін",
+       0.5348811786469931
+      ],
+      [
+       "сүйемін",
+       0.4651188213530169
+      ]
+     ]
+    }
+   ],
+   "en|gold": "I 'm home all right don 't worry",
+   "en|B0 raw chat": "do not worry about the",
+   "en|B2 dictionary": "i am all right don 't worry",
+   "en|M2 Qalaisyn+typos": "I 'm home all right don 't worry"
+  },
+  {
+   "id": 30,
+   "profile": "ru-keyboard",
+   "kaz": "емтиханнан өттің бе",
+   "gold": "емтиханнан өттің бе",
+   "chat": "емтиханнан оттин бе",
+   "eng": "did you pass the exam",
+   "checked": false,
+   "B1 rules": "емтиханнан оттин бе",
+   "B2 dictionary": "емтиханнан оттың бе",
+   "M1 Qalaisyn": "емтиханнан оттың бе",
+   "M2 Qalaisyn+typos": "емтиханнан оттың бе",
+   "B0 raw chat": "емтиханнан оттин бе",
+   "unsure": [
+    {
+     "typed": "оттин",
+     "ours": "оттың",
+     "alts": [
+      [
+       "оттың",
+       0.7809613393028697
+      ],
+      [
+       "өттің",
+       0.20882634676239295
+      ],
+      [
+       "оттің",
+       0.01021231393473473
+      ]
+     ]
+    }
+   ],
+   "en|gold": "Have you passed the exam",
+   "en|B0 raw chat": "whether to take the exam",
+   "en|B2 dictionary": "Did you fail the exam",
+   "en|M2 Qalaisyn+typos": "Did you fail the exam"
+  },
+  {
+   "id": 31,
+   "profile": "ru-keyboard",
+   "kaz": "апай кешіріңіз, ауырып қалдым, ертең келе алмаймын",
+   "gold": "апай кешіріңіз ауырып қалдым ертең келе алмаймын",
+   "chat": "апай кешириниз ауырып калдым ертен келе алмаймын",
+   "eng": "teacher, sorry, I got sick and cannot come tomorrow",
+   "checked": false,
+   "B1 rules": "апай кешириниз ауырып калдым ертен келе алмаймын",
+   "B2 dictionary": "апай кешіріңіз ауырып қалдым ертең келе алмаймын",
+   "M1 Qalaisyn": "апай кешіріңіз ауырып қалдым ертең келе алмаймын",
+   "M2 Qalaisyn+typos": "апай кешіріңіз ауырып қалдым ертең келе алмаймын",
+   "B0 raw chat": "апай кешириниз ауырып калдым ертен келе алмаймын",
+   "unsure": [],
+   "en|gold": "lady I 'm sorry I got sick I can 't come tomorrow",
+   "en|B0 raw chat": "I am sick of your sister , I can 't come early",
+   "en|B2 dictionary": "lady I 'm sorry I got sick I can 't come tomorrow",
+   "en|M2 Qalaisyn+typos": "lady I 'm sorry I got sick I can 't come tomorrow"
+  },
+  {
+   "id": 32,
+   "profile": "ru-keyboard",
+   "kaz": "грантқа қанша балл керек",
+   "gold": "грантқа қанша балл керек",
+   "chat": "грантка канша балл керек",
+   "eng": "how many points are needed for a grant",
+   "checked": false,
+   "B1 rules": "грантка канша балл керек",
+   "B2 dictionary": "грантқа қанша балл керек",
+   "M1 Qalaisyn": "грантқа қанша балл керек",
+   "M2 Qalaisyn+typos": "грантқа қанша балл керек",
+   "B0 raw chat": "грантка канша балл керек",
+   "unsure": [
+    {
+     "typed": "грантка",
+     "ours": "грантқа",
+     "alts": [
+      [
+       "грантқа",
+       0.6873835300978135
+      ],
+      [
+       "грантка",
+       0.21515663340459779
+      ],
+      [
+       "грунтқа",
+       0.059663203014117275
+      ]
+     ]
+    }
+   ],
+   "en|gold": "How many points are needed for the grant",
+   "en|B0 raw chat": "grant needs a score",
+   "en|B2 dictionary": "How many points are needed for the grant",
+   "en|M2 Qalaisyn+typos": "How many points are needed for the grant"
+  },
+  {
+   "id": 33,
+   "profile": "ru-keyboard",
+   "kaz": "көрші су басып кетті",
+   "gold": "көрші су басып кетті",
+   "chat": "корши су басып кетти",
+   "eng": "the neighbours flooded us",
+   "checked": false,
+   "B1 rules": "корши су басып кетти",
+   "B2 dictionary": "көрші су басып кетті",
+   "M1 Qalaisyn": "көрші су басып кетті",
+   "M2 Qalaisyn+typos": "көрші су басып кетті",
+   "B0 raw chat": "корши су басып кетти",
+   "unsure": [],
+   "en|gold": "neighboring water flooded",
+   "en|B0 raw chat": "the water has gone down",
+   "en|B2 dictionary": "neighboring water flooded",
+   "en|M2 Qalaisyn+typos": "neighboring water flooded"
+  },
+  {
+   "id": 34,
+   "profile": "ru-keyboard",
+   "kaz": "емхана сенбіде істей ме",
+   "gold": "емхана сенбіде істей ме",
+   "chat": "емхана сенбиде иштей ме",
+   "eng": "does the clinic work on Saturday",
+   "checked": false,
+   "B1 rules": "емхана сенбиде иштей ме",
+   "B2 dictionary": "емхана сенбіде іштей ме",
+   "M1 Qalaisyn": "емхана сенбіде іштей ме",
+   "M2 Qalaisyn+typos": "емхана сенбіде іштей ме",
+   "B0 raw chat": "емхана сенбиде иштей ме",
+   "unsure": [],
+   "en|gold": "does the clinic do it on saturday",
+   "en|B0 raw chat": "Does the clinic work on Saturday ?",
+   "en|B2 dictionary": "is the clinic open on Saturday",
+   "en|M2 Qalaisyn+typos": "is the clinic open on Saturday"
+  },
+  {
+   "id": 35,
+   "profile": "ru-keyboard",
+   "kaz": "бала құлап басын ұрып алды",
+   "gold": "бала құлап басын ұрып алды",
+   "chat": "бала кулап басын урып алды",
+   "eng": "the child fell and hit his head",
+   "checked": false,
+   "B1 rules": "бала кулап басын урып алды",
+   "B2 dictionary": "бала құлап басын ұрып алды",
+   "M1 Qalaisyn": "бала құлап басын ұрып алды",
+   "M2 Qalaisyn+typos": "бала құлап басын ұрып алды",
+   "B0 raw chat": "бала кулап басын урып алды",
+   "unsure": [
+    {
+     "typed": "урып",
+     "ours": "ұрып",
+     "alts": [
+      [
+       "ұрып",
+       0.8788173912035008
+      ],
+      [
+       "үріп",
+       0.10634317052698154
+      ],
+      [
+       "үрып",
+       0.014839438269519941
+      ]
+     ]
+    }
+   ],
+   "en|gold": "The boy fell and hit his head",
+   "en|B0 raw chat": "The boy fell and hit his head",
+   "en|B2 dictionary": "The boy fell and hit his head",
+   "en|M2 Qalaisyn+typos": "The boy fell and hit his head"
+  },
+  {
+   "id": 36,
+   "profile": "ru-keyboard",
+   "kaz": "қаладан адасып кеттім",
+   "gold": "қаладан адасып кеттім",
+   "chat": "каладан адасып кеттим",
+   "eng": "I got lost in the city",
+   "checked": false,
+   "B1 rules": "каладан адасып кеттим",
+   "B2 dictionary": "қаладан адасып кеттім",
+   "M1 Qalaisyn": "қаладан адасып кеттім",
+   "M2 Qalaisyn+typos": "қаладан адасып кеттім",
+   "B0 raw chat": "каладан адасып кеттим",
+   "unsure": [],
+   "en|gold": "I have lost my way",
+   "en|B0 raw chat": "I lost my way",
+   "en|B2 dictionary": "I have lost my way",
+   "en|M2 Qalaisyn+typos": "I have lost my way"
+  },
+  {
+   "id": 37,
+   "profile": "ru-keyboard",
+   "kaz": "мекенжайды жіберіп жіберші",
+   "gold": "мекенжайды жіберіп жіберші",
+   "chat": "мекенжайды жиберип жиберши",
+   "eng": "please send the address",
+   "checked": false,
+   "B1 rules": "мекенжайды жиберип жиберши",
+   "B2 dictionary": "мекенжайды жіберіп жіберші",
+   "M1 Qalaisyn": "мекенжайды жіберіп жіберші",
+   "M2 Qalaisyn+typos": "мекенжайды жіберіп жіберді",
+   "B0 raw chat": "мекенжайды жиберип жиберши",
+   "unsure": [],
+   "en|gold": "Send the address",
+   "en|B0 raw chat": "send the address",
+   "en|B2 dictionary": "Send the address",
+   "en|M2 Qalaisyn+typos": "sent the address"
+  },
+  {
+   "id": 38,
+   "profile": "ru-keyboard",
+   "kaz": "тапсырыс әлі келген жоқ",
+   "gold": "тапсырыс әлі келген жоқ",
+   "chat": "тапсырыс али келген жок",
+   "eng": "the order has not arrived yet",
+   "checked": false,
+   "B1 rules": "тапсырыс али келген жок",
+   "B2 dictionary": "тапсырыс әлі келген жоқ",
+   "M1 Qalaisyn": "тапсырыс әлі келген жоқ",
+   "M2 Qalaisyn+typos": "тапсырыс әлі келген жоқ",
+   "B0 raw chat": "тапсырыс али келген жок",
+   "unsure": [
+    {
+     "typed": "али",
+     "ours": "әлі",
+     "alts": [
+      [
+       "әлі",
+       0.6277351415791702
+      ],
+      [
+       "әли",
+       0.30643860299507425
+      ],
+      [
+       "али",
+       0.05802894222480822
+      ]
+     ]
+    }
+   ],
+   "en|gold": "The order has not yet arrived",
+   "en|B0 raw chat": "The order has not yet arrived",
+   "en|B2 dictionary": "The order has not yet arrived",
+   "en|M2 Qalaisyn+typos": "The order has not yet arrived"
+  },
+  {
+   "id": 39,
+   "profile": "ru-keyboard",
+   "kaz": "каспимен төлесем бола ма",
+   "gold": "каспимен төлесем бола ма",
+   "chat": "каспимен толесем бола ма",
+   "eng": "can I pay with kaspi",
+   "checked": false,
+   "B1 rules": "каспимен толесем бола ма",
+   "B2 dictionary": "каспимен төлесем бола ма",
+   "M1 Qalaisyn": "каспимен төлесем бола ма",
+   "M2 Qalaisyn+typos": "каспимен төлесем бола ма",
+   "B0 raw chat": "каспимен толесем бола ма",
+   "unsure": [
+    {
+     "typed": "каспимен",
+     "ours": "каспимен",
+     "alts": [
+      [
+       "каспимен",
+       0.7201817073846329
+      ],
+      [
+       "қалпымен",
+       0.2023710597750829
+      ],
+      [
+       "қарпімен",
+       0.047199601130131386
+      ]
+     ]
+    }
+   ],
+   "en|gold": "Can I pay by cash?",
+   "en|B0 raw chat": "Can I fill in the cashier ?",
+   "en|B2 dictionary": "Can I pay by cash?",
+   "en|M2 Qalaisyn+typos": "Can I pay by cash?"
+  },
+  {
+   "id": 40,
+   "profile": "ru-keyboard",
+   "kaz": "қатты шаршадым, ұйықтаймын",
+   "gold": "қатты шаршадым ұйықтаймын",
+   "chat": "катты шаршадым уйыктаймын",
+   "eng": "I am very tired, I am going to sleep",
+   "checked": false,
+   "B1 rules": "катты шаршадым уйыктаймын",
+   "B2 dictionary": "қатты шаршадым уйыктаймын",
+   "M1 Qalaisyn": "қатты шаршадым ұйықтаймын",
+   "M2 Qalaisyn+typos": "қатты шаршадым ұйықтаймын",
+   "B0 raw chat": "катты шаршадым уйыктаймын",
+   "unsure": [
+    {
+     "typed": "уйыктаймын",
+     "ours": "ұйықтаймын",
+     "alts": [
+      [
+       "ұйықтаймын",
+       0.7510622798530368
+      ],
+      [
+       "ұйықтайтын",
+       0.2489377201469651
+      ]
+     ]
+    }
+   ],
+   "en|gold": "I am tired and I fall asleep",
+   "en|B0 raw chat": "I am tired of the letter I am going to heal",
+   "en|B2 dictionary": "I am tired and I am going to get well",
+   "en|M2 Qalaisyn+typos": "I am tired and I fall asleep"
+  },
+  {
+   "id": 41,
+   "profile": "ru-keyboard",
+   "kaz": "не боп жатыр братан",
+   "gold": "не боп жатыр братан",
+   "chat": "не боп жатыр братан",
+   "eng": "what is up, bro",
+   "checked": false,
+   "B1 rules": "не боп жатыр братан",
+   "B2 dictionary": "не боп жатыр братан",
+   "M1 Qalaisyn": "не боп жатыр братан",
+   "M2 Qalaisyn+typos": "не боп жатыр братан",
+   "B0 raw chat": "не боп жатыр братан",
+   "unsure": [
+    {
+     "typed": "братан",
+     "ours": "братан",
+     "alts": [
+      [
+       "братан",
+       0.36818390960207775
+      ],
+      [
+       "бастан",
+       0.2904301924038571
+      ],
+      [
+       "британ",
+       0.1667099808869086
+      ]
+     ]
+    }
+   ],
+   "en|gold": "what is going on braitan",
+   "en|B0 raw chat": "what is going on braitan",
+   "en|B2 dictionary": "what is going on braitan",
+   "en|M2 Qalaisyn+typos": "what is going on braitan"
+  },
+  {
+   "id": 42,
+   "profile": "ru-keyboard",
+   "kaz": "қайдасың, күтіп тұрмын",
+   "gold": "қайдасың күтіп тұрмын",
+   "chat": "кайдасын кутип турмын",
+   "eng": "where are you, I am waiting",
+   "checked": false,
+   "B1 rules": "кайдасын кутип турмын",
+   "B2 dictionary": "қайдасың күтіп тұрмын",
+   "M1 Qalaisyn": "қайдасың күтіп тұрмын",
+   "M2 Qalaisyn+typos": "қайдасың күтіп тұрмын",
+   "B0 raw chat": "кайдасын кутип турмын",
+   "unsure": [
+    {
+     "typed": "кайдасын",
+     "ours": "қайдасың",
+     "alts": [
+      [
+       "қайдасың",
+       0.7745881130355576
+      ],
+      [
+       "кайдасың",
+       0.22541188696444567
+      ]
+     ]
+    }
+   ],
+   "en|gold": "Where are you waiting",
+   "en|B0 raw chat": "Wait for the next step",
+   "en|B2 dictionary": "Where are you waiting",
+   "en|M2 Qalaisyn+typos": "Where are you waiting"
+  },
+  {
+   "id": 43,
+   "profile": "ru-keyboard",
+   "kaz": "жолдамын, кеп қалдым",
+   "gold": "жолдамын кеп қалдым",
+   "chat": "жолдамын кеп калдым",
+   "eng": "I am on the way, almost there",
+   "checked": false,
+   "B1 rules": "жолдамын кеп калдым",
+   "B2 dictionary": "жолдамын кеп қалдым",
+   "M1 Qalaisyn": "жолдамын кеп қалдым",
+   "M2 Qalaisyn+typos": "жолдарын кеп қалдым",
+   "B0 raw chat": "жолдамын кеп калдым",
+   "unsure": [
+    {
+     "typed": "жолдамын",
+     "ours": "жолдарын",
+     "alts": [
+      [
+       "жолдарын",
+       0.7136927550417344
+      ],
+      [
+       "жолдамын",
+       0.10537011169662122
+      ],
+      [
+       "жолдасың",
+       0.0850303325703395
+      ]
+     ]
+    }
+   ],
+   "en|gold": "I got stuck on my way",
+   "en|B0 raw chat": "I got stuck on my way",
+   "en|B2 dictionary": "I got stuck on my way",
+   "en|M2 Qalaisyn+typos": "I left the rows blank"
+  },
+  {
+   "id": 44,
+   "profile": "ru-keyboard",
+   "kaz": "шешем сені қонаққа шақырып жатыр",
+   "gold": "шешем сені қонаққа шақырып жатыр",
+   "chat": "шешем сени конакка шакырып жатыр",
+   "eng": "my mother is inviting you over",
+   "checked": false,
+   "B1 rules": "шешем сени конакка шакырып жатыр",
+   "B2 dictionary": "шешем сені қонаққа шақырып жатыр",
+   "M1 Qalaisyn": "шешем сені қонаққа шақырып жатыр",
+   "M2 Qalaisyn+typos": "шешем сені қонаққа шақырып жатыр",
+   "B0 raw chat": "шешем сени конакка шакырып жатыр",
+   "unsure": [],
+   "en|gold": "My mom is inviting you to a party",
+   "en|B0 raw chat": "my mom is banging you",
+   "en|B2 dictionary": "My mom is inviting you to a party",
+   "en|M2 Qalaisyn+typos": "My mom is inviting you to a party"
+  },
+  {
+   "id": 45,
+   "profile": "ru-keyboard",
+   "kaz": "айналайын ренжіме",
+   "gold": "айналайын ренжіме",
+   "chat": "айналайын ренжиме",
+   "eng": "dear, do not be upset",
+   "checked": false,
+   "B1 rules": "айналайын ренжиме",
+   "B2 dictionary": "айналайын ренжіме",
+   "M1 Qalaisyn": "айналайын ренжіме",
+   "M2 Qalaisyn+typos": "айналайын ренжіме",
+   "B0 raw chat": "айналайын ренжиме",
+   "unsure": [
+    {
+     "typed": "ренжиме",
+     "ours": "ренжіме",
+     "alts": [
+      [
+       "ренжіме",
+       0.813640675728673
+      ],
+      [
+       "режимде",
+       0.0968983200366093
+      ],
+      [
+       "режімде",
+       0.0401521587017445
+      ]
+     ]
+    }
+   ],
+   "en|gold": "round-up",
+   "en|B0 raw chat": "round-up",
+   "en|B2 dictionary": "round-up",
+   "en|M2 Qalaisyn+typos": "round-up"
+  },
+  {
+   "id": 46,
+   "profile": "ru-keyboard",
+   "kaz": "кешір жаным, кешігіп қалдым",
+   "gold": "кешір жаным кешігіп қалдым",
+   "chat": "кешир жаным кешигип калдым",
+   "eng": "sorry, dear, I am late",
+   "checked": false,
+   "B1 rules": "кешир жаным кешигип калдым",
+   "B2 dictionary": "кешір жаным кешігіп қалдым",
+   "M1 Qalaisyn": "кешір жаным кешігіп қалдым",
+   "M2 Qalaisyn+typos": "кешір жаным кешігіп қалдым",
+   "B0 raw chat": "кешир жаным кешигип калдым",
+   "unsure": [],
+   "en|gold": "Sorry I 'm late",
+   "en|B0 raw chat": "I feel a little bit down",
+   "en|B2 dictionary": "Sorry I 'm late",
+   "en|M2 Qalaisyn+typos": "Sorry I 'm late"
+  },
+  {
+   "id": 47,
+   "profile": "ru-keyboard",
+   "kaz": "ақша салып жіберші, кейін қайтарам",
+   "gold": "ақша салып жіберші кейін қайтарам",
+   "chat": "акша салып жибершы кейин кайтарам",
+   "eng": "send me some money, I will return it later",
+   "checked": false,
+   "B1 rules": "акша салып жибершы кейин кайтарам",
+   "B2 dictionary": "ақша салып жіберші кейін қайтарам",
+   "M1 Qalaisyn": "ақша салып жіберші кейін қайтарам",
+   "M2 Qalaisyn+typos": "ақша салып жіберші кейін қайтарам",
+   "B0 raw chat": "акша салып жибершы кейин кайтарам",
+   "unsure": [
+    {
+     "typed": "кайтарам",
+     "ours": "қайтарам",
+     "alts": [
+      [
+       "қайтарам",
+       0.7299437129508057
+      ],
+      [
+       "қайтара",
+       0.2078801478831503
+      ],
+      [
+       "қайтарым",
+       0.024219066092598694
+      ]
+     ]
+    }
+   ],
+   "en|gold": "send money back later",
+   "en|B0 raw chat": "send the receipt back later",
+   "en|B2 dictionary": "send money back later",
+   "en|M2 Qalaisyn+typos": "send money back later"
+  },
+  {
+   "id": 48,
+   "profile": "ru-keyboard",
+   "kaz": "той қашан болады",
+   "gold": "той қашан болады",
+   "chat": "той кашан болады",
+   "eng": "when is the celebration",
+   "checked": false,
+   "B1 rules": "той кашан болады",
+   "B2 dictionary": "той қашан болады",
+   "M1 Qalaisyn": "той қашан болады",
+   "M2 Qalaisyn+typos": "той қашан болады",
+   "B0 raw chat": "той кашан болады",
+   "unsure": [],
+   "en|gold": "when the wedding will be",
+   "en|B0 raw chat": "when the wedding will be",
+   "en|B2 dictionary": "when the wedding will be",
+   "en|M2 Qalaisyn+typos": "when the wedding will be"
+  },
+  {
+   "id": 49,
+   "profile": "ru-keyboard",
+   "kaz": "базарға барып келем",
+   "gold": "базарға барып келем",
+   "chat": "базарга барып келем",
+   "eng": "I will go to the bazaar and come back",
+   "checked": false,
+   "B1 rules": "базарга барып келем",
+   "B2 dictionary": "базарға барып келем",
+   "M1 Qalaisyn": "базарға барып келем",
+   "M2 Qalaisyn+typos": "базарға барып келем",
+   "B0 raw chat": "базарга барып келем",
+   "unsure": [],
+   "en|gold": "I am going to the market",
+   "en|B0 raw chat": "I go to the market",
+   "en|B2 dictionary": "I am going to the market",
+   "en|M2 Qalaisyn+typos": "I am going to the market"
+  },
+  {
+   "id": 50,
+   "profile": "ru-keyboard",
+   "kaz": "ауруханада жатырмын, хал жақсы",
+   "gold": "ауруханада жатырмын хал жақсы",
+   "chat": "ауруханада жатырмын хал жаксы",
+   "eng": "I am in hospital, I am fine",
+   "checked": false,
+   "B1 rules": "ауруханада жатырмын хал жаксы",
+   "B2 dictionary": "ауруханада жатырмын хал жақсы",
+   "M1 Qalaisyn": "ауруханада жатырмын хал жақсы",
+   "M2 Qalaisyn+typos": "ауруханада жатырмын хал жақсы",
+   "B0 raw chat": "ауруханада жатырмын хал жаксы",
+   "unsure": [],
+   "en|gold": "I am in the hospital , all is well",
+   "en|B0 raw chat": "I am in the hospital",
+   "en|B2 dictionary": "I am in the hospital , all is well",
+   "en|M2 Qalaisyn+typos": "I am in the hospital , all is well"
+  },
+  {
+   "id": 51,
+   "profile": "latin",
+   "kaz": "сәлем қалайсың не істеп жатырсың",
+   "gold": "сәлем қалайсың не істеп жатырсың",
+   "chat": "salem qalaisyn ne isteip jatyrsyn",
+   "eng": "hi, how are you, what are you doing",
+   "checked": false,
+   "B1 rules": "салем қалаісын не істеіп жатырсын",
+   "B2 dictionary": "сәлем қалайсың не істеіп жатырсың",
+   "M1 Qalaisyn": "сәлем қалайсың не істейп жатырсың",
+   "M2 Qalaisyn+typos": "сәлем қалайсың не істеп жатырсың",
+   "B0 raw chat": "salem qalaisyn ne isteip jatyrsyn",
+   "unsure": [
+    {
+     "typed": "salem",
+     "ours": "сәлем",
+     "alts": [
+      [
+       "сәлем",
+       0.8851901135259526
+      ],
+      [
+       "салем",
+       0.09511865833528865
+      ],
+      [
+       "салэм",
+       0.019691228138758166
+      ]
+     ]
+    }
+   ],
+   "en|gold": "greetings what are you doing",
+   "en|B0 raw chat": "salem qalaisyn ne isteip jatyrsyn",
+   "en|B2 dictionary": "hello what are you doing",
+   "en|M2 Qalaisyn+typos": "greetings what are you doing"
+  },
+  {
+   "id": 52,
+   "profile": "latin",
+   "kaz": "ертең сабаққа барасың ба",
+   "gold": "ертең сабаққа барасың ба",
+   "chat": "erteng sabaqqa barasyn ba",
+   "eng": "are you going to class tomorrow",
+   "checked": false,
+   "B1 rules": "ертең сабаққа барасын ба",
+   "B2 dictionary": "ертең сабаққа барасың ба",
+   "M1 Qalaisyn": "ертең сабаққа барасың ба",
+   "M2 Qalaisyn+typos": "ертең сабаққа барасың ба",
+   "B0 raw chat": "erteng sabaqqa barasyn ba",
+   "unsure": [],
+   "en|gold": "are you going to class tomorrow ?",
+   "en|B0 raw chat": "the day after tomorrow",
+   "en|B2 dictionary": "are you going to class tomorrow ?",
+   "en|M2 Qalaisyn+typos": "are you going to class tomorrow ?"
+  },
+  {
+   "id": 53,
+   "profile": "latin",
+   "kaz": "рахмет бауырым",
+   "gold": "рахмет бауырым",
+   "chat": "rahmet bauyrym",
+   "eng": "thanks, brother",
+   "checked": false,
+   "B1 rules": "рахмет бауырым",
+   "B2 dictionary": "рахмет бауырым",
+   "M1 Qalaisyn": "рахмет бауырым",
+   "M2 Qalaisyn+typos": "рахмет бауырым",
+   "B0 raw chat": "rahmet bauyrym",
+   "unsure": [],
+   "en|gold": "thank you brother",
+   "en|B0 raw chat": "mercy of the Lord",
+   "en|B2 dictionary": "thank you brother",
+   "en|M2 Qalaisyn+typos": "thank you brother"
+  },
+  {
+   "id": 54,
+   "profile": "latin",
+   "kaz": "кешке хабарласамын",
+   "gold": "кешке хабарласамын",
+   "chat": "keshke habarlasamyn",
+   "eng": "I will call in the evening",
+   "checked": false,
+   "B1 rules": "кешке хабарласамын",
+   "B2 dictionary": "кешке хабарласамын",
+   "M1 Qalaisyn": "кешке хабарласамын",
+   "M2 Qalaisyn+typos": "кешке хабарласамын",
+   "B0 raw chat": "keshke habarlasamyn",
+   "unsure": [],
+   "en|gold": "I 'll call you later",
+   "en|B0 raw chat": "how to send messages",
+   "en|B2 dictionary": "I 'll call you later",
+   "en|M2 Qalaisyn+typos": "I 'll call you later"
+  },
+  {
+   "id": 55,
+   "profile": "latin",
+   "kaz": "әжем ауырып қалды дәріханаға барып келемін",
+   "gold": "әжем ауырып қалды дәріханаға барып келемін",
+   "chat": "ajem auyryp qaldy daryhanaga baryp kelemin",
+   "eng": "grandma got sick, I will go to the pharmacy",
+   "checked": false,
+   "B1 rules": "ажем ауырып қалды дарыханага барып келемін",
+   "B2 dictionary": "әжем ауырып қалды дәріханаға барып келемін",
+   "M1 Qalaisyn": "әжем ауырып қалды дәріханаға барып келемін",
+   "M2 Qalaisyn+typos": "әжем ауырып қалды дәріханаға барып келемін",
+   "B0 raw chat": "ajem auyryp qaldy daryhanaga baryp kelemin",
+   "unsure": [],
+   "en|gold": "My grandmother is sick and I am going to the pharmacy",
+   "en|B0 raw chat": "ajem auyryp qaldy to go to daryhana",
+   "en|B2 dictionary": "My grandmother is sick and I am going to the pharmacy",
+   "en|M2 Qalaisyn+typos": "My grandmother is sick and I am going to the pharmacy"
+  },
+  {
+   "id": 56,
+   "profile": "partial",
+   "kaz": "қалайсың, жақсымысың",
+   "gold": "қалайсың жақсымысың",
+   "chat": "қалайсын жақсымысын",
+   "eng": "how are you, are you well",
+   "checked": false,
+   "B1 rules": "қалайсын жақсымысын",
+   "B2 dictionary": "қалайсың жақсымысын",
+   "M1 Qalaisyn": "қалайсың жақсымысын",
+   "M2 Qalaisyn+typos": "қалайсың жақсымысын",
+   "B0 raw chat": "қалайсын жақсымысын",
+   "unsure": [],
+   "en|gold": "how are you doing",
+   "en|B0 raw chat": "How to make it better",
+   "en|B2 dictionary": "How do you like it",
+   "en|M2 Qalaisyn+typos": "How do you like it"
+  },
+  {
+   "id": 57,
+   "profile": "partial",
+   "kaz": "ертең кездесеміз",
+   "gold": "ертең кездесеміз",
+   "chat": "ертең кездесемiз",
+   "eng": "see you tomorrow",
+   "checked": false,
+   "B1 rules": "ертең кездесеміз",
+   "B2 dictionary": "ертең кездесеміз",
+   "M1 Qalaisyn": "ертең кездесеміз",
+   "M2 Qalaisyn+typos": "ертең кездесеміз",
+   "B0 raw chat": "ертең кездесемiз",
+   "unsure": [],
+   "en|gold": "I 'll see you tomorrow",
+   "en|B0 raw chat": "see you tomorrow",
+   "en|B2 dictionary": "I 'll see you tomorrow",
+   "en|M2 Qalaisyn+typos": "I 'll see you tomorrow"
+  },
+  {
+   "id": 58,
+   "profile": "partial",
+   "kaz": "балам ауырып қалды, дәрігер шақырдық",
+   "gold": "балам ауырып қалды дәрігер шақырдық",
+   "chat": "балам ауырып калды дәрiгер шакырдык",
+   "eng": "my child got sick, we called a doctor",
+   "checked": false,
+   "B1 rules": "балам ауырып калды дәрігер шакырдык",
+   "B2 dictionary": "балам ауырып қалды дәрігер шакырдык",
+   "M1 Qalaisyn": "балам ауырып қалды дәрігер шақырдық",
+   "M2 Qalaisyn+typos": "балам ауырып қалды дәрігер шақырады",
+   "B0 raw chat": "балам ауырып калды дәрiгер шакырдык",
+   "unsure": [],
+   "en|gold": "My son is sick and we called a doctor",
+   "en|B0 raw chat": "my son got sick and we called the doctor",
+   "en|B2 dictionary": "My son is sick and we are sick",
+   "en|M2 Qalaisyn+typos": "my son is sick and a doctor calls"
+  },
+  {
+   "id": 59,
+   "profile": "code-switch",
+   "kaz": "короче ертең келем",
+   "gold": "короче ертең келем",
+   "chat": "короче ертен келем",
+   "eng": "anyway, I will come tomorrow",
+   "checked": false,
+   "B1 rules": "короче ертен келем",
+   "B2 dictionary": "короче ертең келем",
+   "M1 Qalaisyn": "короче ертең келем",
+   "M2 Qalaisyn+typos": "кроче ертең келем",
+   "B0 raw chat": "короче ертен келем",
+   "unsure": [
+    {
+     "typed": "короче",
+     "ours": "кроче",
+     "alts": [
+      [
+       "кроче",
+       0.7591714267811421
+      ],
+      [
+       "короче",
+       0.16293251618405596
+      ],
+      [
+       "корчек",
+       0.07610379935678499
+      ]
+     ]
+    }
+   ],
+   "en|gold": "I will be coming tomorrow",
+   "en|B0 raw chat": "I 'm coming early",
+   "en|B2 dictionary": "I will be coming tomorrow",
+   "en|M2 Qalaisyn+typos": "I will be coming tomorrow"
+  },
+  {
+   "id": 60,
+   "profile": "code-switch",
+   "kaz": "щас келем, күтіп тұр",
+   "gold": "щас келем күтіп тұр",
+   "chat": "щас келем кутип тур",
+   "eng": "coming now, wait",
+   "checked": false,
+   "B1 rules": "щас келем кутип тур",
+   "B2 dictionary": "шас келем күтіп тұр",
+   "M1 Qalaisyn": "шас келем күтіп тұр",
+   "M2 Qalaisyn+typos": "шас келем күтіп тұр",
+   "B0 raw chat": "щас келем кутип тур",
+   "unsure": [],
+   "en|gold": "i am waiting for my arrival",
+   "en|B0 raw chat": "with a receiver",
+   "en|B2 dictionary": "waiting for my arrival",
+   "en|M2 Qalaisyn+typos": "waiting for my arrival"
+  }
+ ]
+}

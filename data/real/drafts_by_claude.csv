@@ -1,0 +1,61 @@
+id,situation_ru,style,how_i_would_text,correct_kazakh_cyrillic,english,checked_by_native
+1,Спросить как дела,ru-keyboard,"салем калайсын, не истеп жатырсын","сәлем қалайсың, не істеп жатырсың","hi, how are you, what are you doing",no
+2,Спросить бабушку будет ли дома,ru-keyboard,ажеке кешке уйде боласызба,әжеке кешке үйде боласыз ба,"grandma, will you be at home in the evening",no
+3,Сказать маме что задержишься,ru-keyboard,мен сабактан кейин кешигип келем,мен сабақтан кейін кешігіп келем,I will come late after classes,no
+4,Спросить во сколько урок,ru-keyboard,ертен сабак нешеде басталады,ертең сабақ нешеде басталады,what time do classes start tomorrow,no
+5,Попросить домашнее задание,ru-keyboard,уй тапсырманы жиберши,үй тапсырманы жіберші,send me the homework,no
+6,Температура у ребёнка,ru-keyboard,балада кызу бар 38 не беремиз,балада қызу бар 38 не береміз,"the child has a fever of 38, what should we give",no
+7,Записаться к врачу,ru-keyboard,ертенге дарыгерге жазылуга болама,ертеңге дәрігерге жазылуға бола ма,can I make a doctor's appointment for tomorrow,no
+8,Где аптека,ru-keyboard,жакын жерде дарихана бар ма,жақын жерде дәріхана бар ма,is there a pharmacy nearby,no
+9,Болит голова,ru-keyboard,ушинши кун басым катты ауырып тур,үшінші күн басым қатты ауырып тұр,my head has been hurting badly for three days,no
+10,Списали деньги с карты,ru-keyboard,"картадан акша шешилип кетипти, мен ешнарсе алмадым","картадан ақша шешіліп кетіпті, мен ешнәрсе алмадым","money was taken from my card, I did not buy anything",no
+11,Стоимость доставки,ru-keyboard,доставка канша турады,доставка қанша тұрады,how much does delivery cost,no
+12,Вернуть долг,ru-keyboard,карызынды кашан кайтарасын,қарызыңды қашан қайтарасың,when will you pay back your debt,no
+13,Странное СМС из банка,ru-keyboard,"банктен биртурли смс келди, сенбеймин","банктен біртүрлі смс келді, сенбеймін","a strange sms came from the bank, I do not trust it",no
+14,Справка через eGov,ru-keyboard,егов аркылы аныктаманы калай алам,егов арқылы анықтаманы қалай алам,how do I get a certificate through egov,no
+15,Потерял удостоверение,ru-keyboard,жеке куалигимди жогалтып алдым не истеу керек,жеке куәлігімді жоғалтып алдым не істеу керек,"I lost my ID card, what should I do",no
+16,Поздравить с днём рождения,ru-keyboard,туган кунин кутты болсын бауырым,туған күнің құтты болсын бауырым,"happy birthday, brother",no
+17,Поблагодарить брата,ru-keyboard,рахмет агатай комектескенинге,рахмет ағатай көмектескеніңе,"thanks, big brother, for helping",no
+18,Позвать погулять,ru-keyboard,"кешке шыгамыз ба, далага","кешке шығамыз ба, далаға",shall we go outside tonight,no
+19,Опоздаю на 10 минут,ru-keyboard,он минутка кешигемин кутип турындар,он минутқа кешігемін күтіп тұрыңдар,"I will be ten minutes late, wait for me",no
+20,Что купить в магазине,ru-keyboard,дукеннен не алып келейин,дүкеннен не алып келейін,what should I bring from the shop,no
+21,Бабушке плохо,ru-keyboard,ажеме жаман болып жатыр жедел жардем шакыр,әжеме жаман болып жатыр жедел жәрдем шақыр,"grandma is feeling bad, call an ambulance",no
+22,Где остановка,ru-keyboard,автобус аялдамасы кай жерде,автобус аялдамасы қай жерде,where is the bus stop,no
+23,Такси приехало,ru-keyboard,такси келип тур шык,такси келіп тұр шық,"the taxi is here, come out",no
+24,Погода завтра,ru-keyboard,ертен ауа райы кандай болады,ертең ауа райы қандай болады,what will the weather be like tomorrow,no
+25,Нет света,ru-keyboard,"уйде жарык жок, сенде бар ма","үйде жарық жоқ, сенде бар ма","there is no electricity at home, do you have it",no
+26,Сломался телефон,ru-keyboard,телефоным бузылып калды,телефоным бұзылып қалды,my phone broke,no
+27,Перенести встречу,ru-keyboard,кездесуди баска кунге ауыстырсак бола ма,кездесуді басқа күнге ауыстырсақ бола ма,can we move the meeting to another day,no
+28,Позвони когда освободишься,ru-keyboard,босаганда хабарлас,босағанда хабарлас,call me when you are free,no
+29,Я дома всё хорошо,ru-keyboard,"уйдемин, бари жаксы, уайымдама","үйдемін, бәрі жақсы, уайымдама","I am at home, everything is fine, do not worry",no
+30,Сдал ли экзамен,ru-keyboard,емтиханнан оттин бе,емтиханнан өттің бе,did you pass the exam,no
+31,Учителю что заболел,ru-keyboard,"апай кешириниз, ауырып калдым, ертен келе алмаймын","апай кешіріңіз, ауырып қалдым, ертең келе алмаймын","teacher, sorry, I got sick and cannot come tomorrow",no
+32,Баллы на грант,ru-keyboard,грантка канша балл керек,грантқа қанша балл керек,how many points are needed for a grant,no
+33,Соседи затопили,ru-keyboard,корши су басып кетти,көрші су басып кетті,the neighbours flooded us,no
+34,Работает ли поликлиника,ru-keyboard,емхана сенбиде иштей ме,емхана сенбіде істей ме,does the clinic work on Saturday,no
+35,Ребёнок упал,ru-keyboard,бала кулап басын урып алды,бала құлап басын ұрып алды,the child fell and hit his head,no
+36,Потерялся в городе,ru-keyboard,каладан адасып кеттим,қаладан адасып кеттім,I got lost in the city,no
+37,Прислать адрес,ru-keyboard,мекенжайды жиберип жиберши,мекенжайды жіберіп жіберші,please send the address,no
+38,Заказ не пришёл,ru-keyboard,тапсырыс али келген жок,тапсырыс әлі келген жоқ,the order has not arrived yet,no
+39,Оплатить через Kaspi,ru-keyboard,каспимен толесем бола ма,каспимен төлесем бола ма,can I pay with kaspi,no
+40,Устал иду спать,ru-keyboard,"катты шаршадым, уйыктаймын","қатты шаршадым, ұйықтаймын","I am very tired, I am going to sleep",no
+41,Как дела (сленг),ru-keyboard,не боп жатыр братан,не боп жатыр братан,"what is up, bro",no
+42,Где ты,ru-keyboard,"кайдасын, кутип турмын","қайдасың, күтіп тұрмын","where are you, I am waiting",no
+43,Уже в пути,ru-keyboard,"жолдамын, кеп калдым","жолдамын, кеп қалдым","I am on the way, almost there",no
+44,Мама приглашает в гости,ru-keyboard,шешем сени конакка шакырып жатыр,шешем сені қонаққа шақырып жатыр,my mother is inviting you over,no
+45,Не обижайся,ru-keyboard,айналайын ренжиме,айналайын ренжіме,"dear, do not be upset",no
+46,Прости опоздал,ru-keyboard,"кешир жаным, кешигип калдым","кешір жаным, кешігіп қалдым","sorry, dear, I am late",no
+47,Перекинь денег,ru-keyboard,"акша салып жибершы, кейин кайтарам","ақша салып жіберші, кейін қайтарам","send me some money, I will return it later",no
+48,Когда той,ru-keyboard,той кашан болады,той қашан болады,when is the celebration,no
+49,Схожу на базар,ru-keyboard,базарга барып келем,базарға барып келем,I will go to the bazaar and come back,no
+50,В больнице,ru-keyboard,"ауруханада жатырмын, хал жаксы","ауруханада жатырмын, хал жақсы","I am in hospital, I am fine",no
+51,Как дела латиницей,latin,salem qalaisyn ne isteip jatyrsyn,сәлем қалайсың не істеп жатырсың,"hi, how are you, what are you doing",no
+52,Пойдёшь на урок,latin,erteng sabaqqa barasyn ba,ертең сабаққа барасың ба,are you going to class tomorrow,no
+53,Спасибо брат,latin,rahmet bauyrym,рахмет бауырым,"thanks, brother",no
+54,Позвоню вечером,latin,keshke habarlasamyn,кешке хабарласамын,I will call in the evening,no
+55,Бабушка заболела,latin,ajem auyryp qaldy daryhanaga baryp kelemin,әжем ауырып қалды дәріханаға барып келемін,"grandma got sick, I will go to the pharmacy",no
+56,Как ты (частично),partial,"қалайсын, жақсымысын","қалайсың, жақсымысың","how are you, are you well",no
+57,До завтра (частично),partial,ертең кездесемiз,ертең кездесеміз,see you tomorrow,no
+58,Ребёнок заболел (частично),partial,"балам ауырып калды, дәрiгер шакырдык","балам ауырып қалды, дәрігер шақырдық","my child got sick, we called a doctor",no
+59,Короче приду завтра,code-switch,короче ертен келем,короче ертең келем,"anyway, I will come tomorrow",no
+60,Щас приду,code-switch,"щас келем, кутип тур","щас келем, күтіп тұр","coming now, wait",no

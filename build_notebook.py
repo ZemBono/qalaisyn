@@ -87,6 +87,17 @@ Kazakh that any downstream AI (translator, chatbot, search) can understand, plus
 
 **Where it lives:** not an app people download, but a layer inside other services (a bank's support chatbot, a
 clinic bot, e-government, translators, a phone keyboard), like autocorrect.
+
+**Why it matters every day.** Over 13 million people speak Kazakh, and support chats, clinics and government
+services are moving to AI first. A misread message means a wrong answer, a lost customer or a delayed emergency.
+Live examples from our model (translator: NLLB-200):
+
+| Service | Message as typed | AI without Qalaisyn | AI with Qalaisyn |
+|---|---|---|---|
+| Bank support | *кредит толей алмай журмин комектесиниздер* | "non-credited commetticines" | "I can't pay my loan please help" |
+| Airline support | *ушак кешигип жатыр ма* | "is there a rumor going on?" | "is the plane running late?" |
+| E-government | *жеке куалигимди жогалтып алдым не истеу керек* | "I canceled my personal credentials or need to delete them" | "I lost my ID what to do" |
+| Clinic chatbot | *баламнын кызуы 39 котерилди не истеу керек* | "fever of the child 39 caterilldi or eat" | "my baby has a fever of 39 what to do" |
 """)
 
 code("""
@@ -388,36 +399,57 @@ md("""
 """)
 
 md("""
-## 9 · Native-speaker check
+## 9 · Native-speaker check: real messages
 
-A native Kazakh speaker on our team writes real messages exactly the way they text friends, plus the correct
-Cyrillic version (`data/real/real_messages.csv`). These messages are never used during development; the cell below
-scores whatever is in the file.
+Simulated messages follow rules we wrote, so the real test is messages written by a person. A native Kazakh speaker
+(a friend of the team, with permission) went through everyday situations and, for each one, typed the message
+exactly as they would in a chat, then wrote its correct spelling (`data/real/ДЛЯ_ДРУГА.csv`). These messages were
+never used for development or tuning. No English references exist for them, so meaning is measured against the
+translation of the *correct* spelling.
 """)
+writefile("src/real_eval.py")
 code("""
-real = Path("data/real/real_messages.csv")
-if real.exists():
-    import csv
-    rr = [r for r in csv.DictReader(open(real, encoding="utf-8")) if r["how_i_would_text"].strip()]
-    rows = [{"id": r["id"], "kaz": r["correct_kazakh_cyrillic"], "chat": r["how_i_would_text"],
-             "gold": __import__("chatify").normalize_cyr(r["correct_kazakh_cyrillic"]), "profile": "real",
-             "eng": r.get("english", "")} for r in rr]
-    tab, outs = evaluate(RESTORERS, rows, "real")
+import real_eval
+real_rows = real_eval.load_rows()
+if real_rows:
+    tab, outs = evaluate(RESTORERS, real_rows, "real")
+    print(f"{len(real_rows)} native-speaker messages")
     display(pd.DataFrame({k: v for k, v in tab.items() if "|" not in k}).T.style.format("{:.1%}"))
-    display(pd.DataFrame([{"as typed": o["chat"], "Qalaisyn": o["M2 Qalaisyn+typos"], "correct": o["gold"]} for o in outs]))
+    rows = []
+    for k, v in tab.items():
+        if "|" in k:
+            m, s = k.split("|"); rows.append({"model": m, "style": s, "WER": v["WER"]})
+    display(pd.DataFrame(rows).pivot(index="model", columns="style", values="WER").style.format("{:.1%}"))
+    display(pd.DataFrame([{"as typed": o["chat"], "Qalaisyn": o["M2 Qalaisyn+typos"], "correct": o["gold"],
+                           "right?": "yes" if o["M2 Qalaisyn+typos"] == o["gold"] else "no"} for o in outs]))
 else:
-    print("Native-speaker messages not added yet (data/real/real_messages.csv).")
+    print("Native-speaker messages are being collected (data/real/ДЛЯ_ДРУГА.csv).")
 """)
 
 md("""
-## 10 · Try it
+## 10 · Try it yourself
 
-Restore and translate any message. Run `python src/app.py --share` for the interactive Gradio demo (screenshot below).
+The demo below is the same model wrapped in a small web page. Left: a message as people type it. Right: what a
+translator understands before and after Qalaisyn, with the restored letters highlighted and suggestions for unsure
+words. Underneath, four everyday services where a misread message costs something (live model outputs).
 """)
 code("""
 from IPython.display import Image, display
-display(Image("figures/demo.jpg", width=620))
-display(Image("figures/demo_suggestions.jpg", width=620))   # dotted words = not sure, with suggestions
+display(Image("figures/demo.jpg", width=720))
+display(Image("figures/demo_uses.jpg", width=720))
+""")
+writefile("src/app.py")
+md("""
+**Run the demo yourself (Google Colab):** run all cells above (≈10 min the first time: it downloads the data and
+the translation model), then run the next cell. It prints a public link to the demo page, valid for 72 hours.
+""")
+code("""
+if IN_COLAB:
+    subprocess.run("pip -q install gradio==5.9.1", shell=True)
+    import app
+    app.demo.launch(share=True, debug=False)
+else:
+    print("On a local machine run:  python src/app.py   (then open http://localhost:7860)")
 """)
 code("""
 import warnings; warnings.filterwarnings("ignore")
@@ -442,10 +474,11 @@ md("""
 ## 11 · Limitations, next steps and sources
 
 **Limitations**
-* Chat-style test messages are simulated from typing-habit profiles; the native-speaker set is small.
-* The language model is trained mostly on Wikipedia, which is more formal than chats.
-* Translation quality is measured automatically with chrF on 623 + 300 sentences.
-* Russian words written in Latin inside Kazakh messages are not handled yet.
+* Most test messages are simulated from typing-habit profiles; the native-speaker set is small.
+* The language model is trained mostly on Wikipedia, which is more formal than chats: colloquial forms
+  (*болама* for *бола ма*, merged particles) and Russian words inside Kazakh messages (*доставка*, *короче*) are
+  sometimes "corrected" into wrong Kazakh words.
+* Translation quality is measured automatically with chrF.
 
 **Next steps**
 1. A longer context model (word trigrams or a small neural model) for the н/ң and і/ы/и cases.
