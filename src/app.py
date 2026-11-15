@@ -13,6 +13,7 @@ import gradio as gr
 sys.path.insert(0, str(Path(__file__).parent))
 from eval_restore import load_lexicon  # noqa: E402
 from eval_translate import Translator  # noqa: E402
+from latin import to_latin  # noqa: E402
 from restore import QalaisynRestorer, RuleRestorer  # noqa: E402
 
 LEX = load_lexicon()
@@ -135,7 +136,8 @@ def look(msg):
             f"<div class='box before'><div class='k'>A translator reads the message as typed</div>"
             f"<div class='v'>{html.escape(before)}</div></div>"
             f"<div class='box fixed'><div class='k'>Qalaisyn restores the Kazakh letters (highlighted)</div>"
-            f"<div class='v'>{restored_html(words)}</div></div>"
+            f"<div class='v'>{restored_html(words)}</div>"
+            f"<div class='lat'>Same text in the official Kazakh Latin alphabet (2021): <b>{html.escape(to_latin(fixed))}</b></div></div>"
             f"<div class='box after'><div class='k'>The translator reads it after Qalaisyn</div>"
             f"<div class='v'>{html.escape(after)}</div></div></div>")
 
@@ -189,6 +191,7 @@ pre.code .c {color:#8FA3B8}
 .unsure {text-decoration:underline dotted #B7791F 2px; text-underline-offset:6px}
 .sugg {margin-top:10px; font-size:14.5px; color:#5F6B7A}
 .chip {display:inline-block; margin:6px 6px 0 0; padding:3px 11px; border-radius:999px; background:#FFFBF1; border:1px solid #F0D9A6; color:#1B2433}
+.lat {margin-top:10px; font-size:14px; color:#5F6B7A} .lat b {color:#1B2433; font-weight:500}
 .empty {color:#5F6B7A; font-size:16px; padding:18px 4px}
 #msg textarea, #msg2 textarea {font-size:19px!important; background:#E9F3F2!important; border:1px solid #CFE3E1!important;
   border-radius:16px 16px 16px 4px!important; padding:12px 14px!important}
@@ -277,15 +280,17 @@ HOW = """
     and the Viterbi algorithm picks the best whole sentence.</p></div>
   <div class="step"><div class="n">3</div><h3>Ask only when unsure</h3>
     <p>Every word gets a probability. Below 90% it becomes a suggestion instead of a silent change,
-    about 1 word in 20.</p></div>
+    about 1 word in 16. Russian words like “короче” are left alone.</p></div>
 </div>
 <div class="facts">
-  <div class="fact"><div class="big">47% → 3.6%</div><p>misspelled words on a Russian keyboard, before and after Qalaisyn (held-out test)</p></div>
-  <div class="fact"><div class="big">87% vs 67%</div><p>of lost meaning recovered on messy messages with typos: Qalaisyn vs a dictionary lookup</p></div>
-  <div class="fact"><div class="big">59%</div><p>of Qalaisyn's mistakes are among the 5% of words it marks as unsure</p></div>
+  <div class="fact"><div class="big">88% vs 80%</div><p>messages with every word right on a Russian keyboard: Qalaisyn vs a dictionary lookup; with typos 74% vs 49% (held-out test)</p></div>
+  <div class="fact"><div class="big">47% → 3.5%</div><p>misspelled words on a Russian keyboard, before and after Qalaisyn</p></div>
+  <div class="fact"><div class="big">63%</div><p>of Qalaisyn's mistakes are among the 6% of words it marks as unsure</p></div>
 </div>
 <p class="note">Prototype for the Veritas AI High School Hackathon 2026, Languages track. Translator: NLLB-200 (Meta).
-The support bot on this page is a simple keyword bot for demonstration only. Not for medical or emergency use.</p>
+The support bot on this page is a simple keyword bot for demonstration only, and the examples were chosen to show
+the idea; overall results on held-out test data are in the project notebook. The engine runs in about 7 ms per
+message on a laptop and needs about 1.3 GB of memory. Not for medical or emergency use.</p>
 </div>
 """
 

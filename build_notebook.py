@@ -37,35 +37,93 @@ def writefile(path):
         SOURCES.append(path)
 
 
+REPO_URL = "https://github.com/USER/qalaisyn"          # filled in after the repository is published
+DEMO_URL = "https://huggingface.co/spaces/USER/qalaisyn"  # filled in after the Space is published
+val = json.loads((ROOT / "results/value.json").read_text(encoding="utf-8"))
+vr, vt, vl = val["Russian keyboard, everyday"], val["Russian keyboard + 15% typos"], val["Latin, unseen spellings"]
+kyr = ky.get("recovered_by_style", {"ru-keyboard": ky["recovered"]})["ru-keyboard"]
+
 md(f"""
-# Qalaisyn — making AI understand Kazakh the way people actually text
+# Qalaisyn — an engine that lets AI understand Kazakh the way people really type it
 
 **Track:** AI + Languages · **Veritas AI International High School Hackathon 2026**
 
-> **AI understands Kazakh only when it is written "properly" — and almost nobody texts that way.**
+Most phones in Kazakhstan have a **Russian keyboard**, which has no keys for the Kazakh letters
+ә ғ қ ң ө ұ ү һ і. People type the closest Russian letter — *калайсын* instead of *қалайсың* — and the AI systems
+that now answer bank, airline, clinic and government chats misread them. **Qalaisyn** is a small engine that runs
+*inside* those systems and puts the letters back before the AI reads the message.
 
-Most phones in Kazakhstan have a **Russian keyboard**, so people drop the Kazakh-only letters
-(ә ғ қ ң ө ұ ү һ і) and type *"калайсын"* instead of *"қалайсың"*; others text in Latin (*"qalaisyn"*).
-Translation and chatbot models are trained on standard Kazakh, so they misread real messages.
-**Qalaisyn** is a small, fast AI layer that sits in front of any translator or chatbot — like autocorrect inside a
-keyboard — and turns chat-style Kazakh back into standard Kazakh. When it is unsure, it says so and offers suggestions.
+## Start here — the project in two minutes
 
-| Headline result (held-out test data, translator: NLLB-200) | Russian keyboard | Latin chat |
-|---|---|---|
-| Meaning lost when a translator reads the message as typed | **{lost_c:.0%}** | **{lost:.0%}** |
-| Meaning recovered by Qalaisyn — everyday sentences | **{rec(tc):.0%}** | **{rec(t):.0%}** |
-| Meaning recovered by Qalaisyn — news sentences | **{rec(fc):.0%}** | **{rec(f):.0%}** |
-| Messy messages (15% typos) — dictionary vs. Qalaisyn | **{rec(chrf['test_tatoeba_cyr-typos-15'], 'all', 'B2 dictionary'):.0%} vs. {rec(chrf['test_tatoeba_cyr-typos-15']):.0%}** | **{rec(chrf['test_tatoeba_typos-15'], 'all', 'B2 dictionary'):.0%} vs. {rec(chrf['test_tatoeba_typos-15']):.0%}** |
-| Words shown as suggestions · share of its mistakes they contain | **{cc['flagged_share']:.0%} · {cc['errors_caught']:.0%}** | **{conf['test_tatoeba']['at_threshold']['flagged_share']:.0%} · {conf['test_tatoeba']['at_threshold']['errors_caught']:.0%}** |
-| Same code on Kyrgyz (no changes, Latin) | | **{ky['recovered']:.0%}** recovered |
+**1 · Why one missing letter matters.** On a Russian keyboard *өт* ("go through") is typed as *от* ("fire").
+A passenger asks an airline bot *ушак кешигип жатыр ма* — "is the plane late?" — and the translator reads
+"is there a rumour going on?". It is like Spanish without accents, where *papá* (dad) and *papa* (potato) merge,
+except that it happens in almost every second Kazakh word.
 
-*This project is a prototype. It is not a product for medical, financial or emergency use.*
+**2 · What Qalaisyn is.** Not a website and not an app. It is a layer inside a company's system, between the
+incoming message and the AI that answers — like a spell-checker inside a keyboard. Customers never see it.
 
-**Contents:** 1 · The problem → 2 · Data → 3 · Simulating chat writing → 4 · Models → 5 · Restoration results →
-6 · Does the meaning survive? (translation) → 7 · Messy messages (stress tests) → 7b · Kyrgyz →
-7c · Knowing when it is unsure (suggestions) → 8 · Where it fails → 9 · Native-speaker check → 10 · Try it →
-11 · Limitations, next steps, sources.
-All source code is in the collapsed *Setup · Source code* section.
+1. The customer types on a phone as usual: *ушак кешигип жатыр ма*
+2. Inside the company's system, **Qalaisyn** puts the letters back in a few milliseconds: *ұшақ кешігіп жатыр ма*
+3. The company's own AI (chatbot, translator, search) now understands and answers: "Flight KC 852 is delayed by 40 minutes."
+
+(The diagram and a live support-bot comparison are shown right below the setup cell and in section 10.)
+
+**3 · Results at a glance** (held-out test data; full details below):
+
+| | Message as typed | Dictionary lookup | **Qalaisyn** |
+|---|---|---|---|
+| Russian keyboard: words wrong | {vr["word_error_rate"]["as_typed"]:.0%} | {vr["word_error_rate"]["dictionary"]:.1%} | **{vr["word_error_rate"]["qalaisyn"]:.1%}** |
+| Russian keyboard: messages with **every** word right | — | {vr["messages_fully_right"]["dictionary"]:.0%} | **{vr["messages_fully_right"]["qalaisyn"]:.0%}** |
+| Russian keyboard + typos: messages fully right | — | {vt["messages_fully_right"]["dictionary"]:.0%} | **{vt["messages_fully_right"]["qalaisyn"]:.0%}** |
+| Meaning recovered for a translator, Russian keyboard + typos | 0% | {rec(chrf['test_tatoeba_cyr-typos-15'], 'cyr-typos-15', 'B2 dictionary'):.0%} | **{rec(chrf['test_tatoeba_cyr-typos-15'], 'cyr-typos-15'):.0%}** |
+| Meaning recovered, Latin with unseen spellings | 0% | {rec(chrf['test_tatoeba_unseen-habits'], 'unseen-habits', 'B2 dictionary'):.0%} | **{rec(chrf['test_tatoeba_unseen-habits'], 'unseen-habits'):.0%}** |
+| Words shown as suggestions · share of its mistakes among them | — | cannot tell | **{cc['flagged_share']:.0%} · {cc['errors_caught']:.0%}** |
+| Same code on Kyrgyz (Russian keyboard), meaning recovered | — | — | **{kyr:.0%}** |
+
+**4 · Why a model and not just a dictionary?** On clean, carefully typed text a dictionary of the most common
+spelling is already good, so we tested where it matters:
+(a) **whole messages** — a chatbot needs every word right: Qalaisyn gets
+{vr["messages_fully_right"]["qalaisyn"]:.0%} of messages fully right vs {vr["messages_fully_right"]["dictionary"]:.0%}
+(+{(vr["messages_fully_right"]["qalaisyn"] - vr["messages_fully_right"]["dictionary"]) * 100:.0f} percentage points, 95% confidence interval
++{vr["messages_fully_right"]["diff_ci"][0] * 100:.0f} to +{vr["messages_fully_right"]["diff_ci"][1] * 100:.0f});
+(b) **context** — it fixes {vr["dictionary_mistakes_fixed"]} of the dictionary's word mistakes while making
+{vr["new_mistakes"]} new ones;
+(c) **messy messages** — with typos the gap grows (table above);
+(d) **knowing when it is unsure** — a dictionary always guesses silently; Qalaisyn flags its doubtful words.
+
+**5 · Try it.** Live demo: {DEMO_URL} · or run this notebook in Colab (all results are already saved below).
+
+*Prototype — not for medical, financial or emergency use.*
+
+**The details:** 1 · Problem and user → 2 · Data → 3 · Simulating how people type → 4 · Models → 5 · Restoration
+results → 6 · Does the meaning survive? → 7 · Messy messages → 7b · Kyrgyz → 7c · Suggestions → 7d · Why not a
+dictionary? → 8 · Where it fails → 9 · Native-speaker check → 10 · Try it yourself → 11 · Limitations and sources.
+Code cells are folded ("Show code"); all source code is in the folded *Setup · Source code* section.
+""")
+
+code(f"""
+#@title Setup (run first in Colab: downloads the project code and the trained model)
+import os, sys, json, subprocess
+from pathlib import Path
+IN_COLAB = "google.colab" in sys.modules
+REPO_URL = "{REPO_URL}"
+if IN_COLAB and not Path("qalaisyn").exists():
+    subprocess.run(f"git clone --depth 1 {{REPO_URL}} qalaisyn", shell=True, check=True)
+    subprocess.run("pip -q install sacrebleu transformers==4.46.3 sentencepiece", shell=True)
+if IN_COLAB:
+    os.chdir("qalaisyn")
+ROOT = Path(".").resolve()
+(ROOT / "src").mkdir(exist_ok=True)
+sys.path.insert(0, str(ROOT / "src"))
+print("Running on Colab:", IN_COLAB)
+""")
+
+code("""
+#@title Where Qalaisyn lives, and the same support bot with and without it (screenshots of the demo)
+from IPython.display import Image, display
+display(Image("figures/demo_where.jpg", width=760))
+display(Image("figures/demo_chatbot.jpg", width=760))
 """)
 
 md("""
@@ -77,40 +135,21 @@ grandson has a fever and she texts the clinic's chatbot:
 > *баламнын кызуы 39 котерилди не истеу керек* — "my child's temperature rose to 39, what should I do"
 > (standard Kazakh: *баламның қызуы 39 көтерілді не істеу керек*)
 
-Banks, clinics and e-government services in Kazakhstan increasingly put AI first in line. If the AI cannot read
-how people really write, the people who write "the way they text" get worse help — or none.
-The same pattern exists for Uzbek, Kyrgyz, Azerbaijani, Turkish, Vietnamese, Yoruba and many other languages whose
-special letters get dropped on phones.
-
 **What goes in:** a Kazakh message as people type it (Russian keyboard or Latin). **What comes out:** standard
-Kazakh that any downstream AI (translator, chatbot, search) can understand, plus suggestions for words it is unsure about.
-
-**Where it lives:** not an app people download, but a layer inside other services (a bank's support chatbot, a
-clinic bot, e-government, translators, a phone keyboard), like autocorrect.
+Kazakh (Cyrillic, or the new official Latin alphabet) that any downstream AI can understand, plus suggestions for
+words it is unsure about.
 
 **Why it matters every day.** Over 13 million people speak Kazakh, and support chats, clinics and government
 services are moving to AI first. A misread message means a wrong answer, a lost customer or a delayed emergency.
-Live examples from our model (translator: NLLB-200):
+The same pattern exists wherever phones drop letters (Kyrgyz, Uzbek, Azerbaijani, Turkish, Vietnamese).
+Live examples from our model (translator: NLLB-200; examples chosen to illustrate, overall results below):
 
 | Service | Message as typed | AI without Qalaisyn | AI with Qalaisyn |
 |---|---|---|---|
-| Bank support | *кредит толей алмай журмин комектесиниздер* | "non-credited commetticines" | "I can't pay my loan please help" |
+| Bank support | *несие бойынша толемди кешиктирсем бола ма* | "Can I cash out the loan amount" | "can I delay payment on loan" |
 | Airline support | *ушак кешигип жатыр ма* | "is there a rumor going on?" | "is the plane running late?" |
 | E-government | *жеке куалигимди жогалтып алдым не истеу керек* | "I canceled my personal credentials or need to delete them" | "I lost my ID what to do" |
 | Clinic chatbot | *баламнын кызуы 39 котерилди не истеу керек* | "fever of the child 39 caterilldi or eat" | "my baby has a fever of 39 what to do" |
-""")
-
-code("""
-# Setup. On Google Colab this downloads everything (≈200 MB); locally it reuses existing files.
-import os, sys, json, subprocess
-from pathlib import Path
-IN_COLAB = "google.colab" in sys.modules
-ROOT = Path(".").resolve()
-(ROOT / "src").mkdir(exist_ok=True)
-sys.path.insert(0, str(ROOT / "src"))
-if IN_COLAB:
-    subprocess.run("pip -q install sacrebleu pyarrow transformers==4.46.3 sentencepiece", shell=True)
-print("Running on Colab:", IN_COLAB)
 """)
 
 md("""
@@ -121,7 +160,8 @@ All data is public. Nothing from a test set is used for training.
 | Purpose | Dataset | Size |
 |---|---|---|
 | Training text (language model + vocabulary) | Kazakh Wikipedia (Nov 2023 dump) | 1.5 M sentences |
-| Training text, conversational | Tatoeba Kazakh sentences (not in test) | ~4 k sentences |
+| Training text, conversational (weighted ×20) | Tatoeba Kazakh sentences (not in test) + Kazakh film subtitles (OPUS OpenSubtitles) | ~8 k sentences |
+| Russian words to leave alone | Russian word-frequency list (FrequencyWords, top 30k) | 30 k words |
 | **Test 1 — everyday sentences** | Tatoeba Kazakh–English pairs | 623 sentences |
 | **Test 2 — news sentences** | FLORES-200 `devtest` (Kazakh + professional English) | 1,012 sentences (300 for translation) |
 | Tuning only | FLORES-200 `dev` | 997 sentences |
@@ -195,9 +235,12 @@ is `и`/`i` **и** or **і**? is `н`/`n` **н** or **ң**? We compare five syst
 | B1 | *letter rules* | every Latin letter → its most common Cyrillic letter (for Cyrillic input this changes almost nothing) |
 | B2 | *dictionary* | every word → the most frequent Kazakh word that matches its letters (a strong simple baseline) |
 | M1 | **Qalaisyn** | candidate words + typing-habit model + **word bigram language model** decoded with **Viterbi** over the whole sentence; unknown words are restored by a **character 5-gram model** |
-| M2 | **Qalaisyn + typo search** | M1, plus: if a word is unknown or rare, also consider real words one edit away (symmetric-delete index) |
+| M2 | **Qalaisyn + typo search** (final) | M1, plus: real words one edit away for unknown/rare words (symmetric-delete index); Russian words inside the message are left alone; question particles typed together are split (*болама* → *бола ма*) |
 
-All settings of M1/M2 were tuned on FLORES `dev` only.
+All settings of M1/M2 were tuned on FLORES `dev` only. The Russian-word and particle rules were developed on a
+separate set of draft chat messages, never on the test sets. To save memory, word pairs and words seen only once
+are dropped: 7.1 M → 1.4 M pairs, memory 2.8 GB → 1.3 GB, with almost the same accuracy (word errors on dev
+3.06% → 3.17% Latin, 2.68% → 2.63% Russian keyboard). The engine restores a message in about 7 ms on a laptop.
 """)
 writefile("src/restore.py")
 writefile("src/eval_restore.py")
@@ -266,8 +309,8 @@ display(pd.DataFrame(out).style.format({c: "{:.1f}" for c in conds} | {"recovere
 """)
 code("""
 from IPython.display import Image, display
-display(Image("figures/main_test_tatoeba_cyr.png", width=760))
-display(Image("figures/main_test_tatoeba.png", width=760))
+display(Image("figures/system_test_tatoeba_cyr.png", width=760))
+display(Image("figures/system_test_tatoeba.png", width=760))
 """)
 code("""
 # Side by side: what the translator produced before and after Qalaisyn (Russian-keyboard messages)
@@ -300,22 +343,24 @@ for kind in ["cyr-typos-15", "typos-5", "typos-15", "unseen-habits"]:
         if "|" not in k: stress_rows.append({"condition": kind, "model": k, "WER": v["WER"]})
     print(f"{kind:14s} e.g. {outs[7]['chat']}  ->  {outs[7]['M2 Qalaisyn+typos']}")
 display(pd.DataFrame(stress_rows).pivot(index="model", columns="condition", values="WER").style.format("{:.1%}"))
-display(Image("figures/messy_messages.png", width=760))
+display(Image("figures/meaning.png", width=780))
 """)
 
 md("""
 ### 7b · Does it transfer to another language? Kyrgyz
 
-Kyrgyz shares the letters ң, ө, ү with Kazakh, and Kyrgyz speakers also text in Latin. We ran **exactly the same code**
-with no changes, trained only on Kyrgyz Wikipedia, and tested on FLORES-200 Kyrgyz (300 sentences × 2 writing styles).
+Kyrgyz shares the letters ң, ө, ү with Kazakh, and Kyrgyz speakers also type on Russian keyboards or in Latin. We ran
+**exactly the same code** with no changes, trained only on Kyrgyz Wikipedia, and tested on FLORES-200 Kyrgyz
+(300 sentences × 3 writing styles: Russian keyboard, typical Latin, minimal Latin).
 """)
 writefile("src/kyrgyz.py")
 code("""
 ky = json.loads(Path("results/kyrgyz.json").read_text(encoding="utf-8"))   # produced by: python src/kyrgyz.py
 print(f"Kyrgyz training sentences: {ky['train_sentences']:,}")
 display(pd.DataFrame({"word error rate": ky["wer"]}).style.format("{:.1%}"))
-display(pd.DataFrame({"chrF": ky["chrf"]}).style.format("{:.1f}"))
-print(f"Meaning recovered for Kyrgyz: {ky['recovered']:.0%}")
+display(pd.DataFrame(ky["chrf"]).style.format("{:.1f}"))
+for st, r in ky.get("recovered_by_style", {}).items():
+    print(f"Meaning recovered for Kyrgyz, {st}: {r:.0%}")
 display(pd.DataFrame(ky["examples"]))
 """)
 
@@ -367,6 +412,42 @@ and those words contain **{cc['errors_caught']:.0%} of all its mistakes**; for
 about are wrong only **{cc['error_rate_unflagged']:.1%}** of the time. The confidence is also honest: words rated
 above 99% are right about 99% of the time. Honest limit: about 4 in 10 mistakes are still made with high confidence
 (mostly н/ң and і/и pairs where both words exist).
+""")
+
+md("""
+### 7d · Why a model and not just a dictionary?
+
+A fair question: a dictionary that picks the most common spelling of each word is already good on clean text
+(compare B2 and M2 in section 5). So we measured what a real system needs, with **95% bootstrap confidence
+intervals** (1,000 resamples of the test messages) so that differences are not noise:
+
+1. **Whole messages.** A chatbot needs *every* word right. We count messages restored with no mistake at all.
+2. **Context.** How many of the dictionary's word mistakes Qalaisyn fixes, and how many new mistakes it makes.
+3. **Messy messages.** Typos and unseen spellings, where the dictionary breaks down.
+4. **Knowing when it is unsure** (section 7c): a dictionary always guesses silently.
+""")
+writefile("src/value.py")
+code("""
+val = json.loads(Path("results/value.json").read_text(encoding="utf-8"))   # produced by: python src/value.py
+rows = []
+for k, v in val.items():
+    m, w = v["messages_fully_right"], v["word_error_rate"]
+    row = {"test": k, "messages fully right: dictionary": m["dictionary"], "Qalaisyn": m["qalaisyn"],
+           "difference (95% CI)": f"{m['qalaisyn'] - m['dictionary']:+.1%} [{m['diff_ci'][0]:+.1%}, {m['diff_ci'][1]:+.1%}]",
+           "word errors: dictionary": w["dictionary"], "Qalaisyn ": w["qalaisyn"],
+           "dictionary mistakes fixed / new mistakes": f"{v['dictionary_mistakes_fixed']} / {v['new_mistakes']}"}
+    if "chrf" in v:
+        c = v["chrf"]; row["chrF difference (95% CI)"] = f"{c['qalaisyn'] - c['dictionary']:+.1f} [{c['diff_ci'][0]:+.1f}, {c['diff_ci'][1]:+.1f}]"
+    rows.append(row)
+pct = {c: "{:.1%}" for c in ["messages fully right: dictionary", "Qalaisyn", "word errors: dictionary", "Qalaisyn "]}
+display(pd.DataFrame(rows).set_index("test").style.format(pct))
+display(Image("figures/messages.png", width=780))
+""")
+md("""
+**Reading the table.** On every test the confidence interval for "messages fully right" lies above zero, so the
+advantage is not noise; it is largest on messy messages. On clean news text the translation scores (chrF) of the
+dictionary and Qalaisyn are close, which we report honestly: the value of the model is in getting whole real
+messages right, in surviving typos, and in knowing when to ask.
 """)
 
 md("""
@@ -446,6 +527,7 @@ display(Image("figures/demo.jpg", width=760))
 display(Image("figures/demo_where.jpg", width=760))
 display(Image("figures/demo_chatbot.jpg", width=760))
 """)
+writefile("src/latin.py")
 writefile("src/app.py")
 md("""
 **Run the demo yourself (Google Colab):** run all cells above (≈10 min the first time: it downloads the data and
@@ -483,9 +565,11 @@ md("""
 
 **Limitations**
 * Most test messages are simulated from typing-habit profiles; the native-speaker set is small.
-* The language model is trained mostly on Wikipedia, which is more formal than chats: colloquial forms
-  (*болама* for *бола ма*, merged particles) and Russian words inside Kazakh messages (*доставка*, *короче*) are
-  sometimes "corrected" into wrong Kazakh words.
+* The language model is trained mostly on Wikipedia (plus Tatoeba and film subtitles), which is more formal than
+  chats. Merged question particles (*болама* → *бола ма*) and common Russian words (*доставка*, *короче*, *щас*) are
+  now handled, but rarer colloquial forms and slang can still be "corrected" into the wrong Kazakh word.
+* Rare word forms (seen fewer than twice in training) were dropped to save memory; typo search can then replace a
+  rare but correct form with a more common neighbour (*телефоным* → *телефоны*).
 * Translation quality is measured automatically with chrF.
 
 **Next steps**
@@ -514,6 +598,12 @@ src_cells = [head] + [nbf.v4.new_code_cell(f"%%writefile {p}\n{(ROOT / p).read_t
                       for p in SOURCES]
 cells[setup_idx + 1:setup_idx + 1] = src_cells
 
+for c in cells:
+    if c.cell_type == "code" and not c.source.startswith("%%writefile"):
+        if not c.source.startswith("#@title"):
+            c.source = "#@title Show code\n" + c.source
+        c.metadata["cellView"] = "form"
+        c.metadata["tags"] = ["hide-input"]
 nb["cells"] = cells
 nb["metadata"]["colab"] = {"collapsed_sections": ["source-code"], "provenance": []}
 nb["metadata"]["kernelspec"] = {"name": "qalaisyn", "display_name": "Python (Qalaisyn)", "language": "python"}

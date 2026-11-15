@@ -1,8 +1,9 @@
 .venv/
 __pycache__/
 data/raw/
-data/lexicon.pkl
+data/lexicon_v1_full.pkl
 data/processed/train_wiki.txt
 *.pyc
 .ipynb_checkpoints/
 preview/
+WRITEUP.html

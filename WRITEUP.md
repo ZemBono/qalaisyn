@@ -1,38 +1,35 @@
-# Qalaisyn: making AI understand Kazakh the way people actually type
+# Qalaisyn: an engine that lets AI understand Kazakh the way people really type it
 
 **Track:** Languages · **Team:** Zhasulan B.
 
 ## The problem
-Most phones in Kazakhstan have a Russian keyboard, so people drop the Kazakh-only letters (ә ғ қ ң ө ұ ү һ і) and type *калайсын* instead of *қалайсың*; others text in Latin (*qalaisyn*). Translators and chatbots are trained on standard Kazakh. We measured the cost on held-out data: on a Russian keyboard **almost every second word (47%) is misspelled** and a translator loses about a quarter of the meaning; in Latin it loses **75%**. As banks, clinics and e-government services put AI first in line, people who type "the way their phone lets them" get worse help. The same happens in other languages whose letters get dropped on phones (Uzbek, Kyrgyz, Azerbaijani, Vietnamese…).
+Most phones in Kazakhstan have a Russian keyboard with no keys for the Kazakh letters ә ғ қ ң ө ұ ү һ і, so people type the closest Russian letter: *калайсын* for *қалайсың*. One letter can change the meaning: *өт* "go through" becomes *от* "fire". In our tests almost every second word typed this way is misspelled, and the AI that now answers bank, airline, clinic and government chats misreads it. An airline bot's translator reads *ушак кешигип жатыр ма* ("is the plane late?") as "is there a rumour going on?". A bank bot asked *несие бойынша толемди кешиктирсем бола ма* ("can I delay my loan payment?") explains how to withdraw cash.
 
 ## What we built
-**Qalaisyn** is not an app people download. It is a small AI layer that sits inside any chatbot, translator or keyboard, like autocorrect. **In:** *баламнын кызуы 39 котерилди не истеу керек*. **Out:** *баламның қызуы 39 көтерілді не істеу керек* ("my child's temperature rose to 39, what should I do"), which the AI now understands. When unsure, it **shows suggestions** (*ot* → **от** 73% · өт 27%) instead of silently guessing.
+**Qalaisyn is not an app or a website.** It is an engine inside a company's system, between the incoming message and the AI that answers it, like a spell-checker inside a keyboard. **In:** *баламнын кызуы 39 котерилди не истеу керек*. **Out:** *баламның қызуы 39 көтерілді не істеу керек* ("my child's temperature rose to 39, what should I do"), in Cyrillic or the new official Latin alphabet. When it is unsure it **shows suggestions** (*от* 73% · *өт* 27%) instead of guessing silently. It handles Russian-keyboard and Latin typing, leaves Russian words alone, and runs in about 7 ms per message (1.3 GB of memory).
 **User:** Gulnar, 62, from a village in Turkistan region, texting a clinic chatbot at night from a phone with only a Russian keyboard.
-**Where it is used every day:** bank, airline and delivery support chats, clinic bots, e-government. Live example: an airline bot's translator reads *ушак кешигип жатыр ма* as "is there a rumor going on?"; after Qalaisyn, "is the plane running late?". In our demo, the same support bot asked *несие бойынша толемди кешиктирсем бола ма* ("can I delay my loan payment?") explains how to withdraw cash; with Qalaisyn inside, it offers to move the payment date.
 
 ## What we added
-Our own idea (not a suggested project). Our own data and questions: (1) a generator that simulates six real typing styles (Russian keyboard, partial Kazakh keyboard, four Latin styles), so we never need anyone's private chats; (2) stress tests that ask *when does it break?*; (3) calibrated confidence and suggestions; (4) a transfer test on Kyrgyz.
+Our own idea. Our own data and questions: a generator of six real typing styles (no private chats needed), stress tests asking *when does it break?*, calibrated suggestions, a "why not a dictionary?" study with confidence intervals, and a transfer test on Kyrgyz.
 
 ## How it works
-**Data:** 1.5M Kazakh Wikipedia + 4k Tatoeba sentences for training. Held-out tests: 623 everyday Tatoeba and FLORES-200 news sentences, each with a professional English translation. Tuning on FLORES `dev` only; no test sentence was seen in training.
-**Model:** For each typed word we list the Kazakh words it could be (к → к/қ, а → а/ә, и → и/і …). A typing-habit model and a **word-bigram language model** score them, and **Viterbi decoding** picks the most likely sentence. Unknown words go to a **character 5-gram model**, likely typos to a **one-edit neighbour search**. **Forward-backward** gives each word a probability, and words under 90% become suggestions. It runs in milliseconds on a laptop.
+**Data:** 1.5M Kazakh Wikipedia sentences plus conversational text (Tatoeba, film subtitles). Held-out tests: 623 everyday and 300–1,012 news sentences (FLORES-200), each with a professional English translation, in six typing styles. Tuning on FLORES `dev` only. **Model:** each typed word → the Kazakh words it could be → a typing-habit model and a **word-bigram language model** score them → **Viterbi** picks the best sentence; a **character 5-gram model** handles unknown words, a one-edit search handles typos, and **forward-backward** gives each word a probability (below 90% → suggestion).
 
-## Results (held-out test data; translator NLLB-200, chrF vs. professional English)
-| | Proper text | As typed | Dictionary | **Qalaisyn** |
-|---|---|---|---|---|
-| Russian keyboard: words wrong | – | 46.9% | 5.1% | **3.6%** (2.2% without typo search) |
-| Russian keyboard: translation chrF | 60.8 | 45.2 | 59.4 | **59.9** (recovers **94%** of lost meaning; dictionary 91%) |
-| Russian keyboard + 15% typos: chrF | 60.8 | 36.0 | 52.6 | **57.6** (**87%** vs. 67%) |
-| Latin chat: translation chrF | 60.8 | 15.3 | 58.4 | **59.9** (**98%** vs. 95%) |
-| Latin, unseen spellings (ae, kk): chrF | 60.8 | 14.2 | 39.3 | **54.4** (**86%** vs. 54%) |
+## Results (held-out test data, 95% bootstrap confidence intervals)
+| | As typed | Dictionary | **Qalaisyn** |
+|---|---|---|---|
+| Russian keyboard: words wrong | 46.9% | 5.8% | **3.5%** |
+| Russian keyboard: messages with every word right | – | 80% | **88%** (+9 pts, CI +7…+11) |
+| Russian keyboard + 15% typos: messages fully right | – | 49% | **74%** (+25 pts, CI +21…+28) |
+| Latin, unseen spellings: messages fully right | – | 19% | **58%** (+40 pts, CI +36…+43) |
+| Meaning recovered for a translator, Russian keyboard + typos | 0% | 66% | **87%** |
+| Words shown as suggestions · share of its mistakes among them | – | cannot tell | **6% · 63%** |
 
-**Suggestions:** only **5% of words** are flagged, yet they contain **59% of all Qalaisyn's mistakes**, and for 75% of those the right word is among the suggestions. Words it is sure about are wrong only 1.4% of the time.
-**Transfer:** the same code trained on Kyrgyz Wikipedia recovers **97%** of the lost meaning for Kyrgyz.
-**Honest notes:** on clean text a simple dictionary is close; Qalaisyn's advantage is on real, messy messages and in knowing when it is unsure. **Where it fails:** н/ң and і/и when both words exist, and true ambiguity (*ot* = от "fire" / өт "pass"). Some "errors" are typos in the reference (*қагаз*, *сатыл ал*) that Qalaisyn fixed.
+**Why a model and not a dictionary?** A chatbot needs whole messages right; Qalaisyn fixes 154 of the dictionary's word mistakes for 38 new ones, wins by 21–40 points on messy messages, and knows when to ask. **Honest notes:** on clean news text translation scores are equal (CI includes 0). Kyrgyz with the same code recovers 98% of the meaning in Latin and 86% on a Russian keyboard (where a dictionary is equally good). **Where it fails:** н/ң and і/и when both words exist, true ambiguity (*от*/*өт*), and some colloquial forms.
 
 ## What we'd do next
-1. Longer context (trigrams or a small neural re-ranker) for н/ң and і/и. 2. A keyboard and a plug-in API for public-service chatbots; more languages (Uzbek, Azerbaijani).
+1. Native-speaker messages and longer context (trigrams or a small neural re-ranker) for н/ң and і/и. 2. A plug-in API for support chatbots and a phone keyboard; more languages.
 
 ## Sources
-Tatoeba (CC BY 2.0 FR) · FLORES-200 (CC BY-SA 4.0) · Kazakh and Kyrgyz Wikipedia via Hugging Face `wikimedia/wikipedia` (CC BY-SA) · NLLB-200 distilled 600M, Meta (CC BY-NC 4.0, evaluation only) · PyTorch, Transformers, sacrebleu, pandas, matplotlib, Gradio · Claude (Anthropic) helped write code and text.
+Tatoeba (CC BY 2.0 FR) · FLORES-200 (CC BY-SA 4.0) · Kazakh and Kyrgyz Wikipedia via Hugging Face (CC BY-SA) · OPUS OpenSubtitles · FrequencyWords Russian list (MIT/CC BY-SA) · NLLB-200 600M, Meta (CC BY-NC 4.0, evaluation only) · PyTorch, Transformers, sacrebleu, pandas, matplotlib, Gradio · Claude (Anthropic) helped with code and text.
 *This project is a prototype and is not medical or financial advice.*

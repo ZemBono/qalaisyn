@@ -1,0 +1,176 @@
+{
+  "Russian keyboard, everyday": {
+    "messages_fully_right": {
+      "qalaisyn": 0.884430176565008,
+      "dictionary": 0.7969502407704655,
+      "diff_ci": [
+        0.0682182985553772,
+        0.1075441412520064
+      ]
+    },
+    "word_error_rate": {
+      "qalaisyn": 0.0347331240188383,
+      "dictionary": 0.057692307692307696,
+      "as_typed": 0.46879905808477235,
+      "diff_ci": [
+        -0.028182701652089408,
+        -0.01780063291139241
+      ]
+    },
+    "dictionary_mistakes_fixed": 154,
+    "new_mistakes": 38,
+    "chrf": {
+      "qalaisyn": 59.889487378918595,
+      "dictionary": 59.25911276473374,
+      "diff_ci": [
+        0.15536888509780766,
+        1.1290256233898717
+      ]
+    }
+  },
+  "Russian keyboard, news": {
+    "messages_fully_right": {
+      "qalaisyn": 0.7159090909090909,
+      "dictionary": 0.6146245059288538,
+      "diff_ci": [
+        0.08003952569169959,
+        0.12351778656126489
+      ]
+    },
+    "word_error_rate": {
+      "qalaisyn": 0.02343570937428375,
+      "dictionary": 0.03432271372908549,
+      "as_typed": 0.4981377492550997,
+      "diff_ci": [
+        -0.012839814788512344,
+        -0.008979058335464436
+      ]
+    },
+    "dictionary_mistakes_fixed": 690,
+    "new_mistakes": 327,
+    "chrf": {
+      "qalaisyn": 52.27060138293266,
+      "dictionary": 52.17723460534261,
+      "diff_ci": [
+        -0.3569055270899,
+        0.5602258051128999
+      ]
+    }
+  },
+  "Latin chat, everyday": {
+    "messages_fully_right": {
+      "qalaisyn": 0.8776083467094703,
+      "dictionary": 0.7857142857142857,
+      "diff_ci": [
+        0.0774478330658106,
+        0.1071428571428572
+      ]
+    },
+    "word_error_rate": {
+      "qalaisyn": 0.03630298273155416,
+      "dictionary": 0.06151883830455259,
+      "as_typed": 0.9992150706436421,
+      "diff_ci": [
+        -0.029076620825147344,
+        -0.021523676043648014
+      ]
+    },
+    "dictionary_mistakes_fixed": 333,
+    "new_mistakes": 81,
+    "chrf": {
+      "qalaisyn": 59.905736862272484,
+      "dictionary": 58.288488963698285,
+      "diff_ci": [
+        1.2247013136193345,
+        2.028504646055289
+      ]
+    }
+  },
+  "Russian keyboard + 15% typos": {
+    "messages_fully_right": {
+      "qalaisyn": 0.7399678972712681,
+      "dictionary": 0.4895666131621188,
+      "diff_ci": [
+        0.2134831460674157,
+        0.2841091492776886
+      ]
+    },
+    "word_error_rate": {
+      "qalaisyn": 0.07888540031397175,
+      "dictionary": 0.17778649921507064,
+      "as_typed": 0.6397174254317112,
+      "diff_ci": [
+        -0.111243072050673,
+        -0.08567038033038801
+      ]
+    },
+    "dictionary_mistakes_fixed": 265,
+    "new_mistakes": 14,
+    "chrf": {
+      "qalaisyn": 57.47277298625711,
+      "dictionary": 52.3434614623807,
+      "diff_ci": [
+        3.8942039516456575,
+        6.358432716069856
+      ]
+    }
+  },
+  "Latin + 15% typos": {
+    "messages_fully_right": {
+      "qalaisyn": 0.7158908507223114,
+      "dictionary": 0.5008025682182986,
+      "diff_ci": [
+        0.1797752808988764,
+        0.2536115569823435
+      ]
+    },
+    "word_error_rate": {
+      "qalaisyn": 0.08281004709576138,
+      "dictionary": 0.1640502354788069,
+      "as_typed": 0.999607535321821,
+      "diff_ci": [
+        -0.09342421812349638,
+        -0.06939935064935064
+      ]
+    },
+    "dictionary_mistakes_fixed": 217,
+    "new_mistakes": 13,
+    "chrf": {
+      "qalaisyn": 56.532405287106805,
+      "dictionary": 53.0835287164115,
+      "diff_ci": [
+        2.134514781809301,
+        4.71855530958382
+      ]
+    }
+  },
+  "Latin, unseen spellings": {
+    "messages_fully_right": {
+      "qalaisyn": 0.5826645264847512,
+      "dictionary": 0.18619582664526485,
+      "diff_ci": [
+        0.3563402889245586,
+        0.43499197431781705
+      ]
+    },
+    "word_error_rate": {
+      "qalaisyn": 0.13540031397174254,
+      "dictionary": 0.3850078492935636,
+      "as_typed": 0.9972527472527473,
+      "diff_ci": [
+        -0.2677659992147625,
+        -0.23154362416107385
+      ]
+    },
+    "dictionary_mistakes_fixed": 648,
+    "new_mistakes": 12,
+    "chrf": {
+      "qalaisyn": 54.733393695584674,
+      "dictionary": 38.674662703742186,
+      "diff_ci": [
+        13.982927969990875,
+        17.933873346889207
+      ]
+    }
+  }
+}

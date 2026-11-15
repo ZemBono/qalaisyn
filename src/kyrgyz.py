@@ -10,7 +10,7 @@ import sacrebleu
 
 sys.path.insert(0, str(Path(__file__).parent))
 from build_data import SENT_SPLIT, good_sentence  # noqa: E402
-from chatify import chatify, normalize_cyr  # noqa: E402
+from chatify import chatify, chatify_cyr, normalize_cyr  # noqa: E402
 from eval_restore import evaluate  # noqa: E402
 from restore import DictRestorer, Lexicon, QalaisynRestorer, RuleRestorer  # noqa: E402
 
@@ -36,12 +36,14 @@ def main():
                         seen.add(n)
                         sents.append(n)
     print(f"Kyrgyz training sentences: {len(sents):,}")
-    lex = Lexicon().fit(sents)
+    lex = Lexicon().fit(sents).prune(2, 2)
     restorers = [RuleRestorer(), DictRestorer(lex), QalaisynRestorer(lex),
                  QalaisynRestorer(lex, fuzzy=True, name="M2 Qalaisyn+typos")]
 
     rows = []
     for i, (k, e) in enumerate(zip(kir, eng)):
+        rows.append({"id": i, "profile": "ru-keyboard", "kaz": k, "gold": normalize_cyr(k),
+                     "chat": chatify_cyr(k, "ru-keyboard", random.Random(f"ky-{i}-cyr")), "eng": e})
         for p in ["typical", "minimal"]:
             rows.append({"id": i, "profile": p, "kaz": k, "gold": normalize_cyr(k),
                          "chat": chatify(k, p, random.Random(f"ky-{i}-{p}")), "eng": e})
@@ -52,15 +54,20 @@ def main():
 
     from eval_translate import Translator
     tr = Translator(src="kir_Cyrl")
-    chrf = {}
-    for cond in ["gold", "B0 raw chat", "B2 dictionary", "M2 Qalaisyn+typos"]:
-        hyps = tr.translate([o[cond] for o in outs])
-        chrf[cond] = sacrebleu.corpus_chrf(hyps, [[o["eng"] for o in outs]]).score
-        print(f"  chrF {cond:18s} {chrf[cond]:.1f}")
-    rec = (chrf["M2 Qalaisyn+typos"] - chrf["B0 raw chat"]) / (chrf["gold"] - chrf["B0 raw chat"])
-    print(f"  recovered: {rec:.0%}")
+    chrf, recs = {}, {}
+    for style in ["ru-keyboard", "latin"]:
+        sub = [o for o in outs if (o["profile"] == "ru-keyboard") == (style == "ru-keyboard")]
+        chrf[style] = {}
+        for cond in ["gold", "B0 raw chat", "B2 dictionary", "M2 Qalaisyn+typos"]:
+            hyps = tr.translate([o[cond] for o in sub])
+            chrf[style][cond] = sacrebleu.corpus_chrf(hyps, [[o["eng"] for o in sub]]).score
+            print(f"  {style:11s} chrF {cond:18s} {chrf[style][cond]:.1f}")
+        c = chrf[style]
+        recs[style] = (c["M2 Qalaisyn+typos"] - c["B0 raw chat"]) / (c["gold"] - c["B0 raw chat"])
+        print(f"  {style}: recovered {recs[style]:.0%}")
+    rec = recs["latin"]
     (ROOT / "results" / "kyrgyz.json").write_text(json.dumps(
-        {"train_sentences": len(sents), "wer": wer, "chrf": chrf, "recovered": rec,
+        {"train_sentences": len(sents), "wer": wer, "chrf": chrf, "recovered": rec, "recovered_by_style": recs,
          "examples": [{"chat": o["chat"], "ours": o["M2 Qalaisyn+typos"], "gold": o["gold"]} for o in outs[:6]]},
         ensure_ascii=False, indent=2), encoding="utf-8")
 

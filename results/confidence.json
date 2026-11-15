@@ -1,116 +1,116 @@
 {
-  "threshold": 0.9,
+  "threshold": 0.95,
   "test_tatoeba": {
     "at_threshold": {
-      "threshold": 0.9,
+      "threshold": 0.95,
       "words": 10030,
-      "error_rate": 0.03429710867397807,
-      "flagged_share": 0.051246261216350945,
-      "errors_caught": 0.5581395348837209,
-      "error_rate_unflagged": 0.015973097940311057,
-      "fixed_by_top3_among_flagged_errors": 0.7239583333333334
+      "error_rate": 0.03280159521435693,
+      "flagged_share": 0.06360917248255234,
+      "errors_caught": 0.6413373860182371,
+      "error_rate_unflagged": 0.01256388415672913,
+      "fixed_by_top3_among_flagged_errors": 0.7630331753554502
     },
     "calibration": [
       {
         "confidence": "0.00-0.50",
-        "words": 70,
-        "actually_correct": 0.4
+        "words": 46,
+        "actually_correct": 0.32608695652173914
       },
       {
         "confidence": "0.50-0.70",
-        "words": 158,
-        "actually_correct": 0.689873417721519
+        "words": 178,
+        "actually_correct": 0.5674157303370787
       },
       {
         "confidence": "0.70-0.90",
-        "words": 286,
-        "actually_correct": 0.6468531468531469
+        "words": 268,
+        "actually_correct": 0.6902985074626866
       },
       {
         "confidence": "0.90-0.99",
-        "words": 931,
-        "actually_correct": 0.9323308270676691
+        "words": 750,
+        "actually_correct": 0.952
       },
       {
         "confidence": "0.99-1.00",
-        "words": 8585,
-        "actually_correct": 0.9896330809551543
+        "words": 8788,
+        "actually_correct": 0.9883932635411925
       }
     ]
   },
   "test_tatoeba_cyr": {
     "at_threshold": {
-      "threshold": 0.9,
+      "threshold": 0.95,
       "words": 5020,
-      "error_rate": 0.03227091633466136,
-      "flagged_share": 0.050199203187251,
-      "errors_caught": 0.5864197530864198,
-      "error_rate_unflagged": 0.014052013422818792,
-      "fixed_by_top3_among_flagged_errors": 0.7473684210526316
+      "error_rate": 0.030677290836653385,
+      "flagged_share": 0.05976095617529881,
+      "errors_caught": 0.6298701298701299,
+      "error_rate_unflagged": 0.012076271186440678,
+      "fixed_by_top3_among_flagged_errors": 0.7628865979381443
     },
     "calibration": [
       {
         "confidence": "0.00-0.50",
-        "words": 34,
-        "actually_correct": 0.4117647058823529
+        "words": 16,
+        "actually_correct": 0.375
       },
       {
         "confidence": "0.50-0.70",
-        "words": 80,
-        "actually_correct": 0.675
+        "words": 85,
+        "actually_correct": 0.5647058823529412
       },
       {
         "confidence": "0.70-0.90",
-        "words": 138,
-        "actually_correct": 0.644927536231884
+        "words": 127,
+        "actually_correct": 0.6771653543307087
       },
       {
         "confidence": "0.90-0.99",
-        "words": 466,
-        "actually_correct": 0.9356223175965666
+        "words": 362,
+        "actually_correct": 0.9475138121546961
       },
       {
         "confidence": "0.99-1.00",
-        "words": 4302,
-        "actually_correct": 0.9913993491399349
+        "words": 4430,
+        "actually_correct": 0.9893905191873589
       }
     ]
   },
   "test_flores_cyr": {
     "at_threshold": {
-      "threshold": 0.9,
+      "threshold": 0.95,
       "words": 13176,
-      "error_rate": 0.0230722525804493,
-      "flagged_share": 0.04644808743169399,
-      "errors_caught": 0.6151315789473685,
-      "error_rate_unflagged": 0.009312320916905445,
-      "fixed_by_top3_among_flagged_errors": 0.7379679144385026
+      "error_rate": 0.020947176684881604,
+      "flagged_share": 0.05373406193078324,
+      "errors_caught": 0.644927536231884,
+      "error_rate_unflagged": 0.007860121912094963,
+      "fixed_by_top3_among_flagged_errors": 0.702247191011236
     },
     "calibration": [
       {
         "confidence": "0.00-0.50",
-        "words": 81,
-        "actually_correct": 0.32098765432098764
+        "words": 94,
+        "actually_correct": 0.3829787234042553
       },
       {
         "confidence": "0.50-0.70",
-        "words": 165,
-        "actually_correct": 0.6606060606060606
+        "words": 131,
+        "actually_correct": 0.6946564885496184
       },
       {
         "confidence": "0.70-0.90",
-        "words": 366,
-        "actually_correct": 0.7923497267759563
+        "words": 302,
+        "actually_correct": 0.8112582781456954
       },
       {
         "confidence": "0.90-0.99",
-        "words": 1313,
-        "actually_correct": 0.9565879664889566
+        "words": 1067,
+        "actually_correct": 0.9615745079662605
       },
       {
         "confidence": "0.99-1.00",
-        "words": 11251,
-        "actually_correct": 0.9946671406986046
+        "words": 11582,
+        "actually_correct": 0.9930927300984286
       }
     ]
   }

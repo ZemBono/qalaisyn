@@ -1,0 +1,9 @@
+numpy
+pandas
+sacrebleu
+matplotlib
+pyarrow
+torch
+transformers==4.46.3
+sentencepiece
+gradio==5.9.1

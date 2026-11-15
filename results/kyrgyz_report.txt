@@ -1,0 +1,16 @@
+Kyrgyz training sentences: 677,030
+  B0 raw chat        WER 0.696
+  B1 rules           WER 0.399
+  B2 dictionary      WER 0.058
+  M1 Qalaisyn        WER 0.029
+  M2 Qalaisyn+typos  WER 0.041
+  ru-keyboard chrF gold               47.2
+  ru-keyboard chrF B0 raw chat        43.8
+  ru-keyboard chrF B2 dictionary      47.1
+  ru-keyboard chrF M2 Qalaisyn+typos  46.8
+  ru-keyboard: recovered 86%
+  latin       chrF gold               47.2
+  latin       chrF B0 raw chat        20.8
+  latin       chrF B2 dictionary      46.3
+  latin       chrF M2 Qalaisyn+typos  46.7
+  latin: recovered 98%

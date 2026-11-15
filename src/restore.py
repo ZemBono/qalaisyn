@@ -12,6 +12,7 @@ from __future__ import annotations
 import math
 import re
 from collections import Counter, defaultdict
+from pathlib import Path
 
 # ---------------------------------------------------------------- canonical keys
 # Every Cyrillic letter is reduced to a "skeleton" letter. Words that look the
@@ -120,6 +121,18 @@ def strict_ok(tok: str, word: str) -> bool:
     return True
 
 
+PARTICLES = {"ма", "ме", "ба", "бе", "па", "пе", "ma", "me", "ba", "be", "pa", "pe"}
+
+
+def _load_russian(n=30000):
+    p = Path(__file__).resolve().parents[1] / "data" / "ru_words.txt"
+    if not p.exists():
+        return set()
+    return {line.split()[0] for line in p.read_text(encoding="utf-8").splitlines()[:n] if line.strip()}
+
+
+RUSSIAN_WORDS = _load_russian()
+
 # Which typed characters show that the writer *can* type a given Kazakh letter.
 MARKERS = {"қ": "qқ", "ә": "äә", "ө": "öө", "ү": "üү", "ғ": "ğғ", "ң": "ñң", "ұ": "ұ", "і": "і", "һ": "һ"}
 
@@ -152,6 +165,25 @@ class Lexicon:
         for k in self.by_key:
             self.by_key[k].sort(reverse=True)
         self.char = CharLM(order=5).fit(self.uni)
+        return self
+
+    def prune(self, min_bigram=2, min_word=2):
+        """Drop word pairs and words seen fewer than `min_*` times. Their probability mass stays in the
+        back-off (ctx/followers keep the full counts), so rare pairs fall back to word frequencies.
+        This cuts memory several times with little effect on accuracy (see notebook)."""
+        self.bi = Counter({k: v for k, v in self.bi.items() if v >= min_bigram})
+        keep = {w for w, c in self.uni.items() if c >= min_word or w in ("</s>",)}
+        self.by_key = defaultdict(list)
+        for word in keep:
+            if word == "</s>" or word.isdigit():
+                continue
+            self.by_key[canon_word(word)].append((self.uni[word], word))
+        for k in self.by_key:
+            self.by_key[k].sort(reverse=True)
+        if self.char is not None:
+            self.char.counts = Counter({g: c for g, c in self.char.counts.items() if c >= 2})
+        if hasattr(self, "del_index"):
+            del self.del_index
         return self
 
     def p_uni(self, w):
@@ -355,8 +387,42 @@ class QalaisynRestorer:
                 pen += self.habit_penalty * extra
         return pen
 
+    # ---- chat language that is not standard Kazakh
+    def split_particles(self, toks):
+        """Question particles typed together with the word: 'болама' -> 'бола ма', 'барасынба' -> 'барасын ба'.
+        Split only if the whole form is rare compared with its stem."""
+        out = []
+        for tok in toks:
+            t = clean_token(tok)
+            parts = [tok]
+            if len(t) >= 5 and t[-2:] in PARTICLES:
+                whole = self.lex.candidates(t, 1)
+                whole_count = self.lex.uni.get(whole[0], 0) if whole else 0
+                stem = self.lex.candidates(t[:-2], 1)
+                stem_count = self.lex.uni.get(stem[0], 0) if stem else 0
+                # split when the stem is far more common than the whole form (болама: 3 vs бола: 3234),
+                # but not for real words like әжеме ("to my grandma": 4 vs әже: 83)
+                if stem_count >= 20 and (whole_count == 0 or stem_count >= 200 * whole_count):
+                    parts = [t[:-2], t[-2:]]
+            out.extend(parts)
+        return out
+
+    def is_russian(self, tok):
+        """Russian words inside a Kazakh message (короче, доставка, щас) must be left alone.
+        A word counts as Russian if it has letters Kazakh words do not use (щ, ё, ъ, э), or if it is a common
+        Russian word and no *different* Kazakh word with the same letters is common."""
+        t = clean_token(tok)
+        if not re.fullmatch(r"[а-яё-]+", t):        # Cyrillic without Kazakh letters only
+            return False
+        if re.search(r"[щёъэ]", t):
+            return True
+        if t not in RUSSIAN_WORDS:
+            return False
+        others = [w for w in self.lex.candidates(t, 5) if w != t]
+        return not others or self.lex.uni.get(others[0], 0) < 50
+
     def restore(self, text: str, explain: bool = False):
-        toks = text.split()
+        toks = self.split_particles(text.split())
         if not toks:
             return ""
         low = text.lower()
@@ -365,6 +431,9 @@ class QalaisynRestorer:
         for tok in toks:
             if tok.isdigit():
                 lattice.append([(tok, 0.0)])
+                continue
+            if self.is_russian(tok):
+                lattice.append([(clean_token(tok), 0.0)])
                 continue
             cands = self.lex.candidates(tok, self.top)
             opts = [(w, self._channel(tok, w, uses_q)) for w in cands]
@@ -396,17 +465,16 @@ class QalaisynRestorer:
         final = max(best.items(), key=lambda kv: kv[1][0] + self.lex.logp("</s>", kv[0]))
         words = final[1][1]
         if explain:
-            return words, lattice
+            return words, lattice, toks
         return " ".join(words)
 
     # ------------------------------------------------------------ confidence & suggestions
     def restore_with_confidence(self, text: str, top_k: int = 3):
         """Viterbi answer + for every word the probability that it is right
         (forward-backward over the same candidate lattice) and the top-k alternatives."""
-        toks = text.split()
-        if not toks:
+        if not text.split():
             return []
-        words, lattice = self.restore(text, explain=True)
+        words, lattice, toks = self.restore(text, explain=True)
 
         def lse(xs):
             m = max(xs)

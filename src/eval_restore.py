@@ -33,7 +33,22 @@ def cer(hyp, ref):
     return edit_distance(hyp, ref), len(ref)
 
 
-def load_lexicon(max_wiki=None, tatoeba_weight=20):
+def conversational_text():
+    """Short everyday text: Tatoeba sentences (not in test) + Kazakh film subtitles (OPUS OpenSubtitles)."""
+    import gzip
+    from chatify import normalize_cyr
+    tat = (P / "train_tatoeba.txt").read_text(encoding="utf-8").split("\n")
+    subs = []
+    sp = ROOT / "data" / "raw" / "extra" / "kk_subs.txt.gz"
+    if sp.exists():
+        for line in gzip.open(sp, "rt", encoding="utf-8"):
+            n = normalize_cyr(line)
+            if len(n.split()) >= 2:
+                subs.append(n)
+    return tat + subs
+
+
+def load_lexicon(max_wiki=None, conv_weight=20, prune=True):
     if CACHE.exists() and max_wiki is None:
         with open(CACHE, "rb") as f:
             return pickle.load(f)
@@ -41,9 +56,12 @@ def load_lexicon(max_wiki=None, tatoeba_weight=20):
     wiki = (P / "train_wiki.txt").read_text(encoding="utf-8").split("\n")
     if max_wiki:
         wiki = wiki[:max_wiki]
-    tat = (P / "train_tatoeba.txt").read_text(encoding="utf-8").split("\n")
-    lex = Lexicon().fit(wiki + tat, [1] * len(wiki) + [tatoeba_weight] * len(tat))
+    conv = conversational_text()
+    lex = Lexicon().fit(wiki + conv, [1] * len(wiki) + [conv_weight] * len(conv))
     print(f"lexicon: {len(lex.uni):,} words, {len(lex.bi):,} bigrams, {time.time() - t:.0f}s")
+    if prune:
+        lex.prune(2, 2)
+        print(f"pruned: {sum(len(v) for v in lex.by_key.values()):,} words, {len(lex.bi):,} bigrams")
     if max_wiki is None:
         with open(CACHE, "wb") as f:
             pickle.dump(lex, f, protocol=pickle.HIGHEST_PROTOCOL)
