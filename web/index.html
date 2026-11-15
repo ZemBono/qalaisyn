@@ -486,6 +486,14 @@ function fillResults(R) {
   const cur = document.querySelector("#cats .pill.on"); if (cur) showCategory(cur.textContent);
   run();
 })();
+// In-page links: scroll with script so they also work in in-app browsers (Telegram, Instagram)
+document.querySelectorAll('a[href^="#"]').forEach(a => a.addEventListener("click", e => {
+  const id = a.getAttribute("href").slice(1), el = id && document.getElementById(id);
+  if (!el) return;
+  e.preventDefault();
+  const y = el.getBoundingClientRect().top + window.pageYOffset - 64;
+  window.scrollTo({ top: y, behavior: REDUCED ? "auto" : "smooth" });
+}));
 $("go").onclick = run;
 $("msg").addEventListener("keydown", e => { if (e.key === "Enter" && (e.ctrlKey || e.metaKey)) run(); });
 </script>
