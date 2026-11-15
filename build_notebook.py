@@ -429,14 +429,22 @@ else:
 md("""
 ## 10 · Try it yourself
 
-The demo below is the same model wrapped in a small web page. Left: a message as people type it. Right: what a
-translator understands before and after Qalaisyn, with the restored letters highlighted and suggestions for unsure
-words. Underneath, four everyday services where a misread message costs something (live model outputs).
+Qalaisyn is not a website or an app: it is an engine that runs **inside** other systems, between an incoming
+message and the AI that answers it. The demo page is only a window into it:
+
+1. *Why one missing letter matters* — explained for people who do not speak Kazakh;
+2. *Where Qalaisyn lives* — the customer's phone → **Qalaisyn inside the company's system** → their AI → the answer;
+3. *See it inside a support chatbot* — the same simple support bot twice: reading the message as typed, and with
+   Qalaisyn inside. Without it the bot answers the wrong question (e.g. "how to withdraw cash" instead of
+   "delay a loan payment"); with it, the bot answers correctly. (The bot is a simple keyword bot for demonstration;
+   the replies come from the live model's translation.)
+4. *Look inside the engine* — any message, word by word, with suggestions for unsure words.
 """)
 code("""
 from IPython.display import Image, display
-display(Image("figures/demo.jpg", width=720))
-display(Image("figures/demo_uses.jpg", width=720))
+display(Image("figures/demo.jpg", width=760))
+display(Image("figures/demo_where.jpg", width=760))
+display(Image("figures/demo_chatbot.jpg", width=760))
 """)
 writefile("src/app.py")
 md("""

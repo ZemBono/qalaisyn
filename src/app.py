@@ -1,4 +1,7 @@
-"""Qalaisyn demo: type Kazakh the way people really text and see what an AI understands, before and after."""
+"""Qalaisyn demo.
+Qalaisyn is not a website: it is an engine that sits *inside* other systems (support chatbots, translators,
+search). This page is only a window into it: (1) a support chatbot with and without Qalaisyn inside,
+(2) a look inside the engine for any message."""
 import difflib
 import html
 import re
@@ -18,170 +21,59 @@ RULES = RuleRestorer()
 TR = Translator()
 THRESHOLD = 0.9   # chosen on FLORES dev (src/confidence.py)
 
+# ------------------------------------------------------------------ toy support bot
+# A deliberately simple bot: keyword rules on the English translation of the customer's message,
+# like many first-line support bots. Only for showing what Qalaisyn changes; not part of the model.
+INTENTS = [
+    (["delay payment", "delay my payment", "postpone", "can't pay", "can 't pay", "cannot pay"],
+     "I can move your loan payment date by up to 30 days at no cost. Shall I do it?"),
+    (["cash out", "withdraw"], "To withdraw cash from your loan account, visit any of our ATMs with your card."),
+    (["plane", "flight", "aircraft"], "Flight KC 852 to Astana is delayed by 40 minutes. New departure: 18:40."),
+    (["lost my id", "lost id", "id card", "identity card", "lost my passport"],
+     "You can order a new ID card on eGov: Services → Documents → Lost ID. It takes about 10 days."),
+    (["credential", "password", "login"], "To reset your password, open Settings → Security → Reset password."),
+]
+FALLBACK = "Sorry, I did not understand your question. A human operator will reply in about 25 minutes."
+
+
+def bot_reply(english: str) -> str:
+    e = english.lower()
+    for keys, answer in INTENTS:
+        if any(k in e for k in keys):
+            return answer
+    return FALLBACK
+
+
+SCENARIOS = [
+    ("Bank: delay a loan payment", "несие бойынша толемди кешиктирсем бола ма"),
+    ("Airline: is my flight late?", "ушак кешигип жатыр ма"),
+    ("E-government: lost ID card", "жеке куалигимди жогалтып алдым не истеу керек"),
+]
 EXAMPLES_RU = [
     "баламнын кызуы 39 котерилди не истеу керек",
     "салем калайсын ертен мектепке барасын ба",
-    "ажеме жедел жардем керек уйге келиниз",
-    "картадан акша шешилип кетипти мен ешнарсе алмадым",
+    "кредит толей алмай журмин комектесиниздер",
 ]
 EXAMPLES_LAT = [
     "balamnyn qyzuy 39 koterildi ne isteu kerek",
     "salem qalaisyn erteng mektepke barasyn ba",
-    "raxmet bauyrym komektesken ushin",
 ]
-
-# Everyday places where a misread message costs something. Outputs are computed live at start-up.
-USE_CASES = [
-    ("Bank support chat", "A customer cannot pay a loan and asks for help.",
-     "кредит толей алмай журмин комектесиниздер", "The bot offers payment options instead of a confused reply."),
-    ("Clinic chatbot", "A parent writes at night about a child with a fever.",
-     "баламнын кызуы 39 котерилди не истеу керек", "The message is treated as urgent, not as noise."),
-    ("E-government (eGov)", "Someone lost their ID card and asks what to do.",
-     "жеке куалигимди жогалтып алдым не истеу керек", "They get the right instructions instead of a wrong answer."),
-    ("Airline support", "A passenger asks if the flight is delayed.",
-     "ушак кешигип жатыр ма", "The passenger gets flight status instead of nonsense."),
-]
-
-CSS = """
-:root, .gradio-container {
-  --paper:#F4F6F8; --card:#FFFFFF; --ink:#1B2433; --muted:#5F6B7A; --line:#DCE1E7;
-  --gold:#E3A72F; --gold-soft:#FBEFD2; --brick:#A8513B; --brick-soft:#F7E9E4; --sea:#1F6F78; --sea-soft:#E3F1F1;
-}
-body, gradio-app {background:#F4F6F8!important}
-.gradio-container {background:var(--paper)!important; max-width:1120px!important; margin:0 auto!important;
-  font-family:'Golos Text', 'Segoe UI', sans-serif!important; color:var(--ink)}
-footer {display:none!important}
-#hero h1 {font-size:40px; line-height:1.12; letter-spacing:-.02em; font-weight:700; margin:8px 0 10px; max-width:820px}
-#hero p {font-size:18px; line-height:1.55; color:var(--muted); max-width:720px; margin:0}
-#hero .brand {font-weight:700; font-size:17px; color:var(--sea); letter-spacing:.01em}
-#hero .brand b {color:var(--gold)}
-#panel {background:var(--card); border:1px solid var(--line); border-radius:18px; padding:22px; margin-top:18px}
-#msg textarea {font-size:21px!important; line-height:1.45!important; background:#E9F3F2!important;
-  border:1px solid #CFE3E1!important; border-radius:18px 18px 18px 6px!important; padding:14px 16px!important; color:var(--ink)!important}
-#msg label span {font-size:14px!important; color:var(--muted)!important; font-weight:500!important}
-#go {background:var(--sea)!important; color:white!important; font-size:17px!important; border-radius:12px!important;
-  border:none!important; min-height:52px}
-#go:hover {background:#18595F!important}
-.exlabel {font-size:14px; color:var(--muted); margin:14px 0 4px}
-button.exbtn {background:white!important; border:1px solid var(--line)!important; border-radius:999px!important;
-  font-size:15px!important; color:#1B2433!important; font-weight:400!important; padding:6px 14px!important;
-  justify-content:flex-start!important; box-shadow:none!important; min-height:0!important; width:auto!important}
-button.exbtn:hover {border-color:#1F6F78!important; color:#1F6F78!important}
-.exrow {gap:8px!important; flex-wrap:wrap!important}
-.res {display:grid; gap:12px}
-.box {border-radius:14px; padding:14px 18px; border:1px solid var(--line); background:white}
-.box .k {font-size:14px; color:var(--muted); margin-bottom:6px}
-.box .v {font-size:22px; line-height:1.45}
-.box.before {background:var(--brick-soft); border-color:#EBCFC6}
-.box.before .v {color:var(--brick)}
-.box.after {background:var(--sea-soft); border-color:#C4E0E0}
-.box.after .v {color:#164E54; font-weight:500}
-.box.fixed .v {font-size:24px}
-.lt {background:var(--gold-soft); box-shadow:inset 0 -3px 0 var(--gold); border-radius:3px; padding:0 1px}
-.unsure {text-decoration:underline dotted #B7791F 2px; text-underline-offset:6px}
-.sugg {margin-top:12px; font-size:15px; color:var(--muted)}
-.chip {display:inline-block; margin:6px 6px 0 0; padding:4px 12px; border-radius:999px; background:#FFFBF1;
-  border:1px solid #F0D9A6; color:var(--ink)}
-.chip b {font-weight:600}
-.empty {color:var(--muted); font-size:17px; padding:30px 6px}
-#how {margin-top:26px}
-#how h2 {font-size:22px; margin:0 0 12px; font-weight:700}
-.steps {display:grid; grid-template-columns:repeat(3,1fr); gap:14px}
-.step {background:var(--card); border:1px solid var(--line); border-radius:14px; padding:16px 18px}
-.step .n {display:inline-flex; width:28px; height:28px; border-radius:50%; background:var(--sea); color:white;
-  align-items:center; justify-content:center; font-weight:700; font-size:15px; margin-bottom:8px}
-.step h3 {font-size:17px; margin:0 0 6px}
-.step p {font-size:15px; line-height:1.5; color:var(--muted); margin:0}
-.step code {background:var(--paper); padding:1px 5px; border-radius:5px; font-size:14px; color:var(--ink)}
-.where {margin-top:16px; display:flex; flex-wrap:wrap; gap:8px; align-items:center; font-size:15px; color:var(--muted)}
-.where span.p {background:white; border:1px solid var(--line); border-radius:999px; padding:4px 12px; color:var(--ink)}
-.facts {margin-top:22px; display:grid; grid-template-columns:repeat(3,1fr); gap:14px}
-.fact {border-top:3px solid var(--sea); padding-top:10px}
-.fact .big {font-size:30px; font-weight:700; letter-spacing:-.01em}
-.fact p {font-size:14px; color:var(--muted); margin:2px 0 0; line-height:1.45}
-#uses {margin-top:30px}
-#uses h2 {font-size:22px; margin:0 0 6px; font-weight:700}
-#uses .lead {font-size:16px; color:var(--muted); margin:0 0 14px; max-width:760px; line-height:1.5}
-.ucs {display:grid; grid-template-columns:repeat(2,1fr); gap:14px}
-.uc {background:var(--card); border:1px solid var(--line); border-radius:14px; padding:16px 18px}
-.uc h3 {font-size:17px; margin:0 0 2px}
-.uc .sit {font-size:14px; color:var(--muted); margin:0 0 10px}
-.bubble {display:inline-block; background:#E9F3F2; border:1px solid #CFE3E1; border-radius:14px 14px 14px 4px;
-  padding:8px 12px; font-size:16px; margin-bottom:10px}
-.ucrow {font-size:15px; line-height:1.45; padding:6px 0; border-top:1px solid var(--line)}
-.ucrow span {display:block; font-size:12.5px; color:var(--muted)}
-.ucrow.bad {color:var(--brick)}
-.ucrow.good {color:#164E54; font-weight:500}
-.uc .out {font-size:14px; margin:8px 0 0; color:var(--ink)}
-@media (max-width:760px){ .ucs{grid-template-columns:1fr} }
-.note {font-size:13px; color:var(--muted); margin:22px 0 8px}
-@media (max-width:760px){ #hero h1{font-size:30px} .steps,.facts{grid-template-columns:1fr} }
-"""
-
-HERO = """
-<div id="hero">
-  <div class="brand">Qalaisyn<b>.</b></div>
-  <h1>People type Kazakh the way their phone allows. Qalaisyn makes AI understand it.</h1>
-  <p>Most phones in Kazakhstan have a Russian keyboard, so <i>қалайсың</i> becomes <i>калайсын</i> and
-  chatbots and translators lose the meaning. Type a message the way people really text and compare what
-  the AI understands before and after.</p>
-</div>
-"""
-
-HOW = """
-<div id="how">
-  <h2>How it works</h2>
-  <div class="steps">
-    <div class="step"><div class="n">1</div><h3>List the possible words</h3>
-      <p>Each typed word could be several Kazakh words: <code>кызуы</code> → қызуы or кызуы,
-      <code>н</code> → н or ң. Qalaisyn lists the real words it could be.</p></div>
-    <div class="step"><div class="n">2</div><h3>Pick the most likely sentence</h3>
-      <p>A language model trained on 1.5 million Kazakh sentences scores how words fit together, and the
-      Viterbi algorithm picks the best whole sentence.</p></div>
-    <div class="step"><div class="n">3</div><h3>Ask only when unsure</h3>
-      <p>Every word gets a probability. Below 90% it is shown as a suggestion instead of being changed
-      silently, about 1 word in 20.</p></div>
-  </div>
-  <div class="where">Not an app to download. A layer inside:
-    <span class="p">bank support chats</span><span class="p">clinic chatbots</span>
-    <span class="p">e-government</span><span class="p">translators</span><span class="p">phone keyboards</span></div>
-  <div class="facts">
-    <div class="fact"><div class="big">47% → 3.6%</div><p>words misspelled on a Russian keyboard, before and after Qalaisyn (held-out test set)</p></div>
-    <div class="fact"><div class="big">87%</div><p>of lost meaning recovered on messy messages with typos; a dictionary lookup recovers 67%</p></div>
-    <div class="fact"><div class="big">59%</div><p>of Qalaisyn's own mistakes are among the 5% of words it marks as unsure</p></div>
-  </div>
-  <p class="note">Prototype for the Veritas AI High School Hackathon 2026, Languages track. Translator used for the
-  comparison: NLLB-200 (Meta). Not for medical or emergency use.</p>
-</div>
-"""
-
-def use_cases_html():
-    msgs = [m for _, _, m, _ in USE_CASES]
-    fixed = [QAL.restore(m) for m in msgs]
-    tr = TR.translate(msgs + fixed)
-    before, after = tr[:len(msgs)], tr[len(msgs):]
-    cards = []
-    for (place, situation, msg, outcome), f, b, a in zip(USE_CASES, fixed, before, after):
-        cards.append(
-            f"<div class='uc'><h3>{place}</h3><p class='sit'>{situation}</p>"
-            f"<div class='bubble'>{html.escape(msg)}</div>"
-            f"<div class='ucrow bad'><span>AI without Qalaisyn</span>{html.escape(b)}</div>"
-            f"<div class='ucrow good'><span>AI with Qalaisyn</span>{html.escape(a)}</div>"
-            f"<p class='out'>{outcome}</p></div>")
-    return ("<div id='uses'><h2>Where it helps every day</h2>"
-            "<p class='lead'>Over 13 million people speak Kazakh, and support chats, clinics and government services "
-            "are moving to AI first. A message the AI misreads means a wrong answer, a lost customer or a delayed emergency. "
-            "These are live results from the same model, not mock-ups.</p>"
-            f"<div class='ucs'>{''.join(cards)}</div></div>")
+EN_FUNCTION_WORDS = set("the a an and or is are am was to of in on for my your you i it this that what how hello hi "
+                        "with be do does can not no yes please thanks thank site restaurant".split())
 
 
-USES = use_cases_html()
+def clean(msg: str) -> str:
+    return " ".join(re.findall(r"[\w'-]+", (msg or "").strip().lower()))
 
-EMPTY = "<div class='empty'>Type a message on the left, or pick an example, and press <b>Restore and translate</b>.</div>"
+
+def looks_english(msg: str) -> bool:
+    toks = msg.split()
+    if not toks or re.search(r"[а-яәғқңөұүһі]", msg):
+        return False
+    return sum(t in EN_FUNCTION_WORDS for t in toks) / len(toks) >= 0.34
 
 
 def highlight(naive: str, restored: str) -> str:
-    """Wrap the letters Qalaisyn decided (different from a naive letter-by-letter reading)."""
     out = []
     for op, _, _, b0, b1 in difflib.SequenceMatcher(a=naive, b=restored).get_opcodes():
         seg = html.escape(restored[b0:b1])
@@ -189,13 +81,7 @@ def highlight(naive: str, restored: str) -> str:
     return "".join(out)
 
 
-def run(msg):
-    msg = " ".join(re.findall(r"[\w'-]+", (msg or "").strip().lower()))
-    if not msg:
-        return EMPTY
-    words = QAL.restore_with_confidence(msg)
-    restored = " ".join(w["word"] for w in words)
-    before, after = TR.translate([msg, restored])
+def restored_html(words):
     shown, sugg = [], []
     for w in words:
         seg = highlight(RULES.restore(w["typed"]), w["word"])
@@ -205,41 +91,246 @@ def run(msg):
                               for a, p in w["alternatives"] if p >= 0.03)
             sugg.append(f"<span class='chip'>{alts}</span>")
         shown.append(seg)
-    fixed = " ".join(shown)
+    body = " ".join(shown)
     if sugg:
-        fixed += "<div class='sugg'>Not sure, so the user sees a suggestion:<br>" + "".join(sugg) + "</div>"
+        body += "<div class='sugg'>Not sure, so this becomes a suggestion: " + "".join(sugg) + "</div>"
+    return body
+
+
+NOT_KAZAKH = ("<div class='empty'>This does not look like Kazakh. Qalaisyn only changes Kazakh words, so an "
+              "English message is passed through unchanged.</div>")
+
+
+# ------------------------------------------------------------------ chatbot view
+def chat(msg):
+    msg = clean(msg)
+    if not msg:
+        return "", "", ""
+    if looks_english(msg):
+        return NOT_KAZAKH, "", ""
+    words = QAL.restore_with_confidence(msg)
+    fixed = " ".join(w["word"] for w in words)
+    raw_en, fixed_en = TR.translate([msg, fixed])
+    bubble = f"<div class='me'>{html.escape(msg)}</div>"
+    left = (bubble + f"<div class='seen'>Bot reads: “{html.escape(raw_en)}”</div>"
+            f"<div class='bot'>{html.escape(bot_reply(raw_en))}</div>")
+    right = (bubble + f"<div class='seen ok'>Bot reads: “{html.escape(fixed_en)}”</div>"
+             f"<div class='bot good'>{html.escape(bot_reply(fixed_en))}</div>")
+    inside = (f"<div class='inside'><div class='k'>Inside the system, Qalaisyn turned the message into</div>"
+              f"<div class='v'>{restored_html(words)}</div></div>")
+    return left, right, inside
+
+
+# ------------------------------------------------------------------ look-inside view
+def look(msg):
+    msg = clean(msg)
+    if not msg:
+        return "<div class='empty'>Type a message, or pick an example.</div>"
+    if looks_english(msg):
+        return NOT_KAZAKH
+    words = QAL.restore_with_confidence(msg)
+    fixed = " ".join(w["word"] for w in words)
+    before, after = TR.translate([msg, fixed])
     return ("<div class='res'>"
-            f"<div class='box before'><div class='k'>What the AI understands from the message as typed</div>"
+            f"<div class='box before'><div class='k'>A translator reads the message as typed</div>"
             f"<div class='v'>{html.escape(before)}</div></div>"
             f"<div class='box fixed'><div class='k'>Qalaisyn restores the Kazakh letters (highlighted)</div>"
-            f"<div class='v'>{fixed}</div></div>"
-            f"<div class='box after'><div class='k'>What the AI understands after Qalaisyn</div>"
-            f"<div class='v'>{html.escape(after)}</div></div>"
-            "</div>")
+            f"<div class='v'>{restored_html(words)}</div></div>"
+            f"<div class='box after'><div class='k'>The translator reads it after Qalaisyn</div>"
+            f"<div class='v'>{html.escape(after)}</div></div></div>")
 
+
+# ------------------------------------------------------------------ page
+CSS = """
+body, gradio-app {background:#F4F6F8!important}
+.gradio-container {background:#F4F6F8!important; max-width:1120px!important; margin:0 auto!important;
+  font-family:'Golos Text','Segoe UI',sans-serif!important; color:#1B2433}
+footer {display:none!important}
+.brand {font-weight:700; font-size:17px; color:#1F6F78} .brand b {color:#E3A72F}
+#hero h1 {font-size:40px; line-height:1.12; letter-spacing:-.02em; font-weight:700; margin:8px 0 10px; max-width:860px}
+#hero p.sub {font-size:18px; line-height:1.55; color:#5F6B7A; max-width:740px; margin:0}
+.sec {margin-top:28px} .sec h2 {font-size:23px; font-weight:700; margin:0 0 6px} .sec p.lead {font-size:16px; color:#5F6B7A;
+  line-height:1.55; max-width:780px; margin:0 0 14px}
+.why {display:grid; grid-template-columns:1.25fr 1fr; gap:14px}
+.card {background:#fff; border:1px solid #DCE1E7; border-radius:16px; padding:18px 20px}
+.words {display:flex; gap:14px; align-items:stretch; margin:6px 0 12px}
+.w {flex:1; border-radius:12px; padding:12px 14px; border:1px solid #DCE1E7}
+.w .kz {font-size:30px; font-weight:700} .w .en {font-size:15px; color:#5F6B7A}
+.w.good {background:#E3F1F1; border-color:#C4E0E0} .w.bad {background:#F7E9E4; border-color:#EBCFC6}
+.lt {background:#FBEFD2; box-shadow:inset 0 -3px 0 #E3A72F; border-radius:3px; padding:0 1px}
+.card p {font-size:15.5px; line-height:1.55; margin:6px 0 0}
+.analogy {font-size:15px; color:#5F6B7A}
+.flow {display:flex; align-items:stretch; gap:0; margin:10px 0 4px; flex-wrap:wrap}
+.node {background:#fff; border:1px solid #DCE1E7; border-radius:12px; padding:12px 14px; min-width:150px; flex:1}
+.node .t {font-weight:700; font-size:15.5px} .node .d {font-size:13.5px; color:#5F6B7A; margin-top:3px; line-height:1.4}
+.node.q {background:#1F6F78; border-color:#1F6F78; color:#fff} .node.q .d {color:#D6ECEC}
+.arrow {display:flex; align-items:center; padding:0 8px; color:#9AA5B1; font-size:22px}
+.server {border:2px dashed #B9C3CE; border-radius:16px; padding:10px; display:flex; align-items:stretch; flex:3; gap:0;
+  position:relative; background:#FAFBFC}
+.server .lab {position:absolute; top:-11px; left:14px; background:#F4F6F8; padding:0 6px; font-size:13px; color:#5F6B7A}
+.cap {font-size:15px; color:#5F6B7A; margin-top:10px; line-height:1.5}
+pre.code {background:#1B2433; color:#E6EDF3; border-radius:12px; padding:14px 16px; font-size:13.5px; line-height:1.55;
+  overflow-x:auto; margin:10px 0 0}
+pre.code .c {color:#8FA3B8}
+.tabs {margin-top:6px}
+.me {background:#E9F3F2; border:1px solid #CFE3E1; border-radius:16px 16px 16px 4px; padding:10px 14px; font-size:18px;
+  display:inline-block; margin:4px 0 8px}
+.seen {font-size:13.5px; color:#A8513B; margin:0 0 8px} .seen.ok {color:#1F6F78}
+.bot {background:#F7E9E4; border:1px solid #EBCFC6; border-radius:16px 16px 4px 16px; padding:10px 14px; font-size:16.5px;
+  line-height:1.45; margin-left:28px}
+.bot.good {background:#E3F1F1; border-color:#C4E0E0}
+.botcol h3 {font-size:16px; margin:0 0 8px} .botcol h3 span {font-weight:400; color:#5F6B7A}
+.inside {background:#fff; border:1px dashed #B9C3CE; border-radius:14px; padding:12px 16px; margin-top:4px}
+.inside .k, .box .k {font-size:14px; color:#5F6B7A; margin-bottom:6px} .inside .v {font-size:20px}
+.res {display:grid; gap:12px}
+.box {border-radius:14px; padding:14px 18px; border:1px solid #DCE1E7; background:white} .box .v {font-size:21px; line-height:1.45}
+.box.before {background:#F7E9E4; border-color:#EBCFC6} .box.before .v {color:#A8513B}
+.box.after {background:#E3F1F1; border-color:#C4E0E0} .box.after .v {color:#164E54; font-weight:500}
+.unsure {text-decoration:underline dotted #B7791F 2px; text-underline-offset:6px}
+.sugg {margin-top:10px; font-size:14.5px; color:#5F6B7A}
+.chip {display:inline-block; margin:6px 6px 0 0; padding:3px 11px; border-radius:999px; background:#FFFBF1; border:1px solid #F0D9A6; color:#1B2433}
+.empty {color:#5F6B7A; font-size:16px; padding:18px 4px}
+#msg textarea, #msg2 textarea {font-size:19px!important; background:#E9F3F2!important; border:1px solid #CFE3E1!important;
+  border-radius:16px 16px 16px 4px!important; padding:12px 14px!important}
+button.go {background:#1F6F78!important; color:#fff!important; border:none!important; border-radius:12px!important; font-size:16px!important}
+button.ex {background:#fff!important; border:1px solid #DCE1E7!important; border-radius:999px!important; color:#1B2433!important;
+  font-weight:400!important; font-size:15px!important; box-shadow:none!important; justify-content:flex-start!important}
+button.ex:hover {border-color:#1F6F78!important; color:#1F6F78!important}
+.steps {display:grid; grid-template-columns:repeat(3,1fr); gap:14px}
+.step {background:#fff; border:1px solid #DCE1E7; border-radius:14px; padding:16px 18px}
+.step .n {display:inline-flex; width:28px; height:28px; border-radius:50%; background:#1F6F78; color:#fff; align-items:center;
+  justify-content:center; font-weight:700; font-size:15px; margin-bottom:8px}
+.step h3 {font-size:17px; margin:0 0 6px} .step p {font-size:15px; line-height:1.5; color:#5F6B7A; margin:0}
+.facts {margin-top:18px; display:grid; grid-template-columns:repeat(3,1fr); gap:14px}
+.fact {border-top:3px solid #1F6F78; padding-top:10px} .fact .big {font-size:28px; font-weight:700}
+.fact p {font-size:14px; color:#5F6B7A; margin:2px 0 0; line-height:1.45}
+.note {font-size:13px; color:#5F6B7A; margin:22px 0 8px}
+@media (max-width:820px){ #hero h1{font-size:30px} .why,.steps,.facts{grid-template-columns:1fr} .flow{flex-direction:column}
+  .arrow{justify-content:center; transform:rotate(90deg)} .server{flex-direction:column} }
+"""
+
+HERO = """
+<div id="hero">
+  <div class="brand">Qalaisyn<b>.</b></div>
+  <h1>An engine inside chatbots and translators that understands Kazakh the way people really type it.</h1>
+  <p class="sub">Most phones in Kazakhstan have a Russian keyboard, which has no letters for ә, ғ, қ, ң, ө, ұ, ү, і.
+  People type the closest Russian letter, and AI systems misread them. Qalaisyn puts the letters back before the AI
+  reads the message.</p>
+</div>
+"""
+
+WHY = """
+<div class="sec"><h2>Why one missing letter matters</h2>
+<div class="why">
+  <div class="card">
+    <div class="words">
+      <div class="w good"><div class="kz">өт</div><div class="en">go through, pass</div></div>
+      <div class="w bad"><div class="kz">от</div><div class="en">fire</div></div>
+    </div>
+    <p>A Russian keyboard has no <span class="lt">ө</span>, so <i>“go through”</i> is typed as the word for
+    <i>“fire”</i>. Real example: a passenger types <b>“ушак кешигип жатыр ма”</b>, meaning <i>“Is the plane late?”</i>.
+    Without <span class="lt">ұ</span> and <span class="lt">қ</span> the word for <i>airplane</i> (ұшақ) is broken, and the
+    airline's translator reads <i>“Is there a rumour going on?”</i></p>
+    <p class="analogy">It is like writing Spanish without accents, where <i>papá</i> (dad) and <i>papa</i> (potato)
+    become the same word, except that in Kazakh this happens in almost every second word.</p>
+  </div>
+  <div class="card">
+    <p style="margin-top:0"><b>47%</b> of words typed on a Russian keyboard are misspelled in our tests.
+    Over 13 million people speak Kazakh, and banks, airlines, clinics and e-government are moving their support to
+    AI first. Every misread message is a wrong answer, a lost customer or a delayed emergency.</p>
+    <p>The same problem exists wherever phones drop letters: Kyrgyz, Uzbek, Azerbaijani, Turkish, Vietnamese.
+    The same code worked for Kyrgyz without changes.</p>
+  </div>
+</div></div>
+"""
+
+WHERE = """
+<div class="sec"><h2>Where Qalaisyn lives</h2>
+<p class="lead">Not a website and not an app. Customers never see it: it runs inside a company's system, between the
+incoming message and the AI that answers, like a spell-checker inside a keyboard.</p>
+<div class="flow">
+  <div class="node"><div class="t">Customer's phone</div><div class="d">types as usual:<br>“ушак кешигип жатыр ма”</div></div>
+  <div class="arrow">→</div>
+  <div class="server"><span class="lab">inside the company's system</span>
+    <div class="node q"><div class="t">Qalaisyn</div><div class="d">puts the letters back:<br>“ұшақ кешігіп жатыр ма”<br>in milliseconds</div></div>
+    <div class="arrow">→</div>
+    <div class="node"><div class="t">Their AI</div><div class="d">chatbot, translator, search, spam filter</div></div>
+  </div>
+  <div class="arrow">→</div>
+  <div class="node"><div class="t">Right answer</div><div class="d">“Flight KC 852 is delayed by 40 minutes.”</div></div>
+</div>
+<pre class="code"><span class="c"># how a company adds it: one call before its own AI</span>
+from qalaisyn import restore
+text = restore(message)          <span class="c"># "ушак кешигип жатыр ма" -> "ұшақ кешігіп жатыр ма"</span>
+reply = support_bot.answer(text)</pre>
+</div>
+"""
+
+HOW = """
+<div class="sec"><h2>How the engine decides</h2>
+<div class="steps">
+  <div class="step"><div class="n">1</div><h3>List the possible words</h3>
+    <p>Each typed word could be several Kazakh words: “от” → от (fire) or өт (go), “ушак” → ұшақ (airplane).
+    Qalaisyn lists the real words it could be.</p></div>
+  <div class="step"><div class="n">2</div><h3>Pick the most likely sentence</h3>
+    <p>A language model trained on 1.5 million Kazakh sentences knows which words go together (“plane … late”),
+    and the Viterbi algorithm picks the best whole sentence.</p></div>
+  <div class="step"><div class="n">3</div><h3>Ask only when unsure</h3>
+    <p>Every word gets a probability. Below 90% it becomes a suggestion instead of a silent change,
+    about 1 word in 20.</p></div>
+</div>
+<div class="facts">
+  <div class="fact"><div class="big">47% → 3.6%</div><p>misspelled words on a Russian keyboard, before and after Qalaisyn (held-out test)</p></div>
+  <div class="fact"><div class="big">87% vs 67%</div><p>of lost meaning recovered on messy messages with typos: Qalaisyn vs a dictionary lookup</p></div>
+  <div class="fact"><div class="big">59%</div><p>of Qalaisyn's mistakes are among the 5% of words it marks as unsure</p></div>
+</div>
+<p class="note">Prototype for the Veritas AI High School Hackathon 2026, Languages track. Translator: NLLB-200 (Meta).
+The support bot on this page is a simple keyword bot for demonstration only. Not for medical or emergency use.</p>
+</div>
+"""
 
 theme = gr.themes.Base(font=[gr.themes.GoogleFont("Golos Text"), "Segoe UI", "sans-serif"])
 with gr.Blocks(title="Qalaisyn", css=CSS, theme=theme) as demo:
     gr.HTML(HERO)
-    with gr.Row(elem_id="panel", equal_height=False):
+    gr.HTML(WHY)
+    gr.HTML(WHERE)
+    gr.HTML("<div class='sec'><h2>See it inside a support chatbot</h2><p class='lead'>The same simple support bot twice. "
+            "On the left it reads the message as typed; on the right Qalaisyn runs inside it first. "
+            "Pick a situation or type your own message.</p></div>")
+    with gr.Row():
+        sc_btns = [gr.Button(label, elem_classes="ex", size="sm") for label, _ in SCENARIOS]
+    with gr.Row():
+        cin = gr.Textbox(value=SCENARIOS[1][1], label="Customer's message (typed on a Russian keyboard)", elem_id="msg", scale=5)
+        cgo = gr.Button("Send", elem_classes="go", scale=1)
+    with gr.Row(equal_height=False):
+        with gr.Column(elem_classes="botcol"):
+            gr.HTML("<h3>Support bot today <span>(reads the message as typed)</span></h3>")
+            left = gr.HTML()
+        with gr.Column(elem_classes="botcol"):
+            gr.HTML("<h3>Same bot with Qalaisyn inside</h3>")
+            right = gr.HTML()
+    inside = gr.HTML()
+
+    gr.HTML("<div class='sec'><h2>Look inside the engine</h2><p class='lead'>Any message, word by word: what a "
+            "translator understands before and after, which letters Qalaisyn put back, and where it is unsure.</p></div>")
+    with gr.Row(equal_height=False):
         with gr.Column(scale=5):
-            inp = gr.Textbox(label="A message, typed like in a chat", value=EXAMPLES_RU[0], lines=3, elem_id="msg")
-            btn = gr.Button("Restore and translate", elem_id="go")
-            gr.HTML("<div class='exlabel'>Try an example typed on a Russian keyboard</div>")
-            with gr.Column(elem_classes="exrow"):
-                ex_ru = [gr.Button(e, elem_classes="exbtn", size="sm", variant="secondary") for e in EXAMPLES_RU]
-            gr.HTML("<div class='exlabel'>or in Latin letters</div>")
-            with gr.Column(elem_classes="exrow"):
-                ex_lat = [gr.Button(e, elem_classes="exbtn", size="sm", variant="secondary") for e in EXAMPLES_LAT]
+            lin = gr.Textbox(value=EXAMPLES_RU[0], label="A message typed like in a chat", lines=2, elem_id="msg2")
+            lgo = gr.Button("Restore and translate", elem_classes="go")
+            ex_btns = [gr.Button(e, elem_classes="ex", size="sm") for e in EXAMPLES_RU + EXAMPLES_LAT]
         with gr.Column(scale=6):
-            out = gr.HTML(EMPTY)
-    gr.HTML(USES)
+            lout = gr.HTML()
     gr.HTML(HOW)
-    btn.click(run, inp, out)
-    inp.submit(run, inp, out)
-    for b, text in zip(ex_ru + ex_lat, EXAMPLES_RU + EXAMPLES_LAT):
-        b.click(lambda t=text: t, None, inp).then(run, inp, out)
-    demo.load(run, inp, out)
+
+    cgo.click(chat, cin, [left, right, inside])
+    cin.submit(chat, cin, [left, right, inside])
+    for b, (_, text) in zip(sc_btns, SCENARIOS):
+        b.click(lambda t=text: t, None, cin).then(chat, cin, [left, right, inside])
+    lgo.click(look, lin, lout)
+    lin.submit(look, lin, lout)
+    for b, text in zip(ex_btns, EXAMPLES_RU + EXAMPLES_LAT):
+        b.click(lambda t=text: t, None, lin).then(look, lin, lout)
+    demo.load(chat, cin, [left, right, inside]).then(look, lin, lout)
 
 if __name__ == "__main__":
     demo.launch(share="--share" in sys.argv)

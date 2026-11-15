@@ -17892,3 +17892,25 @@
 {"src": "кредит төлей алмай жүрмін көмектесіңіздер", "tgt": "I can 't pay my loan please help"}
 {"src": "тапсырыс али келген жок акшамды кайтарыныз", "tgt": "Please return the order not yet received"}
 {"src": "тапсырыс әлі келген жоқ ақшамды қайтарыңыз", "tgt": "return my money that the order has not yet arrived"}
+{"src": "restaurant", "tgt": "restaurant"}
+{"src": "рестаурант", "tgt": "restore"}
+{"src": "рестаурант ор ситэ", "tgt": "restore the server"}
+{"src": "restaurant or site", "tgt": "restaurant or site"}
+{"src": "hello how are you", "tgt": "hello how are you"}
+{"src": "белло хош әре йоу", "tgt": "white hair"}
+{"src": "мен ресторанга барамын", "tgt": "I 'm going to the restaurant"}
+{"src": "мен ресторанға барамын", "tgt": "I 'm going to the restaurant"}
+{"src": "рейс кашан ушады", "tgt": "when the flight will start"}
+{"src": "рейс қашан ұшады", "tgt": "when the flight will depart"}
+{"src": "тапсырысты әлі келген жоқ", "tgt": "The order has not yet arrived"}
+{"src": "тапсырысым али келген жок", "tgt": "My order has not yet arrived"}
+{"src": "картамды бұғаттап тастаңыз", "tgt": "Lock the card"}
+{"src": "картамды бугаттап тастаныз", "tgt": "deactivate the card"}
+{"src": "баламның қызуы көтерілді не істедің", "tgt": "My son got a little hot , what did you do ?"}
+{"src": "баламнын кызуы котерилди не истейин", "tgt": "child fever is coated or eaten"}
+{"src": "билетимди баска кунге ауыстырсам бола ма", "tgt": "can I change the ticket to the top button ?"}
+{"src": "білетімді басқа күнге ауыстырсам бола ма", "tgt": "Can I change my ticket to another date ?"}
+{"src": "несие бойынша төлемді кешіктірсем бола ма", "tgt": "can I delay payment on loan"}
+{"src": "несие бойынша толемди кешиктирсем бола ма", "tgt": "Can I cash out the loan amount"}
+{"src": "балам катты ауырып жатыр жедел жардем керек", "tgt": "my son is sick with a letter and I need to go to the emergency room"}
+{"src": "балам қатты ауырып жатыр жедел жәрдем керек", "tgt": "my son is seriously ill and needs urgent care"}
