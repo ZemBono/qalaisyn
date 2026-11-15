@@ -159,7 +159,7 @@ footer .links{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:12px}
 }
 
 /* roomier layout */
-.wrap{max-width:1240px;padding:0 32px}
+.wrap{max-width:1060px;padding:0 32px}
 section{padding:84px 0 8px}
 h2{font-size:32px;margin:0 0 10px}
 .lead{font-size:17.5px;line-height:1.6;max-width:820px;margin:0 0 30px}
@@ -168,8 +168,10 @@ h2{font-size:32px;margin:0 0 10px}
 .why,.bots,.gallery,.facts,.native,.charts,.steps,.limits,.try{gap:22px}
 .where-grid{gap:16px;margin-top:22px}
 .notsite{margin:28px 0 10px;padding:26px 32px}
-.hero{gap:56px;padding:72px 0 28px}
-@media (max-width:900px){.wrap{padding:0 18px} .card{padding:18px} section{padding:56px 0 6px} h2{font-size:26px} .hero{padding-top:34px;gap:30px}}
+.hero{gap:40px;padding:72px 0 28px;grid-template-columns:1.25fr 1fr} .cta{gap:8px}
+nav .links{gap:16px;font-size:14px} nav .links a{white-space:nowrap}
+@media (max-width:1100px){nav .links{display:none}}
+@media (max-width:900px){.wrap{padding:0 18px} .card{padding:18px} section{padding:56px 0 6px} h2{font-size:26px} .hero{padding-top:34px;gap:30px;grid-template-columns:1fr}}
 </style>
 </head>
 <body>
