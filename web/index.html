@@ -13,6 +13,14 @@
   --gold:#E3A72F;--gold-soft:#FBEFD2;--brick:#A8513B;--brick-soft:#F7E9E4;--bubble:#E9F3F2}
 *{box-sizing:border-box}
 [hidden]{display:none!important}
+.notsite{margin:8px 0 6px;background:var(--ink);color:#E9EEF3;border-radius:18px;padding:20px 24px;display:grid;grid-template-columns:auto 1fr;gap:6px 24px;align-items:center}
+.ns-t{font-size:22px;font-weight:700;color:#fff;grid-row:span 2}
+.ns-d{font-size:15px;line-height:1.55;color:#C9D3DD} .ns-d b{color:#fff}
+.ns-flow{display:flex;flex-wrap:wrap;gap:8px;align-items:center;font-size:13.5px}
+.ns-flow span{border:1px solid #3A4659;border-radius:999px;padding:4px 12px;color:#E9EEF3} .ns-flow span.q{background:var(--sea);border-color:var(--sea);color:#fff}
+.ns-flow i{font-style:normal;color:#7D8A99}
+@media (max-width:900px){.notsite{grid-template-columns:1fr}.ns-t{grid-row:auto}}
+
 html{scroll-behavior:smooth;scroll-padding-top:70px}
 @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
 body{margin:0;background:var(--paper);color:var(--ink);font-family:'Golos Text','Segoe UI',system-ui,sans-serif;line-height:1.5}
@@ -146,7 +154,7 @@ footer .links{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:12px}
 <nav><div class="wrap">
   <a class="brand" href="#top">Qalaisyn<b>.</b></a>
   <div class="links"><a href="#why">The problem</a><a href="#where">Where it lives</a><a href="#bot">In a chatbot</a>
-    <a href="#examples">Examples</a><a href="#try">Try it</a><a href="#results">Results</a></div>
+    <a href="#examples">Examples</a><a href="#try">Inside the engine</a><a href="#results">Results</a></div>
   <div class="right"><a class="btn" href="https://colab.research.google.com/github/ZemBono/qalaisyn/blob/main/Qalaisyn.ipynb" target="_blank" rel="noopener">Notebook</a>
     <a class="btn" href="https://github.com/ZemBono/qalaisyn" target="_blank" rel="noopener">Code</a></div>
 </div></nav>
@@ -158,17 +166,28 @@ footer .links{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:12px}
       <p class="sub">Most phones in Kazakhstan have a Russian keyboard with no keys for ә, ғ, қ, ң, ө, ұ, ү, і. People type
       the closest Russian letter, and the AI behind bank, airline and government chats misreads them. Qalaisyn puts
       the letters back before the AI reads the message.</p>
-      <div class="cta"><a class="btn primary" href="#try">Try it with your own message</a><a class="btn" href="#bot">See it inside a chatbot</a><a class="btn" href="#results">Results</a></div>
+      <div class="cta"><a class="btn primary" href="#bot">See it working inside a chatbot</a><a class="btn" href="#try">Look inside the engine</a><a class="btn" href="#results">Results</a></div>
       <a class="badge" href="#native">✓ Tested on <b><span data-r="real_n">70</span> real messages written by a native Kazakh speaker</b> — words wrong: <span data-r="real_dict" data-f="pct0">20%</span> with a dictionary, <b><span data-r="real_qal" data-f="pct0">15%</span> with Qalaisyn</b></a>
       <p class="status" id="status">Loading the engine into your browser (about 20 MB, once)…</p>
     </div>
     <div class="demo" aria-live="polite">
-      <p class="lab">A passenger texts an airline chatbot</p>
+      <p class="lab">Inside an airline's support chatbot</p>
       <div class="me" id="h-msg"></div>
       <div class="step-in" id="h-fix"><p class="lab" style="margin-top:14px">Qalaisyn puts the letters back</p><div class="fixed" id="h-fixed"></div></div>
       <div class="row bad step-in" id="h-bad"><small>The AI reads it as typed</small>“is there a rumour going on?”</div>
       <div class="row good step-in" id="h-good"><small>The AI reads it after Qalaisyn</small>“is the plane running late?”</div>
+      <p class="lab step-in" id="h-note" style="margin:12px 0 0">Qalaisyn runs inside the chatbot, between the message and the AI. The passenger never sees it and changes nothing.</p>
     </div>
+  </div>
+
+
+  <div class="notsite">
+    <div class="ns-t">Not a website to visit.</div>
+    <div class="ns-d">Qalaisyn is an <b>engine</b>: a small language model plus a few hundred lines of code that a bank,
+    airline, clinic or government service builds into its own chatbot, translator or search. Customers keep typing
+    the way they always do; the company's AI simply starts understanding them. This page is only a window to watch the
+    engine work.</div>
+    <div class="ns-flow"><span>Customer types as usual</span><i>→</i><span class="q">Qalaisyn, inside the company's system</span><i>→</i><span>Company's AI answers correctly</span></div>
   </div>
 
   <section id="why">
@@ -258,14 +277,16 @@ const reply = supportBot.answer(text);</pre>
   </section>
 
   <section id="try">
-    <h2>Try it with your own message</h2>
-    <p class="lead">Type any Kazakh message on a Russian keyboard or in Latin letters. Restored letters are highlighted;
-    dotted words are the ones Qalaisyn is unsure about, shown as suggestions instead of silent changes.</p>
+    <h2>Look inside the engine</h2>
+    <p class="lead">In real use there is no text box: the engine runs automatically inside a company's chatbot,
+    translator or search. This box only lets you watch what it does to a message. Type any Kazakh message on a Russian
+    keyboard or in Latin letters: restored letters are highlighted, and dotted words are the ones Qalaisyn is unsure
+    about (a chatbot can ask the customer or use both options).</p>
     <div class="try">
       <div>
-        <label class="k" for="msg">A message, typed like in a chat</label>
+        <label class="k" for="msg">A message as a customer would type it</label>
         <textarea id="msg" spellcheck="false">ертен физикадан бакылау болама дайындалдынба</textarea>
-        <button class="go" id="go">Restore</button>
+        <button class="go" id="go">Run the engine on this message</button>
         <p class="note-sm">Ctrl + Enter also works. Everything runs on your device; nothing is sent anywhere.</p>
       </div>
       <div id="out" class="res"></div>
@@ -377,13 +398,13 @@ async function hero() {
   const msg = "ушак кешигип жатыр ма", fixed = "ұшақ кешігіп жатыр ма";
   const show = id => $(id).classList.add("on");
   $("h-fixed").innerHTML = highlightSentence(msg, fixed);
-  if (REDUCED) { $("h-msg").textContent = msg; ["h-fix","h-bad","h-good"].forEach(show); return; }
+  if (REDUCED) { $("h-msg").textContent = msg; ["h-fix","h-bad","h-good","h-note"].forEach(show); return; }
   const wait = ms => new Promise(r => setTimeout(r, ms));
   $("h-msg").innerHTML = '<span id="h-t"></span><span class="caret"></span>';
   await wait(500);
   for (const ch of msg) { $("h-t").textContent += ch; await wait(55); }
   await wait(350); $("h-msg").textContent = msg;
-  show("h-bad"); await wait(900); show("h-fix"); await wait(900); show("h-good");
+  show("h-bad"); await wait(900); show("h-fix"); await wait(900); show("h-good"); await wait(700); show("h-note");
 }
 
 function showScenario(i) {
