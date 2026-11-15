@@ -13,7 +13,7 @@ body = markdown.markdown(md, extensions=["tables"])
 body = body.replace("<h2>What we added</h2>",
                     f'<img src="data:image/png;base64,{img}" class="chart"><h2>What we added</h2>', 1)
 html = f"""<!doctype html><html><head><meta charset="utf-8"><style>
-@page {{ size: A4; margin: 10mm 12mm; }}
+@page {{ size: A4; margin: 8mm 12mm; }}
 body {{ font-family: 'Segoe UI', Arial, sans-serif; font-size: 8.3pt; line-height: 1.3; color: #1B2433; }}
 h1 {{ font-size: 15.5pt; line-height: 1.15; margin: 0 0 2px; color: #1B2433; letter-spacing: -.01em; }}
 h1 + p {{ color: #5F6B7A; margin-bottom: 6px; }}

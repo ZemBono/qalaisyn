@@ -32,5 +32,5 @@ Our own data and questions: a generator of six real typing styles, 70 real messa
 1. More chat forms (*кейн* → *кейін*, *келейн* → *келейін*), more native-speaker test messages, and longer context for н/ң and і/и. 2. A plug-in API for support chatbots and a phone keyboard; more languages.
 
 ## Sources
-Tatoeba (CC BY 2.0 FR) · FLORES-200 (CC BY-SA 4.0) · Kazakh and Kyrgyz Wikipedia via Hugging Face (CC BY-SA) · OPUS OpenSubtitles · FrequencyWords Russian list (MIT/CC BY-SA) · NLLB-200 600M, Meta (CC BY-NC 4.0, evaluation only) · PyTorch, Transformers, sacrebleu, pandas, matplotlib, Gradio · Claude (Anthropic) helped with code and text.
+Tatoeba (CC BY 2.0 FR) · FLORES-200 (CC BY-SA 4.0) · Kazakh and Kyrgyz Wikipedia via Hugging Face (CC BY-SA) · OPUS OpenSubtitles · FrequencyWords Russian list (MIT/CC BY-SA) · NLLB-200 600M, Meta (CC BY-NC 4.0, evaluation only) · PyTorch, Transformers, sacrebleu, pandas, matplotlib, Gradio, Playwright · AI tools: Claude (code, text), ElevenLabs (video voice).
 *This project is a prototype and is not medical or financial advice.*
