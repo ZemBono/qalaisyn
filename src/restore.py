@@ -122,6 +122,10 @@ def strict_ok(tok: str, word: str) -> bool:
 
 
 PARTICLES = {"ма", "ме", "ба", "бе", "па", "пе", "ma", "me", "ba", "be", "pa", "pe"}
+# Very short chat contractions that typo search would otherwise turn into an unrelated word (жатм -> атом).
+# Longer colloquial forms (жатсың, кешіп келем, боп, кеп, барам) are already in the training text.
+CONTRACTIONS = {"жатм": "жатырмын", "жатрм": "жатырмын", "жатырм": "жатырмын",
+                "jatm": "жатырмын", "jatyrm": "жатырмын", "zhatyrm": "жатырмын"}
 
 
 def _load_russian(n=30000):
@@ -434,6 +438,9 @@ class QalaisynRestorer:
                 continue
             if self.is_russian(tok):
                 lattice.append([(clean_token(tok), 0.0)])
+                continue
+            if clean_token(tok) in CONTRACTIONS:
+                lattice.append([(CONTRACTIONS[clean_token(tok)], 0.0)])
                 continue
             cands = self.lex.candidates(tok, self.top)
             opts = [(w, self._channel(tok, w, uses_q)) for w in cands]
