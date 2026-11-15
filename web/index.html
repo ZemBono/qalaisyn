@@ -132,6 +132,7 @@ textarea{width:100%;font-family:inherit;font-size:19px;line-height:1.45;backgrou
 .note-sm{font-size:13.5px;color:var(--muted)}
 
 .facts{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+#why-not-llm h3{margin:0;font-size:17px}
 .fact{background:#fff;border:1px solid var(--line);border-radius:16px;padding:16px 18px}
 .fact .big{font-size:30px;font-weight:700;letter-spacing:-.01em} .fact p{font-size:14px;color:var(--muted);margin:4px 0 0}
 .native{margin-top:14px;display:grid;grid-template-columns:1fr 1.4fr;gap:14px;align-items:center}
@@ -182,7 +183,7 @@ footer .links{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:12px}
       <p class="lab">Inside an airline's support chatbot</p>
       <div class="me" id="h-msg"></div>
       <div class="step-in" id="h-fix"><p class="lab" style="margin-top:14px">Qalaisyn puts the letters back</p><div class="fixed" id="h-fixed"></div></div>
-      <div class="row bad step-in" id="h-bad"><small>The AI reads it as typed</small>“is there a rumour going on?”</div>
+      <div class="row bad step-in" id="h-bad"><small>The AI reads it as typed</small>“is there a rumor going on?”</div>
       <div class="row good step-in" id="h-good"><small>The AI reads it after Qalaisyn</small>“is the plane running late?”</div>
       <p class="lab step-in" id="h-note" style="margin:12px 0 0">Qalaisyn runs inside the chatbot, between the message and the AI. The passenger never sees it and changes nothing.</p>
     </div>
@@ -223,7 +224,7 @@ footer .links{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:12px}
         </div>
         <p>A Russian keyboard has no <span class="lt">ө</span>, so <i>“go through”</i> is typed as the word for <i>“fire”</i>.
         In the airline example above, the word for <i>airplane</i> (ұшақ) loses <span class="lt">ұ</span> and
-        <span class="lt">қ</span>, and the translator guesses <i>“rumour”</i>.</p>
+        <span class="lt">қ</span>, and the translator guesses <i>“rumor”</i>.</p>
         <p class="analogy">It is like Spanish without accents, where <i>papá</i> (dad) and <i>papa</i> (potato) become the
         same word, except that in Kazakh this happens in almost every second word.</p>
       </div>
@@ -245,7 +246,7 @@ footer .links{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:12px}
       <div class="node"><div class="t">Customer's phone</div><div class="d">types as usual:<br>“ушак кешигип жатыр ма”</div></div>
       <div class="arrow">→</div>
       <div class="server"><span class="tag">inside the company's system</span>
-        <div class="node q"><div class="t">Qalaisyn</div><div class="d">puts the letters back:<br>“ұшақ кешігіп жатыр ма”<br>in under a millisecond</div></div>
+        <div class="node q"><div class="t">Qalaisyn</div><div class="d">puts the letters back:<br>“ұшақ кешігіп жатыр ма”<br>in a few milliseconds</div></div>
         <div class="arrow">→</div>
         <div class="node"><div class="t">Their AI</div><div class="d">chatbot, translator, search, spam filter</div></div>
       </div>
@@ -353,6 +354,23 @@ const reply = supportBot.answer(text);</pre>
       <div class="step"><div class="n">3</div><h3>Ask only when unsure</h3><p>Every word gets a probability. Below 90% it
         becomes a suggestion instead of a silent change. Russian words like “короче” are left alone.</p></div>
     </div>
+  </section>
+
+  <section id="why-not-llm">
+    <h2>Why not just ask ChatGPT?</h2>
+    <p class="lead">A large AI model can often guess what a message means. Qalaisyn is built for a different job: a small,
+    fast step that every message goes through before any AI sees it.</p>
+    <div class="facts">
+      <div class="card"><h3>Free and fast</h3><p>A large model is paid per message and takes seconds. Qalaisyn costs
+        nothing to run and takes milliseconds, so a bank can pass millions of messages through it.</p></div>
+      <div class="card"><h3>Private</h3><p>It runs on the company's own server, or even inside a web page like this one.
+        Customers' messages are not sent to another company, and no internet connection is needed.</p></div>
+      <div class="card"><h3>Works with them</h3><p>It can sit in front of any AI, large models included, and hand it clean
+        Kazakh. Honest note: we have not yet measured large models directly; that is our next test.</p></div>
+    </div>
+    <p class="analogy" style="margin-top:12px">Putting dropped letters back has been studied before, for languages such as
+    Vietnamese and Romanian. What is new here is Kazakh the way people really chat: a Russian keyboard or Latin letters,
+    slang, Russian words and typos, and an engine that says when it is unsure.</p>
   </section>
 
   <section>

@@ -26,7 +26,7 @@ th, td {{ border-bottom: 1px solid #DCE1E7; padding: 2.5px 5px; text-align: left
 th {{ color: #5F6B7A; font-weight: 600; border-bottom: 1.5px solid #B9C3CE; }}
 td:last-child {{ color: #00737D; }}
 ol {{ margin: 2px 0 2px 16px; padding: 0; }}
-img.chart {{ width: 46%; display: block; margin: 0 auto; }}
+img.chart {{ width: 38%; display: block; margin: 0 auto; }}
 code {{ font-family: Consolas, monospace; font-size: 7.8pt; background: #F1F4F7; padding: 0 3px; border-radius: 3px; }}
 </style></head><body>{body}</body></html>"""
 (ROOT / "WRITEUP.html").write_text(html, encoding="utf-8")

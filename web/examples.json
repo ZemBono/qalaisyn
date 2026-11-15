@@ -21,7 +21,6 @@
   "Bank": [
    "несие бойынша толемди кешиктирсем бола ма",
    "кредит толей алмай журмин комектесиниздер",
-   "картамды урлап кетти бугаттаныз",
    "картадан акша шешилип кетипти мен ешнарсе алмадым",
    "аударым откен жок акшам кайда"
   ],
@@ -54,13 +53,11 @@
   "Everyday": [
    "салем калайсын ертен мектепке барасын ба",
    "уйге келе жатм кешке хабарласамын",
-   "рахмет бауырым комектескенин ушин",
    "короче ертен келем"
   ],
   "Latin letters": [
    "balamnyn qyzuy 39 koterildi ne isteu kerek",
-   "salem qalaisyn erteng mektepke barasyn ba",
-   "kartamdy urlap ketti bugattanyz"
+   "salem qalaisyn erteng mektepke barasyn ba"
   ]
  },
  "limits": [
@@ -71,70 +68,63 @@
   "несие бойынша толемди кешиктирсем бола ма": {
    "fixed": "несие бойынша төлемді кешіктірсем бола ма",
    "raw_en": "Can I cash out the loan amount",
-   "fixed_en": "can I delay payment on loan",
+   "fixed_en": "Can I delay payment on loan",
    "bot_raw": "To withdraw cash from your loan account, visit any of our ATMs with your card.",
    "bot_fixed": "I can move your loan payment date by up to 30 days at no cost. Shall I do it?"
   },
   "кредит толей алмай журмин комектесиниздер": {
    "fixed": "кредит төлей алмай жүрмін көмектесіңіздер",
-   "raw_en": "non-credited commetticines",
-   "fixed_en": "I can 't pay my loan please help",
+   "raw_en": "Non-credited commetticines",
+   "fixed_en": "I can't pay my loan please help",
    "bot_raw": "Sorry, I did not understand your question. A human operator will reply in about 25 minutes.",
    "bot_fixed": "I can move your loan payment date by up to 30 days at no cost. Shall I do it?"
   },
-  "картамды урлап кетти бугаттаныз": {
-   "fixed": "картамды ұрлап кетті бұғаттаныз",
-   "raw_en": "My card is stolen and I can't find it",
-   "fixed_en": "My card was stolen and locked",
-   "bot_raw": "Sorry, I did not understand your question. A human operator will reply in about 25 minutes.",
-   "bot_fixed": "Sorry, I did not understand your question. A human operator will reply in about 25 minutes."
-  },
   "картадан акша шешилип кетипти мен ешнарсе алмадым": {
    "fixed": "картадан ақша шешіліп кетіпті мен ешнәрсе алмадым",
-   "raw_en": "I couldn 't help but get a map out of my head",
-   "fixed_en": "money was removed from the card and I couldn 't get anything",
+   "raw_en": "I couldn't help but get a map out of my head",
+   "fixed_en": "Money was removed from the card and I couldn't get anything",
    "bot_raw": "Sorry, I did not understand your question. A human operator will reply in about 25 minutes.",
    "bot_fixed": "Sorry, I did not understand your question. A human operator will reply in about 25 minutes."
   },
   "аударым откен жок акшам кайда": {
    "fixed": "аударым өткен жоқ ақшам қайда",
-   "raw_en": "where is my money without transfer",
-   "fixed_en": "where is my money not transferred",
+   "raw_en": "Where is my money without transfer",
+   "fixed_en": "Where is my money not transferred",
    "bot_raw": "Sorry about the missing order. Your refund is on its way: 3–5 working days.",
    "bot_fixed": "Sorry about the missing order. Your refund is on its way: 3–5 working days."
   },
   "ушак кешигип жатыр ма": {
    "fixed": "ұшақ кешігіп жатыр ма",
-   "raw_en": "is there a rumor going on ?",
-   "fixed_en": "is the plane running late ?",
+   "raw_en": "Is there a rumor going on?",
+   "fixed_en": "Is the plane running late?",
    "bot_raw": "Sorry, I did not understand your question. A human operator will reply in about 25 minutes.",
    "bot_fixed": "Flight KC 852 to Astana is delayed by 40 minutes. New departure: 18:40."
   },
   "рейс кашан ушады": {
    "fixed": "рейс қашан ұшады",
-   "raw_en": "when the flight will start",
-   "fixed_en": "when the flight will depart",
+   "raw_en": "When the flight will start",
+   "fixed_en": "When the flight will depart",
    "bot_raw": "Flight KC 852 to Astana is delayed by 40 minutes. New departure: 18:40.",
    "bot_fixed": "Flight KC 852 to Astana is delayed by 40 minutes. New departure: 18:40."
   },
   "баламнын кызуы 39 котерилди не истеу керек": {
    "fixed": "баламның қызуы 39 көтерілді не істеу керек",
-   "raw_en": "fever of the child 39 caterilldi or eat",
-   "fixed_en": "my baby has a fever of 39 what to do",
+   "raw_en": "Fever of the child 39 caterilldi or eat",
+   "fixed_en": "My baby has a fever of 39 what to do",
    "bot_raw": "Sorry, I did not understand your question. A human operator will reply in about 25 minutes.",
    "bot_fixed": "Sorry, I did not understand your question. A human operator will reply in about 25 minutes."
   },
   "ажеме жедел жардем керек уйге келиниз": {
    "fixed": "әжеме жедел жәрдем керек үйге келіңіз",
-   "raw_en": "need urgent assistance to my grandmother",
-   "fixed_en": "please come to the house where grandmother needs emergency care",
+   "raw_en": "Need urgent assistance to my grandmother",
+   "fixed_en": "Please come to the house where grandmother needs emergency care",
    "bot_raw": "Sorry, I did not understand your question. A human operator will reply in about 25 minutes.",
    "bot_fixed": "Sorry, I did not understand your question. A human operator will reply in about 25 minutes."
   },
   "ертенге дарыгерге жазылуга болама": {
    "fixed": "ертеңге дәрігерге жазылуға бола ма",
    "raw_en": "Do not register for early treatment",
-   "fixed_en": "can you see a doctor tomorrow ?",
+   "fixed_en": "Can you see a doctor tomorrow?",
    "bot_raw": "Sorry, I did not understand your question. A human operator will reply in about 25 minutes.",
    "bot_fixed": "Sorry, I did not understand your question. A human operator will reply in about 25 minutes."
   },
@@ -147,119 +137,105 @@
   },
   "тугу туралы куалик кайдан алуга болады": {
    "fixed": "туу туралы куәлік қайдан алуға болады",
-   "raw_en": "where to get a birth certificate",
-   "fixed_en": "where to obtain a birth certificate",
+   "raw_en": "Where to get a birth certificate",
+   "fixed_en": "Where to obtain a birth certificate",
    "bot_raw": "Sorry, I did not understand your question. A human operator will reply in about 25 minutes.",
    "bot_fixed": "Sorry, I did not understand your question. A human operator will reply in about 25 minutes."
   },
   "тапсырыс али келген жок акшамды кайтарыныз": {
    "fixed": "тапсырыс әлі келген жоқ ақшамды қайтарыңыз",
    "raw_en": "Please return the order not yet received",
-   "fixed_en": "return my money that the order has not yet arrived",
+   "fixed_en": "Return my money that the order has not yet arrived",
    "bot_raw": "To return an order, pack the item and book a courier pickup in the app.",
    "bot_fixed": "Sorry about the missing order. Your refund is on its way: 3–5 working days."
   },
   "доставка канша турады": {
    "fixed": "доставка қанша тұрады",
-   "raw_en": "delivery is still on hold",
-   "fixed_en": "how much is the delivery cost",
+   "raw_en": "Delivery is still on hold",
+   "fixed_en": "How much is the delivery cost",
    "bot_raw": "Sorry, I did not understand your question. A human operator will reply in about 25 minutes.",
    "bot_fixed": "Sorry, I did not understand your question. A human operator will reply in about 25 minutes."
   },
   "тауар сынык келди кайтарып беремин": {
    "fixed": "тауар сынық келді қайтарып беремін",
    "raw_en": "I will return the product when it is broken",
-   "fixed_en": "product fault came I will return",
+   "fixed_en": "Product fault came I will return",
    "bot_raw": "Sorry, I did not understand your question. A human operator will reply in about 25 minutes.",
    "bot_fixed": "Sorry, I did not understand your question. A human operator will reply in about 25 minutes."
   },
   "такси кашан келеди мен кутип турмын": {
    "fixed": "такси қашан келеді мен күтіп тұрмын",
-   "raw_en": "when will the taxi come and I will wait",
-   "fixed_en": "when will the taxi arrive I am waiting",
+   "raw_en": "When will the taxi come and I will wait",
+   "fixed_en": "When will the taxi arrive I am waiting",
    "bot_raw": "Sorry, I did not understand your question. A human operator will reply in about 25 minutes.",
    "bot_fixed": "Sorry, I did not understand your question. A human operator will reply in about 25 minutes."
   },
   "автобус аялдамасы кай жерде": {
    "fixed": "автобус аялдамасы қай жерде",
-   "raw_en": "where is the bus stop",
-   "fixed_en": "where is the bus stop",
+   "raw_en": "Where is the bus stop",
+   "fixed_en": "Where is the bus stop",
    "bot_raw": "Sorry, I did not understand your question. A human operator will reply in about 25 minutes.",
    "bot_fixed": "Sorry, I did not understand your question. A human operator will reply in about 25 minutes."
   },
   "ертен сабак нешеде басталады": {
    "fixed": "ертең сабақ нешеде басталады",
-   "raw_en": "how early does the lesson start",
-   "fixed_en": "What time will the class start tomorrow ?",
+   "raw_en": "How early does the lesson start",
+   "fixed_en": "What time will the class start tomorrow?",
    "bot_raw": "Sorry, I did not understand your question. A human operator will reply in about 25 minutes.",
    "bot_fixed": "Sorry, I did not understand your question. A human operator will reply in about 25 minutes."
   },
   "уй тапсырманы жиберши": {
    "fixed": "үй тапсырманы жіберші",
-   "raw_en": "send the home task",
-   "fixed_en": "send home assignment",
+   "raw_en": "Send the home task",
+   "fixed_en": "Send home assignment",
    "bot_raw": "Sorry, I did not understand your question. A human operator will reply in about 25 minutes.",
    "bot_fixed": "Sorry, I did not understand your question. A human operator will reply in about 25 minutes."
   },
   "салем калайсын ертен мектепке барасын ба": {
    "fixed": "сәлем қалайсың ертең мектепке барасың ба",
-   "raw_en": "whether to send the greeting card to school early",
-   "fixed_en": "hello , are you going to school tomorrow ?",
+   "raw_en": "Whether to send the greeting card to school early",
+   "fixed_en": "Hello, are you going to school tomorrow?",
    "bot_raw": "Sorry, I did not understand your question. A human operator will reply in about 25 minutes.",
    "bot_fixed": "Sorry, I did not understand your question. A human operator will reply in about 25 minutes."
   },
   "уйге келе жатм кешке хабарласамын": {
    "fixed": "үйге келе жатырмын кешке хабарласамын",
-   "raw_en": "I 'll call you when I get home",
-   "fixed_en": "I 'm coming home and I 'll call you later tonight",
-   "bot_raw": "Sorry, I did not understand your question. A human operator will reply in about 25 minutes.",
-   "bot_fixed": "Sorry, I did not understand your question. A human operator will reply in about 25 minutes."
-  },
-  "рахмет бауырым комектескенин ушин": {
-   "fixed": "рахмет бауырым көмектескенін үшін",
-   "raw_en": "thanks my brother for the comic",
-   "fixed_en": "Thank you for helping my brother",
+   "raw_en": "I'll call you when I get home",
+   "fixed_en": "I'm coming home and I'll call you later tonight",
    "bot_raw": "Sorry, I did not understand your question. A human operator will reply in about 25 minutes.",
    "bot_fixed": "Sorry, I did not understand your question. A human operator will reply in about 25 minutes."
   },
   "короче ертен келем": {
    "fixed": "короче ертең келем",
-   "raw_en": "I 'm coming early",
+   "raw_en": "I'm coming early",
    "fixed_en": "I will be coming tomorrow",
    "bot_raw": "Sorry, I did not understand your question. A human operator will reply in about 25 minutes.",
    "bot_fixed": "Sorry, I did not understand your question. A human operator will reply in about 25 minutes."
   },
   "balamnyn qyzuy 39 koterildi ne isteu kerek": {
    "fixed": "баламның қызуы 39 көтерілді не істеу керек",
-   "raw_en": "balamnyn qyzuy 39 is needed",
-   "fixed_en": "my baby has a fever of 39 what to do",
+   "raw_en": "Balamnyn qyzuy 39 is needed",
+   "fixed_en": "My baby has a fever of 39 what to do",
    "bot_raw": "Sorry, I did not understand your question. A human operator will reply in about 25 minutes.",
    "bot_fixed": "Sorry, I did not understand your question. A human operator will reply in about 25 minutes."
   },
   "salem qalaisyn erteng mektepke barasyn ba": {
    "fixed": "сәлем қалайсың ертең мектепке барасың ба",
-   "raw_en": "salem qalaisyn erteng school to barasyn ba",
-   "fixed_en": "hello , are you going to school tomorrow ?",
-   "bot_raw": "Sorry, I did not understand your question. A human operator will reply in about 25 minutes.",
-   "bot_fixed": "Sorry, I did not understand your question. A human operator will reply in about 25 minutes."
-  },
-  "kartamdy urlap ketti bugattanyz": {
-   "fixed": "картамды ұрлап кетті бұғаттаныз",
-   "raw_en": "kartamdy urlap went to bugattanyz",
-   "fixed_en": "My card was stolen and locked",
+   "raw_en": "Salem qalaisyn erteng school to barasyn ba",
+   "fixed_en": "Hello, are you going to school tomorrow?",
    "bot_raw": "Sorry, I did not understand your question. A human operator will reply in about 25 minutes.",
    "bot_fixed": "Sorry, I did not understand your question. A human operator will reply in about 25 minutes."
   },
   "жуким жогалып кетти": {
    "fixed": "тұқым жоғалып кетті",
    "raw_en": "My bug is missing",
-   "fixed_en": "seed is missing",
+   "fixed_en": "Seed is missing",
    "bot_raw": "Sorry, I did not understand your question. A human operator will reply in about 25 minutes.",
    "bot_fixed": "Sorry, I did not understand your question. A human operator will reply in about 25 minutes."
   },
   "егов аркылы аныктаманы калай алам": {
    "fixed": "егор арқылы анықтаманы қалай алам",
-   "raw_en": "can retrieve the cross-definition",
+   "raw_en": "Can retrieve the cross-definition",
    "fixed_en": "How do I get a definition using egor",
    "bot_raw": "Sorry, I did not understand your question. A human operator will reply in about 25 minutes.",
    "bot_fixed": "Sorry, I did not understand your question. A human operator will reply in about 25 minutes."

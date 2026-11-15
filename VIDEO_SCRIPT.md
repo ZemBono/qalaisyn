@@ -18,10 +18,10 @@
 *(Русский смысл: на большинстве телефонов русская раскладка без казахских букв. Бабушка пишет боту поликлиники про температуру внука, а ИИ читает бессмыслицу. Она не виновата — ИИ просто не понимает, как люди на самом деле пишут.)*
 
 **0:15–0:35 · Схема «Where Qalaisyn lives»**
-> "Qalaisyn is not an app. It's a small engine that sits inside a company's system — between the customer's message and the AI that answers. Customers never see it. It puts the missing letters back in under a millisecond, like a spell-checker inside a keyboard."
+> "Qalaisyn is not an app. It's a small engine that sits inside a company's system — between the customer's message and the AI that answers. Customers never see it. It puts the missing letters back in a few milliseconds, like a spell-checker inside a keyboard."
 
 **0:35–1:05 · Раздел «See it inside a support chatbot» — нажать «Bank», потом «Airline»**
-> "Here is the same simple support bot twice. A customer asks the bank: can I delay my loan payment? Without Qalaisyn, the bot reads 'can I cash out the loan' and explains how to withdraw cash. With Qalaisyn inside, it offers to move the payment date. The airline bot thinks a question about a late plane is about a rumour — until Qalaisyn fixes one word."
+> "Here is the same simple support bot twice. A customer asks the bank: can I delay my loan payment? Without Qalaisyn, the bot reads 'can I cash out the loan' and explains how to withdraw cash. With Qalaisyn inside, it offers to move the payment date. The airline bot thinks a question about a late plane is about a rumor — until Qalaisyn fixes one word."
 
 **1:05–1:25 · «Try it with your own message» — набрать вживую** `ертен физикадан бакылау болама`
 > "You can try it yourself on the website — it runs right in your browser. Highlighted letters are the ones Qalaisyn put back, and when it's unsure, it shows suggestions instead of guessing silently."
@@ -34,3 +34,18 @@
 
 ---
 Произношение: Qalaisyn = «Калайсын». Gulnar = «Гульнар».
+
+---
+
+## Готовая запись экрана: demo_video/Qalaisyn_demo.mp4 (1:48, без звука)
+Что идёт на экране (примерно), под это читай текст выше:
+- 0:00–0:08 — главный экран с примером авиакомпании
+- 0:08–0:21 — «Why one missing letter matters» (Гульнар, өт/от)
+- 0:21–0:33 — «Where Qalaisyn lives» (схема, где стоит движок)
+- 0:33–0:41 — «Not only Kazakh» (кыргызский: 70% → 4%)
+- 0:41–1:03 — чат-бот: Bank, Airline, E-government, Shop
+- 1:03–1:20 — «Look inside the engine»: вживую печатается «ертен физикадан бакылау болама»
+- 1:20–1:36 — «Results»: проверка носителем языка, цифры
+- 1:36–1:48 — «Where it still goes wrong»
+Озвучка: открой видео в Clipchamp → «Запись» → «Аудио» (или запиши голос отдельно и перетащи на дорожку).
+Про кыргызский можно сказать: "The same code, unchanged, works for Kyrgyz: wrong words drop from 70 to 4 percent."
