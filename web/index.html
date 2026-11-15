@@ -6,83 +6,165 @@
 <title>Qalaisyn</title>
 <meta name="description" content="An engine inside chatbots and translators that understands Kazakh the way people really type it.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Golos+Text:wght@400;500;600;700&display=swap">
 <style>
-:root{--paper:#F4F6F8;--card:#fff;--ink:#1B2433;--muted:#5F6B7A;--line:#DCE1E7;--sea:#1F6F78;--sea-soft:#E3F1F1;
+:root{--paper:#F4F6F8;--card:#fff;--ink:#1B2433;--muted:#5F6B7A;--line:#DCE1E7;--sea:#1F6F78;--sea-dark:#164E54;--sea-soft:#E3F1F1;
   --gold:#E3A72F;--gold-soft:#FBEFD2;--brick:#A8513B;--brick-soft:#F7E9E4;--bubble:#E9F3F2}
 *{box-sizing:border-box}
-html,body{margin:0;background:var(--paper);color:var(--ink);font-family:'Golos Text','Segoe UI',system-ui,sans-serif}
-.wrap{max-width:1080px;margin:0 auto;padding:28px 20px 40px}
-.brand{font-weight:700;font-size:17px;color:var(--sea)} .brand b{color:var(--gold)}
-h1{font-size:40px;line-height:1.12;letter-spacing:-.02em;margin:8px 0 12px;max-width:860px}
-.sub{font-size:18px;line-height:1.55;color:var(--muted);max-width:740px;margin:0}
-section{margin-top:34px} h2{font-size:23px;margin:0 0 6px} .lead{font-size:16px;color:var(--muted);line-height:1.55;max-width:780px;margin:0 0 14px}
+[hidden]{display:none!important}
+html{scroll-behavior:smooth;scroll-padding-top:70px}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:'Golos Text','Segoe UI',system-ui,sans-serif;line-height:1.5}
+a{color:var(--sea)}
+.wrap{max-width:1100px;margin:0 auto;padding:0 20px}
+button{font-family:inherit;cursor:pointer}
+:focus-visible{outline:3px solid #9FD3D6;outline-offset:2px}
+
+/* nav */
+nav{position:sticky;top:0;z-index:10;background:rgba(244,246,248,.92);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+nav .wrap{display:flex;align-items:center;gap:22px;height:58px}
+.brand{font-weight:700;font-size:18px;color:var(--sea);text-decoration:none} .brand b{color:var(--gold)}
+nav .links{display:flex;gap:18px;font-size:14.5px} nav .links a{color:var(--muted);text-decoration:none} nav .links a:hover{color:var(--ink)}
+nav .right{margin-left:auto;display:flex;gap:8px}
+.btn{display:inline-flex;align-items:center;gap:6px;border-radius:10px;padding:8px 14px;font-size:14.5px;font-weight:500;text-decoration:none;border:1px solid var(--line);background:#fff;color:var(--ink)}
+.btn:hover{border-color:var(--sea);color:var(--sea)}
+.btn.primary{background:var(--sea);border-color:var(--sea);color:#fff} .btn.primary:hover{background:var(--sea-dark);color:#fff}
+
+/* hero */
+.hero{display:grid;grid-template-columns:1.05fr 1fr;gap:40px;align-items:center;padding:52px 0 18px}
+h1{font-size:44px;line-height:1.1;letter-spacing:-.025em;margin:0 0 16px}
+.sub{font-size:18px;color:var(--muted);margin:0 0 22px;max-width:560px}
+.cta{display:flex;flex-wrap:wrap;gap:10px}
+.status{font-size:13.5px;color:var(--muted);margin-top:16px} .status.ready{color:var(--sea)}
+.demo{background:#fff;border:1px solid var(--line);border-radius:20px;padding:20px;box-shadow:0 20px 40px -24px rgba(27,36,51,.25)}
+.demo .lab{font-size:12.5px;color:var(--muted);margin:0 0 6px}
+.me{display:inline-block;background:var(--bubble);border:1px solid #CFE3E1;border-radius:16px 16px 16px 4px;padding:9px 14px;font-size:18px;min-height:44px}
+.caret{display:inline-block;width:2px;height:1.1em;background:var(--sea);vertical-align:-3px;margin-left:1px;animation:blink 1s steps(1) infinite}
+@keyframes blink{50%{opacity:0}}
+.fixed{font-size:22px;font-weight:500;margin:4px 0 0;min-height:33px}
+.lt{background:var(--gold-soft);box-shadow:inset 0 -3px 0 var(--gold);border-radius:3px;padding:0 1px}
+.demo .row{margin-top:10px;border-radius:12px;padding:10px 14px;font-size:16px}
+.row.bad{background:var(--brick-soft);color:var(--brick)} .row.good{background:var(--sea-soft);color:var(--sea-dark);font-weight:500}
+.row small{display:block;font-size:12.5px;opacity:.8;font-weight:400}
+.step-in{opacity:0;transform:translateY(4px);transition:opacity .45s ease,transform .45s ease}
+.step-in.on{opacity:1;transform:none}
+@media (prefers-reduced-motion:reduce){.step-in{transition:none}}
+
+section{padding:40px 0 6px} h2{font-size:26px;letter-spacing:-.01em;margin:0 0 6px}
+.lead{font-size:16.5px;color:var(--muted);max-width:780px;margin:0 0 18px}
 .card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:18px 20px}
 .why{display:grid;grid-template-columns:1.25fr 1fr;gap:14px}
-.words{display:flex;gap:14px;margin:4px 0 12px} .w{flex:1;border-radius:12px;padding:12px 14px;border:1px solid var(--line)}
+.words{display:flex;gap:14px;margin:2px 0 12px} .w{flex:1;border-radius:12px;padding:12px 14px;border:1px solid var(--line)}
 .w .kz{font-size:30px;font-weight:700} .w .en{font-size:15px;color:var(--muted)}
 .w.good{background:var(--sea-soft);border-color:#C4E0E0} .w.bad{background:var(--brick-soft);border-color:#EBCFC6}
-.card p{font-size:15.5px;line-height:1.55;margin:6px 0 0} .analogy{color:var(--muted);font-size:15px}
-.lt{background:var(--gold-soft);box-shadow:inset 0 -3px 0 var(--gold);border-radius:3px;padding:0 1px}
-.flow{display:flex;align-items:stretch;margin:10px 0 4px;flex-wrap:wrap}
+.card p{font-size:15.5px;margin:6px 0 0} .analogy{color:var(--muted)}
+.big-stat{font-size:40px;font-weight:700;letter-spacing:-.02em;line-height:1}
+.flow{display:flex;align-items:stretch;flex-wrap:wrap}
 .node{background:#fff;border:1px solid var(--line);border-radius:12px;padding:12px 14px;min-width:150px;flex:1}
 .node .t{font-weight:700;font-size:15.5px} .node .d{font-size:13.5px;color:var(--muted);margin-top:3px;line-height:1.4}
 .node.q{background:var(--sea);border-color:var(--sea);color:#fff} .node.q .d{color:#D6ECEC}
 .arrow{display:flex;align-items:center;padding:0 8px;color:#9AA5B1;font-size:22px}
 .server{border:2px dashed #B9C3CE;border-radius:16px;padding:10px;display:flex;flex:3;position:relative;background:#FAFBFC}
-.server .lab{position:absolute;top:-11px;left:14px;background:var(--paper);padding:0 6px;font-size:13px;color:var(--muted)}
-pre.code{background:var(--ink);color:#E6EDF3;border-radius:12px;padding:14px 16px;font-size:13.5px;line-height:1.55;overflow-x:auto;margin:12px 0 0}
+.server .tag{position:absolute;top:-11px;left:14px;background:var(--paper);padding:0 6px;font-size:13px;color:var(--muted)}
+.where-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:14px}
+.where-grid div{background:#fff;border:1px solid var(--line);border-radius:12px;padding:12px;font-size:14.5px}
+.where-grid b{display:block;font-size:15px}
+pre.code{background:var(--ink);color:#E6EDF3;border-radius:12px;padding:14px 16px;font-size:13.5px;line-height:1.55;overflow-x:auto;margin:14px 0 0}
 pre.code .c{color:#8FA3B8}
-.pills{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 12px}
-button{font-family:inherit;cursor:pointer}
-.pill{background:#fff;border:1px solid var(--line);border-radius:999px;padding:7px 14px;font-size:15px;color:var(--ink)}
-.pill:hover,.pill.on{border-color:var(--sea);color:var(--sea)}
-.pill:focus-visible,.go:focus-visible,textarea:focus-visible{outline:3px solid #9FD3D6;outline-offset:2px}
+
+.pills{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 14px}
+.pill{background:#fff;border:1px solid var(--line);border-radius:999px;padding:7px 14px;font-size:14.5px;color:var(--ink)}
+.pill:hover{border-color:var(--sea);color:var(--sea)} .pill.on{background:var(--sea);border-color:var(--sea);color:#fff}
 .bots{display:grid;grid-template-columns:1fr 1fr;gap:16px}
 .bots h3{font-size:16px;margin:0 0 8px} .bots h3 span{font-weight:400;color:var(--muted)}
-.me{background:var(--bubble);border:1px solid #CFE3E1;border-radius:16px 16px 16px 4px;padding:10px 14px;font-size:18px;display:inline-block;margin:2px 0 8px}
-.seen{font-size:13.5px;color:var(--brick);margin:0 0 8px} .seen.ok{color:var(--sea)}
-.bot{background:var(--brick-soft);border:1px solid #EBCFC6;border-radius:16px 16px 4px 16px;padding:10px 14px;font-size:16.5px;line-height:1.45;margin-left:28px}
+.seen{font-size:13.5px;color:var(--brick);margin:8px 0} .seen.ok{color:var(--sea)}
+.bot{background:var(--brick-soft);border:1px solid #EBCFC6;border-radius:16px 16px 4px 16px;padding:10px 14px;font-size:16px;margin-left:28px}
 .bot.good{background:var(--sea-soft);border-color:#C4E0E0}
 .inside{background:#fff;border:1px dashed #B9C3CE;border-radius:14px;padding:12px 16px;margin-top:14px}
-.k{font-size:14px;color:var(--muted);margin-bottom:6px} .inside .v{font-size:20px}
+.k{font-size:13.5px;color:var(--muted);margin-bottom:4px} .inside .v{font-size:20px}
+
+.gallery{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}
+.ex{background:#fff;border:1px solid var(--line);border-radius:16px;padding:16px 18px;display:flex;flex-direction:column;gap:8px}
+.ex .msg{font-size:17px;background:var(--bubble);border:1px solid #CFE3E1;border-radius:14px 14px 14px 4px;padding:7px 12px;align-self:flex-start}
+.ex .fx{font-size:17px;font-weight:500}
+.ex .tr{font-size:14.5px;line-height:1.45;border-top:1px solid var(--line);padding-top:6px}
+.ex .tr span{display:block;font-size:12px;color:var(--muted)}
+.ex .tr.bad{color:var(--brick)} .ex .tr.good{color:var(--sea-dark);font-weight:500}
+.ex button{align-self:flex-start;background:none;border:0;color:var(--sea);font-size:14px;padding:2px 0}
+
 .try{display:grid;grid-template-columns:5fr 6fr;gap:18px;align-items:start}
-textarea{width:100%;font-family:inherit;font-size:19px;line-height:1.45;background:var(--bubble);border:1px solid #CFE3E1;border-radius:16px 16px 16px 4px;padding:12px 14px;resize:vertical;min-height:92px;color:var(--ink)}
-.go{width:100%;background:var(--sea);color:#fff;border:0;border-radius:12px;font-size:16px;padding:13px;margin:10px 0 12px}
-.go:hover{background:#18595F}
-.exl{font-size:14px;color:var(--muted);margin:10px 0 6px}
+textarea{width:100%;font-family:inherit;font-size:19px;line-height:1.45;background:var(--bubble);border:1px solid #CFE3E1;border-radius:16px 16px 16px 4px;padding:12px 14px;resize:vertical;min-height:96px;color:var(--ink)}
+.go{width:100%;background:var(--sea);color:#fff;border:0;border-radius:12px;font-size:16px;padding:13px;margin:10px 0 0} .go:hover{background:var(--sea-dark)}
 .res{display:grid;gap:12px}
 .box{border-radius:14px;padding:14px 18px;border:1px solid var(--line);background:#fff} .box .v{font-size:21px;line-height:1.45}
 .box.before{background:var(--brick-soft);border-color:#EBCFC6} .box.before .v{color:var(--brick)}
-.box.after{background:var(--sea-soft);border-color:#C4E0E0} .box.after .v{color:#164E54;font-weight:500}
+.box.after{background:var(--sea-soft);border-color:#C4E0E0} .box.after .v{color:var(--sea-dark);font-weight:500}
 .unsure{text-decoration:underline dotted #B7791F 2px;text-underline-offset:6px}
 .sugg{margin-top:10px;font-size:14.5px;color:var(--muted)}
 .chip{display:inline-block;margin:6px 6px 0 0;padding:3px 11px;border-radius:999px;background:#FFFBF1;border:1px solid #F0D9A6;color:var(--ink)}
 .lat{margin-top:10px;font-size:14px;color:var(--muted)} .lat b{color:var(--ink);font-weight:500}
-.note-sm{font-size:13.5px;color:var(--muted);line-height:1.5}
+.note-sm{font-size:13.5px;color:var(--muted)}
+
+.facts{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.fact{background:#fff;border:1px solid var(--line);border-radius:16px;padding:16px 18px}
+.fact .big{font-size:30px;font-weight:700;letter-spacing:-.01em} .fact p{font-size:14px;color:var(--muted);margin:4px 0 0}
+.native{margin-top:14px;display:grid;grid-template-columns:1fr 1.4fr;gap:14px;align-items:center}
+.bars{display:grid;gap:8px}
+.bar{display:grid;grid-template-columns:150px 1fr 56px;gap:10px;align-items:center;font-size:14px}
+.bar .track{background:#EEF1F4;border-radius:6px;height:14px;overflow:hidden} .bar .fill{height:100%;border-radius:6px}
+.charts{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:14px}
+.charts figure{margin:0;background:#fff;border:1px solid var(--line);border-radius:16px;padding:10px}
+.charts img{width:100%;display:block;border-radius:8px}
+.charts figcaption{font-size:13px;color:var(--muted);padding:6px 4px 2px}
 .steps{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
-.step{background:#fff;border:1px solid var(--line);border-radius:14px;padding:16px 18px}
+.step{background:#fff;border:1px solid var(--line);border-radius:16px;padding:16px 18px}
 .n{display:inline-flex;width:28px;height:28px;border-radius:50%;background:var(--sea);color:#fff;align-items:center;justify-content:center;font-weight:700;font-size:15px;margin-bottom:8px}
-.step h3{font-size:17px;margin:0 0 6px} .step p{font-size:15px;line-height:1.5;color:var(--muted);margin:0}
-.facts{margin-top:18px;display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
-.fact{border-top:3px solid var(--sea);padding-top:10px} .fact .big{font-size:28px;font-weight:700} .fact p{font-size:14px;color:var(--muted);margin:2px 0 0;line-height:1.45}
-.status{font-size:14px;color:var(--muted);margin:6px 0 0} .status.ready{color:var(--sea)}
-footer{font-size:13px;color:var(--muted);margin-top:26px;line-height:1.55}
-footer a{color:var(--sea)}
-@media (max-width:820px){h1{font-size:30px}.why,.bots,.try,.steps,.facts{grid-template-columns:1fr}.flow,.server{flex-direction:column}.arrow{justify-content:center;transform:rotate(90deg)}}
+.step h3{font-size:17px;margin:0 0 6px} .step p{font-size:15px;color:var(--muted);margin:0}
+.limits{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.limits .card p{font-size:14.5px}
+footer{margin-top:44px;border-top:1px solid var(--line);padding:22px 0 40px;font-size:13.5px;color:var(--muted)}
+footer .links{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:12px}
+@media (max-width:900px){
+  nav .links{display:none} h1{font-size:32px} .hero{grid-template-columns:1fr;padding-top:30px}
+  .why,.bots,.try,.steps,.facts,.gallery,.native,.charts,.limits{grid-template-columns:1fr}
+  .where-grid{grid-template-columns:1fr 1fr} .flow,.server{flex-direction:column} .arrow{justify-content:center;transform:rotate(90deg)}
+  .bar{grid-template-columns:110px 1fr 50px}
+}
 </style>
 </head>
 <body>
-<div class="wrap">
-  <div class="brand">Qalaisyn<b>.</b></div>
-  <h1>An engine inside chatbots and translators that understands Kazakh the way people really type it.</h1>
-  <p class="sub">Most phones in Kazakhstan have a Russian keyboard, which has no letters for ә, ғ, қ, ң, ө, ұ, ү, і.
-  People type the closest Russian letter, and AI systems misread them. Qalaisyn puts the letters back before the AI
-  reads the message.</p>
-  <p class="status" id="status">Loading the engine into your browser (about 20 MB, once)…</p>
+<nav><div class="wrap">
+  <a class="brand" href="#top">Qalaisyn<b>.</b></a>
+  <div class="links"><a href="#why">The problem</a><a href="#where">Where it lives</a><a href="#bot">In a chatbot</a>
+    <a href="#examples">Examples</a><a href="#try">Try it</a><a href="#results">Results</a></div>
+  <div class="right"><a class="btn" href="https://colab.research.google.com/github/ZemBono/qalaisyn/blob/main/Qalaisyn.ipynb" target="_blank" rel="noopener">Notebook</a>
+    <a class="btn" href="https://github.com/ZemBono/qalaisyn" target="_blank" rel="noopener">Code</a></div>
+</div></nav>
 
-  <section>
+<main class="wrap" id="top">
+  <div class="hero">
+    <div>
+      <h1>An engine inside chatbots and translators that understands Kazakh the way people really type it.</h1>
+      <p class="sub">Most phones in Kazakhstan have a Russian keyboard with no keys for ә, ғ, қ, ң, ө, ұ, ү, і. People type
+      the closest Russian letter, and the AI behind bank, airline and government chats misreads them. Qalaisyn puts
+      the letters back before the AI reads the message.</p>
+      <div class="cta"><a class="btn primary" href="#try">Try it with your own message</a><a class="btn" href="#bot">See it inside a chatbot</a><a class="btn" href="#results">Results</a></div>
+      <p class="status" id="status">Loading the engine into your browser (about 20 MB, once)…</p>
+    </div>
+    <div class="demo" aria-live="polite">
+      <p class="lab">A passenger texts an airline chatbot</p>
+      <div class="me" id="h-msg"></div>
+      <div class="step-in" id="h-fix"><p class="lab" style="margin-top:14px">Qalaisyn puts the letters back</p><div class="fixed" id="h-fixed"></div></div>
+      <div class="row bad step-in" id="h-bad"><small>The AI reads it as typed</small>“is there a rumour going on?”</div>
+      <div class="row good step-in" id="h-good"><small>The AI reads it after Qalaisyn</small>“is the plane running late?”</div>
+    </div>
+  </div>
+
+  <section id="why">
     <h2>Why one missing letter matters</h2>
+    <p class="lead">For a Kazakh speaker the meaning is obvious. For an AI trained on standard Kazakh, a missing letter
+    can turn one word into another.</p>
     <div class="why">
       <div class="card">
         <div class="words">
@@ -90,43 +172,48 @@ footer a{color:var(--sea)}
           <div class="w bad"><div class="kz">от</div><div class="en">fire</div></div>
         </div>
         <p>A Russian keyboard has no <span class="lt">ө</span>, so <i>“go through”</i> is typed as the word for <i>“fire”</i>.
-        Real example: a passenger types <b>“ушак кешигип жатыр ма”</b>, meaning <i>“Is the plane late?”</i>. Without
-        <span class="lt">ұ</span> and <span class="lt">қ</span> the word for <i>airplane</i> (ұшақ) is broken, and the
-        airline's translator reads <i>“Is there a rumour going on?”</i></p>
-        <p class="analogy">It is like Spanish without accents, where <i>papá</i> (dad) and <i>papa</i> (potato) become
-        the same word, except that in Kazakh this happens in almost every second word.</p>
+        In the airline example above, the word for <i>airplane</i> (ұшақ) loses <span class="lt">ұ</span> and
+        <span class="lt">қ</span>, and the translator guesses <i>“rumour”</i>.</p>
+        <p class="analogy">It is like Spanish without accents, where <i>papá</i> (dad) and <i>papa</i> (potato) become the
+        same word, except that in Kazakh this happens in almost every second word.</p>
       </div>
       <div class="card">
-        <p style="margin-top:0">Typed this way, <b>47%</b> of words are misspelled in our tests. Over 13 million people
-        speak Kazakh, and banks, airlines, clinics and e-government are moving their support to AI first. Every
-        misread message is a wrong answer, a lost customer or a delayed emergency.</p>
-        <p>The same problem exists wherever phones drop letters: Kyrgyz, Uzbek, Azerbaijani, Turkish, Vietnamese.
-        The same code works for Kyrgyz.</p>
+        <div class="big-stat" data-r="ru_words_wrong_typed" data-f="pct0">47%</div>
+        <p style="margin-top:4px">of words typed this way are misspelled in our tests. Over 13 million people speak Kazakh,
+        and banks, airlines, clinics and e-government are moving their support to AI first. Every misread message is a
+        wrong answer, a lost customer or a delayed emergency.</p>
+        <p class="analogy">The same happens wherever phones drop letters: Kyrgyz, Uzbek, Azerbaijani, Turkish, Vietnamese.</p>
       </div>
     </div>
   </section>
 
-  <section>
+  <section id="where">
     <h2>Where Qalaisyn lives</h2>
     <p class="lead">Not a website and not an app. Customers never see it: it runs inside a company's system, between
     the incoming message and the AI that answers, like a spell-checker inside a keyboard.</p>
     <div class="flow">
       <div class="node"><div class="t">Customer's phone</div><div class="d">types as usual:<br>“ушак кешигип жатыр ма”</div></div>
       <div class="arrow">→</div>
-      <div class="server"><span class="lab">inside the company's system</span>
-        <div class="node q"><div class="t">Qalaisyn</div><div class="d">puts the letters back:<br>“ұшақ кешігіп жатыр ма”<br>in milliseconds</div></div>
+      <div class="server"><span class="tag">inside the company's system</span>
+        <div class="node q"><div class="t">Qalaisyn</div><div class="d">puts the letters back:<br>“ұшақ кешігіп жатыр ма”<br>in under a millisecond</div></div>
         <div class="arrow">→</div>
         <div class="node"><div class="t">Their AI</div><div class="d">chatbot, translator, search, spam filter</div></div>
       </div>
       <div class="arrow">→</div>
       <div class="node"><div class="t">Right answer</div><div class="d">“Flight KC 852 is delayed by 40 minutes.”</div></div>
     </div>
+    <div class="where-grid">
+      <div><b>Banks</b>support chats, card blocking, loans</div>
+      <div><b>Airlines &amp; taxis</b>flight status, bookings</div>
+      <div><b>Clinics &amp; e-government</b>appointments, documents</div>
+      <div><b>Translators &amp; search</b>and phone keyboards</div>
+    </div>
     <pre class="code"><span class="c">// how a company adds it: one call before its own AI (this page runs exactly this engine)</span>
 const text  = qalaisyn.restore(message);   <span class="c">// "ушак кешигип жатыр ма" → "ұшақ кешігіп жатыр ма"</span>
 const reply = supportBot.answer(text);</pre>
   </section>
 
-  <section>
+  <section id="bot">
     <h2>See it inside a support chatbot</h2>
     <p class="lead">The same simple support bot twice. On the left it reads the message as typed; on the right
     Qalaisyn runs inside it first. Pick a situation.</p>
@@ -138,19 +225,51 @@ const reply = supportBot.answer(text);</pre>
     <div class="inside" id="inside"></div>
   </section>
 
-  <section>
-    <h2>Try it yourself</h2>
-    <p class="lead">Type any Kazakh message the way people really text: on a Russian keyboard or in Latin letters.
-    Qalaisyn runs live in your browser. Restored letters are highlighted; dotted words are the ones it is unsure about.</p>
+  <section id="examples">
+    <h2>Everyday messages</h2>
+    <p class="lead">Real-life messages typed the way people text, with what a translator understands before and after
+    Qalaisyn. Translations are from Meta's NLLB-200; the restored text is computed live in your browser.</p>
+    <div class="pills" id="cats"></div>
+    <div class="gallery" id="gallery"></div>
+  </section>
+
+  <section id="try">
+    <h2>Try it with your own message</h2>
+    <p class="lead">Type any Kazakh message on a Russian keyboard or in Latin letters. Restored letters are highlighted;
+    dotted words are the ones Qalaisyn is unsure about, shown as suggestions instead of silent changes.</p>
     <div class="try">
       <div>
         <label class="k" for="msg">A message, typed like in a chat</label>
-        <textarea id="msg" spellcheck="false">баламнын кызуы 39 котерилди не истеу керек</textarea>
+        <textarea id="msg" spellcheck="false">ертен физикадан бакылау болама дайындалдынба</textarea>
         <button class="go" id="go">Restore</button>
-        <div class="exl">Examples typed on a Russian keyboard</div><div class="pills" id="exru"></div>
-        <div class="exl">or in Latin letters</div><div class="pills" id="exlat"></div>
+        <p class="note-sm">Ctrl + Enter also works. Everything runs on your device; nothing is sent anywhere.</p>
       </div>
       <div id="out" class="res"></div>
+    </div>
+  </section>
+
+  <section id="results">
+    <h2>Does it work? Results on data it never saw</h2>
+    <p class="lead">Measured on held-out test sentences (Tatoeba, FLORES-200) typed in six chat styles, and on real
+    messages written by a native speaker. Full method, numbers and confidence intervals are in the notebook.</p>
+    <div class="facts">
+      <div class="fact"><div class="big"><span data-r="ru_msgs_right_qal" data-f="pct0">88%</span> <span style="color:var(--muted);font-weight:500;font-size:20px">vs <span data-r="ru_msgs_right_dict" data-f="pct0">80%</span></span></div>
+        <p>messages with every word right on a Russian keyboard: Qalaisyn vs a dictionary lookup</p></div>
+      <div class="fact"><div class="big"><span data-r="typos_msgs_right_qal" data-f="pct0">74%</span> <span style="color:var(--muted);font-weight:500;font-size:20px">vs <span data-r="typos_msgs_right_dict" data-f="pct0">49%</span></span></div>
+        <p>the same with typos, where a dictionary breaks down</p></div>
+      <div class="fact"><div class="big" data-r="caught" data-f="pct0">62%</div>
+        <p>of Qalaisyn's mistakes are among the <span data-r="flagged" data-f="pct0">6%</span> of words it marks as unsure</p></div>
+    </div>
+    <div class="card native" id="native" hidden>
+      <div><h3 style="margin:0 0 4px;font-size:18px">Real messages from a native speaker</h3>
+        <p style="margin:0;color:var(--muted);font-size:14.5px"><span data-r="real_n">70</span> everyday messages written
+        by a native Kazakh speaker exactly as they text, with heavy slang, Russian words and shortened forms. Share of
+        words still wrong:</p></div>
+      <div class="bars" id="realbars"></div>
+    </div>
+    <div class="charts">
+      <figure><img src="img/messages.png" alt="Messages with every word right: dictionary vs Qalaisyn across six test conditions"><figcaption>Whole messages right, dictionary vs Qalaisyn, with 95% confidence intervals.</figcaption></figure>
+      <figure><img src="img/meaning.png" alt="Share of the lost meaning recovered for a translator: dictionary vs Qalaisyn"><figcaption>How much of the meaning lost by a translator comes back.</figcaption></figure>
     </div>
   </section>
 
@@ -159,43 +278,60 @@ const reply = supportBot.answer(text);</pre>
     <div class="steps">
       <div class="step"><div class="n">1</div><h3>List the possible words</h3><p>Each typed word could be several Kazakh
         words: “от” → от (fire) or өт (go), “ушак” → ұшақ (airplane). Qalaisyn lists the real words it could be.</p></div>
-      <div class="step"><div class="n">2</div><h3>Pick the most likely sentence</h3><p>A language model trained on
-        1.5 million Kazakh sentences knows which words go together (“plane … late”), and the Viterbi algorithm picks the
-        best whole sentence.</p></div>
-      <div class="step"><div class="n">3</div><h3>Ask only when unsure</h3><p>Every word gets a probability. Below 90%
-        it becomes a suggestion instead of a silent change, about 1 word in 16. Russian words like “короче” are left alone.</p></div>
+      <div class="step"><div class="n">2</div><h3>Pick the most likely sentence</h3><p>A language model trained on 1.5
+        million Kazakh sentences knows which words go together (“plane … late”); the Viterbi algorithm picks the best whole sentence.</p></div>
+      <div class="step"><div class="n">3</div><h3>Ask only when unsure</h3><p>Every word gets a probability. Below 90% it
+        becomes a suggestion instead of a silent change. Russian words like “короче” are left alone.</p></div>
     </div>
-    <div class="facts">
-      <div class="fact"><div class="big">88% vs 80%</div><p>messages with every word right on a Russian keyboard: Qalaisyn vs a dictionary lookup; with typos 74% vs 49% (held-out test)</p></div>
-      <div class="fact"><div class="big">47% → 3.5%</div><p>misspelled words on a Russian keyboard, before and after Qalaisyn</p></div>
-      <div class="fact"><div class="big">63%</div><p>of Qalaisyn's mistakes are among the 6% of words it marks as unsure</p></div>
+  </section>
+
+  <section>
+    <h2>Where it still goes wrong</h2>
+    <p class="lead">We report failures as carefully as successes.</p>
+    <div class="limits">
+      <div class="card"><div class="k">Wrong word chosen</div><p><b>жуким жогалып кетти</b> (my luggage is lost) →
+        Qalaisyn wrote <b>тұқым</b> (“seed”) instead of <b>жүгім</b>. Both are real words; the model had too little context.</p></div>
+      <div class="card"><div class="k">Names and new words</div><p><b>егов</b> (the e-government portal) was changed to
+        the name <b>егор</b>, because the portal's name is rare in the training text.</p></div>
+      <div class="card"><div class="k">Shortened speech</div><p>Chat forms like <b>болад</b> (болады) or <b>жберш</b>
+        (жіберші) keep their letters fixed but are not expanded; that is the next step.</p></div>
     </div>
   </section>
 
   <footer>
-    Prototype for the Veritas AI International High School Hackathon 2026, Languages track.
-    The engine on this page is the project's model running in your browser (same accuracy as the Python version on the
-    test sets). Translations come from Meta's NLLB-200 and are pre-computed for the examples, because the translator is
-    too large for a browser. The support bot is a simple keyword bot for demonstration, and the examples were chosen
-    to show the idea; full results on held-out data are in the
-    <a href="https://github.com/ZemBono/qalaisyn">project notebook</a>. Not for medical or emergency use.
+    <div class="links">
+      <a class="btn" href="https://colab.research.google.com/github/ZemBono/qalaisyn/blob/main/Qalaisyn.ipynb" target="_blank" rel="noopener">Notebook with all results</a>
+      <a class="btn" href="WRITEUP.pdf" target="_blank" rel="noopener">One-page write-up (PDF)</a>
+      <a class="btn" href="https://github.com/ZemBono/qalaisyn" target="_blank" rel="noopener">Source code</a>
+    </div>
+    Prototype for the Veritas AI International High School Hackathon 2026, Languages track. The engine on this page is
+    the project's model running in your browser, with the same accuracy as the Python version on the test sets.
+    Translations are pre-computed with NLLB-200 (Meta) for the examples, because the translator is too large for a
+    browser. The support bot is a simple keyword bot for demonstration, and the examples were chosen to show the idea.
+    Not for medical or emergency use.
   </footer>
-</div>
+</main>
 
 <script src="qalaisyn.js"></script>
 <script>
 const $ = id => document.getElementById(id);
-const esc = s => s.replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const esc = s => String(s).replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
 const clean = s => (s.toLowerCase().match(/[\p{L}\p{N}'-]+/gu) || []).join(" ");
+const REDUCED = matchMedia("(prefers-reduced-motion: reduce)").matches;
 const THRESHOLD = 0.9;
 let ENG = null, EX = null;
 
-function highlight(naive, word) {           // letters Qalaisyn decided, compared with a naive letter-by-letter reading
+function highlight(naive, word) {
   const a = Array.from(naive), b = Array.from(word);
-  if (a.length !== b.length) return a.join("") === b.join("") ? esc(word) : `<span class="lt">${esc(word)}</span>`;
+  if (a.length !== b.length) return a.join("") === word ? esc(word) : `<span class="lt">${esc(word)}</span>`;
   return b.map((ch, i) => ch === a[i] ? esc(ch) : `<span class="lt">${esc(ch)}</span>`).join("");
 }
-function restoredHtml(words) {
+function highlightSentence(typed, fixed) {
+  const t = typed.split(" "), f = fixed.split(" ");
+  if (t.length !== f.length) return esc(fixed);
+  return f.map((w, i) => highlight(Qalaisyn.ruleWord(t[i]), w)).join(" ");
+}
+function restoredHtml(words, withSugg = true) {
   const shown = [], sugg = [];
   for (const w of words) {
     let seg = highlight(Qalaisyn.ruleWord(w.typed), w.word);
@@ -207,54 +343,91 @@ function restoredHtml(words) {
     shown.push(seg);
   }
   let html = shown.join(" ");
-  if (sugg.length) html += `<div class="sugg">Not sure, so this becomes a suggestion: ${sugg.join("")}</div>`;
+  if (withSugg && sugg.length) html += `<div class="sugg">Not sure, so this becomes a suggestion: ${sugg.join("")}</div>`;
   return html;
 }
+const fixedHtml = m => ENG ? restoredHtml(ENG.restoreWithConfidence(m), false) : highlightSentence(m, EX.items[m].fixed);
+
+/* hero: one short sequence on load */
+async function hero() {
+  const msg = "ушак кешигип жатыр ма", fixed = "ұшақ кешігіп жатыр ма";
+  const show = id => $(id).classList.add("on");
+  $("h-fixed").innerHTML = highlightSentence(msg, fixed);
+  if (REDUCED) { $("h-msg").textContent = msg; ["h-fix","h-bad","h-good"].forEach(show); return; }
+  const wait = ms => new Promise(r => setTimeout(r, ms));
+  $("h-msg").innerHTML = '<span id="h-t"></span><span class="caret"></span>';
+  await wait(500);
+  for (const ch of msg) { $("h-t").textContent += ch; await wait(55); }
+  await wait(350); $("h-msg").textContent = msg;
+  show("h-bad"); await wait(900); show("h-fix"); await wait(900); show("h-good");
+}
+
 function showScenario(i) {
   const s = EX.scenarios[i], it = EX.items[s.msg];
   document.querySelectorAll("#scen .pill").forEach((b, j) => b.classList.toggle("on", j === i));
   const bubble = `<div class="me">${esc(s.msg)}</div>`;
   $("left").innerHTML = bubble + `<div class="seen">Bot reads: “${esc(it.raw_en)}”</div><div class="bot">${esc(it.bot_raw)}</div>`;
   $("right").innerHTML = bubble + `<div class="seen ok">Bot reads: “${esc(it.fixed_en)}”</div><div class="bot good">${esc(it.bot_fixed)}</div>`;
-  $("inside").innerHTML = `<div class="k">Inside the system, Qalaisyn turned the message into</div><div class="v">${
-    ENG ? restoredHtml(ENG.restoreWithConfidence(s.msg)) : esc(it.fixed)}</div>`;
+  $("inside").innerHTML = `<div class="k">Inside the system, Qalaisyn turned the message into</div><div class="v">${fixedHtml(s.msg)}</div>`;
+}
+function showCategory(c) {
+  document.querySelectorAll("#cats .pill").forEach(b => b.classList.toggle("on", b.textContent === c));
+  $("gallery").innerHTML = EX.categories[c].map(m => {
+    const it = EX.items[m];
+    return `<div class="ex"><div class="msg">${esc(m)}</div><div class="fx">${fixedHtml(m)}</div>
+      <div class="tr bad"><span>AI without Qalaisyn</span>${esc(it.raw_en)}</div>
+      <div class="tr good"><span>AI with Qalaisyn</span>${esc(it.fixed_en)}</div>
+      <button data-m="${esc(m)}">Open in “Try it” →</button></div>`;
+  }).join("");
+  $("gallery").querySelectorAll("button").forEach(b => b.onclick = () => { $("msg").value = b.dataset.m; run(); $("try").scrollIntoView(); });
 }
 function run() {
   const m = clean($("msg").value);
-  if (!m) { $("out").innerHTML = `<div class="note-sm">Type a message, or pick an example.</div>`; return; }
+  if (!m) { $("out").innerHTML = `<div class="note-sm">Type a message, or open one of the examples.</div>`; return; }
   if (!ENG) { $("out").innerHTML = `<div class="note-sm">The engine is still loading…</div>`; return; }
-  const t0 = performance.now();
-  const words = ENG.restoreWithConfidence(m);
-  const ms = performance.now() - t0;
-  const fixed = words.map(w => w.word).join(" ");
-  const pre = EX.items[m];
+  const t0 = performance.now(), words = ENG.restoreWithConfidence(m), ms = performance.now() - t0;
+  const fixed = words.map(w => w.word).join(" "), pre = EX.items[m];
   let html = "";
   if (pre) html += `<div class="box before"><div class="k">A translator reads the message as typed</div><div class="v">${esc(pre.raw_en)}</div></div>`;
-  html += `<div class="box"><div class="k">Qalaisyn restores the Kazakh letters (highlighted) · ${ms.toFixed(1)} ms in your browser</div>
+  html += `<div class="box"><div class="k">Qalaisyn restores the Kazakh letters · ${ms.toFixed(1)} ms in your browser</div>
     <div class="v">${restoredHtml(words)}</div>
-    <div class="lat">Same text in the official Kazakh Latin alphabet (2021): <b>${esc(Qalaisyn.toLatin(fixed))}</b></div></div>`;
-  if (pre) html += `<div class="box after"><div class="k">The translator reads it after Qalaisyn</div><div class="v">${esc(pre.fixed_en)}</div></div>`;
-  else html += `<div class="note-sm">Translations before/after are shown for the examples (the translator model is too large
-    to run in a browser); the restoration above is computed live for your message.</div>`;
+    <div class="lat">In the official Kazakh Latin alphabet (2021): <b>${esc(Qalaisyn.toLatin(fixed))}</b></div></div>`;
+  html += pre ? `<div class="box after"><div class="k">The translator reads it after Qalaisyn</div><div class="v">${esc(pre.fixed_en)}</div></div>`
+    : `<div class="note-sm">English translations are shown for the examples above; a translator model is too large to run in a
+       browser, so for your own message you see the restored Kazakh, which is what a company's AI would receive.</div>`;
   $("out").innerHTML = html;
 }
-function pill(text, parent, onclick) {
-  const b = document.createElement("button"); b.className = "pill"; b.textContent = text; b.onclick = onclick; parent.appendChild(b);
+function pill(text, parent, onclick) { const b = document.createElement("button"); b.className = "pill"; b.textContent = text; b.onclick = onclick; parent.appendChild(b); }
+function fillResults(R) {
+  document.querySelectorAll("[data-r]").forEach(el => {
+    const v = R[el.dataset.r]; if (v === undefined) return;
+    el.textContent = el.dataset.f === "pct0" ? Math.round(v * 100) + "%" : v;
+  });
+  if (R.real_n) {
+    $("native").hidden = false;
+    const rows = [["As typed", R.real_typed, "#B24E36"], ["Dictionary lookup", R.real_dict, "#D99A1E"],
+                  ["Qalaisyn", R.real_qal, "#00909C"]];
+    $("realbars").innerHTML = rows.map(([l, v, c]) => `<div class="bar"><span>${l}</span><div class="track">
+      <div class="fill" style="width:${Math.min(100, v * 100)}%;background:${c}"></div></div><b>${(v * 100).toFixed(0)}%</b></div>`).join("") +
+      `<p class="note-sm" style="margin:4px 0 0">Before the last rule (particle vowel harmony, added after reading these errors):
+       ${(R.real_before * 100).toFixed(1)}% — the fully unseen result.</p>`;
+  }
 }
 (async () => {
-  EX = await (await fetch("examples.json")).json();
+  hero();
+  const [ex, res] = await Promise.all([fetch("examples.json").then(r => r.json()), fetch("results.json").then(r => r.json()).catch(() => ({}))]);
+  EX = ex; fillResults(res);
   EX.scenarios.forEach((s, i) => pill(s.label, $("scen"), () => showScenario(i)));
-  for (const [list, el] of [[EX.examples_ru, "exru"], [EX.examples_lat, "exlat"]])
-    list.forEach(m => pill(m, $(el), () => { $("msg").value = m; run(); }));
-  showScenario(1);
+  Object.keys(EX.categories).forEach(c => pill(c, $("cats"), () => showCategory(c)));
+  showScenario(1); showCategory(Object.keys(EX.categories)[0]);
   try {
     ENG = await Qalaisyn.load("model/", fetch);
-    $("status").textContent = "Engine loaded — everything below runs in your browser.";
+    $("status").textContent = "Engine loaded — everything on this page runs in your browser.";
     $("status").classList.add("ready");
-  } catch (e) {
-    $("status").textContent = "Could not load the engine: " + e.message;
-  }
-  showScenario(1); run();
+  } catch (e) { $("status").textContent = "Could not load the engine: " + e.message; }
+  showScenario(document.querySelector("#scen .pill.on") ? [...document.querySelectorAll("#scen .pill")].findIndex(b => b.classList.contains("on")) : 1);
+  const cur = document.querySelector("#cats .pill.on"); if (cur) showCategory(cur.textContent);
+  run();
 })();
 $("go").onclick = run;
 $("msg").addEventListener("keydown", e => { if (e.key === "Enter" && (e.ctrlKey || e.metaKey)) run(); });

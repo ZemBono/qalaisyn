@@ -1,0 +1,21 @@
+{
+ "ru_words_wrong_typed": 0.46879905808477235,
+ "ru_words_wrong_dict": 0.057692307692307696,
+ "ru_words_wrong_qal": 0.03512558869701727,
+ "ru_msgs_right_dict": 0.7969502407704655,
+ "ru_msgs_right_qal": 0.8828250401284109,
+ "typos_msgs_right_dict": 0.4895666131621188,
+ "typos_msgs_right_qal": 0.7383627608346709,
+ "flagged": 0.05976095617529881,
+ "caught": 0.6217948717948718,
+ "real_n": 70,
+ "real_typed": 0.6144859813084113,
+ "real_dict": 0.20093457943925233,
+ "real_before": 0.16121495327102803,
+ "real_qal": 0.14953271028037382,
+ "real_chrf": {
+  "B0 raw chat": 40.63658431443465,
+  "B2 dictionary": 73.64120086684109,
+  "M2 Qalaisyn+typos": 76.41537906166688
+ }
+}

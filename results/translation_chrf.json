@@ -68,13 +68,13 @@
     "all|B0 raw chat": 14.659940921427692,
     "all|B1 rules": 39.12589671283398,
     "all|B2 dictionary": 56.69794274967851,
-    "all|M1 Qalaisyn": 58.595765489454564,
+    "all|M1 Qalaisyn": 58.55407661776153,
     "all|M2 Qalaisyn+typos": 59.072023163295995,
     "typos-5|gold": 60.78905363847085,
     "typos-5|B0 raw chat": 14.659940921427692,
     "typos-5|B1 rules": 39.12589671283398,
     "typos-5|B2 dictionary": 56.69794274967851,
-    "typos-5|M1 Qalaisyn": 58.595765489454564,
+    "typos-5|M1 Qalaisyn": 58.55407661776153,
     "typos-5|M2 Qalaisyn+typos": 59.072023163295995
   },
   "test_tatoeba_typos-15": {
@@ -82,14 +82,14 @@
     "all|B0 raw chat": 14.236219901622608,
     "all|B1 rules": 37.10093384300708,
     "all|B2 dictionary": 53.0835287164115,
-    "all|M1 Qalaisyn": 55.1523609625859,
-    "all|M2 Qalaisyn+typos": 56.532405287106805,
+    "all|M1 Qalaisyn": 55.13576439584994,
+    "all|M2 Qalaisyn+typos": 56.56655771725387,
     "typos-15|gold": 60.78905363847085,
     "typos-15|B0 raw chat": 14.236219901622608,
     "typos-15|B1 rules": 37.10093384300708,
     "typos-15|B2 dictionary": 53.0835287164115,
-    "typos-15|M1 Qalaisyn": 55.1523609625859,
-    "typos-15|M2 Qalaisyn+typos": 56.532405287106805
+    "typos-15|M1 Qalaisyn": 55.13576439584994,
+    "typos-15|M2 Qalaisyn+typos": 56.56655771725387
   },
   "test_tatoeba_unseen-habits": {
     "all|gold": 60.78905363847085,

@@ -28,8 +28,8 @@
   typos-5  gold 60.8  B0 14.7  B1 39.1  B2 56.7  M1 58.6  M2 59.1  | recovered 95%
 
 == test_tatoeba_typos-15 (623 messages) chrF ==
-  all      gold 60.8  B0 14.2  B1 37.1  B2 53.1  M1 55.2  M2 56.5  | recovered 88%
-  typos-15 gold 60.8  B0 14.2  B1 37.1  B2 53.1  M1 55.2  M2 56.5  | recovered 88%
+  all      gold 60.8  B0 14.2  B1 37.1  B2 53.1  M1 55.1  M2 56.6  | recovered 88%
+  typos-15 gold 60.8  B0 14.2  B1 37.1  B2 53.1  M1 55.1  M2 56.6  | recovered 88%
 
 == test_tatoeba_unseen-habits (623 messages) chrF ==
   all      gold 60.8  B0 14.2  B1 31.4  B2 38.7  M1 42.7  M2 54.7  | recovered 61%

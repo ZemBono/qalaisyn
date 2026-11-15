@@ -1,9 +1,9 @@
-test_tatoeba: 2492 messages, 5s
+test_tatoeba: 2492 messages, 3s
   B0 raw chat      WER 0.999  CER 0.895
   B1 rules         WER 0.476  CER 0.108
   B2 dictionary    WER 0.062  CER 0.016
   M1 Qalaisyn      WER 0.024  CER 0.004
-  M2 Qalaisyn+typos WER 0.036  CER 0.008
+  M2 Qalaisyn+typos WER 0.037  CER 0.008
   B0 raw chat|careful          WER 0.998
   B0 raw chat|minimal          WER 0.999
   B0 raw chat|mixed            WER 0.998
@@ -18,9 +18,9 @@ test_tatoeba: 2492 messages, 5s
   B2 dictionary|typical        WER 0.068
   M1 Qalaisyn|careful          WER 0.016
   M1 Qalaisyn|minimal          WER 0.029
-  M1 Qalaisyn|mixed            WER 0.023
-  M1 Qalaisyn|typical          WER 0.027
-  M2 Qalaisyn+typos|careful    WER 0.029
+  M1 Qalaisyn|mixed            WER 0.024
+  M1 Qalaisyn|typical          WER 0.028
+  M2 Qalaisyn+typos|careful    WER 0.030
   M2 Qalaisyn+typos|minimal    WER 0.041
-  M2 Qalaisyn+typos|mixed      WER 0.035
+  M2 Qalaisyn+typos|mixed      WER 0.036
   M2 Qalaisyn+typos|typical    WER 0.040

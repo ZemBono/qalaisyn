@@ -122,6 +122,20 @@ def strict_ok(tok: str, word: str) -> bool:
 
 
 PARTICLES = {"ма", "ме", "ба", "бе", "па", "пе", "ma", "me", "ba", "be", "pa", "pe"}
+DROP_END = set("бвгдзклмнпрстфхцчшщжңқғ") | set("bvgdzklmnprstfhcwjq")
+BACK, FRONT = set("аоұы"), set("әеөүіиэ")
+
+
+def harmonize_particles(words):
+    """Kazakh vowel harmony for the question particle: керек па -> керек пе, болды ме -> болды ма."""
+    out = list(words)
+    for i in range(1, len(out)):
+        w = out[i]
+        if w in ("ма", "ме", "ба", "бе", "па", "пе"):
+            vowels = [c for c in out[i - 1] if c in BACK | FRONT]
+            if vowels:
+                out[i] = w[0] + ("е" if vowels[-1] in FRONT else "а")
+    return out
 # Very short chat contractions that typo search would otherwise turn into an unrelated word (жатм -> атом).
 # Longer colloquial forms (жатсың, кешіп келем, боп, кеп, барам) are already in the training text.
 CONTRACTIONS = {"жатм": "жатырмын", "жатрм": "жатырмын", "жатырм": "жатырмын",
@@ -362,7 +376,10 @@ class QalaisynRestorer:
 
     def __init__(self, lex: Lexicon, habit_penalty=math.log(0.1), oov_penalty=-12.0,
                  top=25, use_char=True, fuzzy=False, typo_penalty=math.log(0.002),
-                 name=None, fuzzy_below=5, char_bonus=0.0):
+                 name=None, fuzzy_below=5, char_bonus=0.0, vowel_drop=False, drop_penalty=math.log(0.05), harmony=True):
+        self.vowel_drop = vowel_drop          # tried: dropped final vowel (болад -> болады); did not help, off
+        self.harmony = harmony                # particle vowel harmony (керек па -> керек пе)
+        self.drop_penalty = drop_penalty
         # defaults for fuzzy_below / typo_penalty / char_bonus were tuned on FLORES dev only
         self.char_bonus = char_bonus
         self.fuzzy_below = fuzzy_below   # look for typo neighbours only if the word is unknown/rare
@@ -453,6 +470,20 @@ class QalaisynRestorer:
                 if fz and not cands:
                     # keep the letter-by-letter guess in the race (rare names, new words)
                     opts.append((self.lex.char.restore(tok), self.char_bonus))
+            if best_count < self.fuzzy_below and self.vowel_drop:
+                # chat speech drops a final vowel: болад -> болады, жберш -> жіберші, ед -> еді
+                t = clean_token(tok)
+                if len(t) >= 2 and t[-1] in DROP_END:
+                    have = {w for w, _ in opts}
+                    for v in (("ы", "и") if re.search(r"[а-я]", t) else ("y", "i")):
+                        ext = t + v
+                        ext_c = [(w, 0.0) for w in self.lex.candidates(ext, 5)]
+                        if self.fuzzy and len(ext) >= 4:
+                            ext_c += [(w, self.typo_penalty) for w in self.lex.fuzzy_candidates(ext, 5)]
+                        for w, extra in ext_c:
+                            if w not in have:
+                                have.add(w)
+                                opts.append((w, self.drop_penalty + extra + self._channel(ext, w, uses_q)))
             if not opts:
                 guess = self.lex.char.restore(tok) if self.use_char else rule_word(tok)
                 opts = [(guess, self.oov_penalty)]
@@ -470,9 +501,10 @@ class QalaisynRestorer:
                 new[w] = cand_best
             best = new
         final = max(best.items(), key=lambda kv: kv[1][0] + self.lex.logp("</s>", kv[0]))
-        words = final[1][1]
+        raw_words = final[1][1]
+        words = harmonize_particles(raw_words) if self.harmony else raw_words
         if explain:
-            return words, lattice, toks
+            return words, lattice, toks, raw_words
         return " ".join(words)
 
     # ------------------------------------------------------------ confidence & suggestions
@@ -481,7 +513,7 @@ class QalaisynRestorer:
         (forward-backward over the same candidate lattice) and the top-k alternatives."""
         if not text.split():
             return []
-        words, lattice, toks = self.restore(text, explain=True)
+        words, lattice, toks, raw_words = self.restore(text, explain=True)
 
         def lse(xs):
             m = max(xs)
@@ -506,5 +538,8 @@ class QalaisynRestorer:
         for i, (tok, w) in enumerate(zip(toks, words)):
             post = {v: math.exp(fwd[i + 1][v] + bwd[i][v] - z) for v, _ in lattice[i]}
             alts = sorted(post.items(), key=lambda kv: -kv[1])[:top_k]
-            out.append({"typed": tok, "word": w, "confidence": post.get(w, 0.0), "alternatives": alts})
+            conf = post.get(w, post.get(raw_words[i], 0.0))     # a harmonised particle keeps its lattice probability
+            if w != raw_words[i]:
+                alts = [(w if a == raw_words[i] else a, p) for a, p in alts]
+            out.append({"typed": tok, "word": w, "confidence": conf, "alternatives": alts})
         return out

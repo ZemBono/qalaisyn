@@ -12,5 +12,5 @@ test_tatoeba_cyr: 1246 messages, 1s
   B2 dictionary|ru-keyboard    WER 0.064
   M1 Qalaisyn|partial          WER 0.021
   M1 Qalaisyn|ru-keyboard      WER 0.025
-  M2 Qalaisyn+typos|partial    WER 0.032
-  M2 Qalaisyn+typos|ru-keyboard WER 0.037
+  M2 Qalaisyn+typos|partial    WER 0.033
+  M2 Qalaisyn+typos|ru-keyboard WER 0.038

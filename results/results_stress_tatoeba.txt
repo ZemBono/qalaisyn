@@ -1,8 +1,8 @@
-typos-5 B0 WER 1.000  B1 WER 0.511  B2 WER 0.104  M1 WER 0.066  M2 WER 0.057
+typos-5 B0 WER 1.000  B1 WER 0.511  B2 WER 0.104  M1 WER 0.067  M2 WER 0.057
    e.g. almaty menin suiikti qalam -> алматы менің сүйікті қалам
-typos-15 B0 WER 1.000  B1 WER 0.536  B2 WER 0.164  M1 WER 0.130  M2 WER 0.083
+typos-15 B0 WER 1.000  B1 WER 0.536  B2 WER 0.164  M1 WER 0.131  M2 WER 0.084
    e.g. almaty mnin suiikti qaam -> алматы мнің сүйікті қаам
-unseen-habits B0 WER 0.997  B1 WER 0.634  B2 WER 0.385  M1 WER 0.368  M2 WER 0.135
+unseen-habits B0 WER 0.997  B1 WER 0.634  B2 WER 0.385  M1 WER 0.369  M2 WER 0.136
    e.g. almati menin sueiikti kkalam -> алматы менің суэйықты ккалам
-cyr-typos-15 B0 WER 0.640  B1 WER 0.624  B2 WER 0.178  M1 WER 0.143  M2 WER 0.079
+cyr-typos-15 B0 WER 0.640  B1 WER 0.624  B2 WER 0.178  M1 WER 0.144  M2 WER 0.079
    e.g. алматы мнин суйикти калам -> алматы мнің сүйікті қалам

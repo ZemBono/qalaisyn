@@ -10,7 +10,7 @@ Most phones in Kazakhstan have a Russian keyboard with no keys for the Kazakh le
 **User:** Gulnar, 62, from a village in Turkistan region, texting a clinic chatbot at night from a phone with only a Russian keyboard.
 
 ## What we added
-Our own idea. Our own data and questions: a generator of six real typing styles (no private chats needed), stress tests asking *when does it break?*, calibrated suggestions, a "why not a dictionary?" study with confidence intervals, and a transfer test on Kyrgyz.
+Our own idea. Our own data and questions: a generator of six real typing styles, 70 real messages written by a native speaker (with permission), stress tests asking *when does it break?*, calibrated suggestions, a "why not a dictionary?" study with confidence intervals, and a transfer test on Kyrgyz.
 
 ## How it works
 **Data:** 1.5M Kazakh Wikipedia sentences plus conversational text (Tatoeba, film subtitles). Held-out tests: 623 everyday and 300–1,012 news sentences (FLORES-200), each with a professional English translation, in six typing styles. Tuning on FLORES `dev` only. **Model:** each typed word → the Kazakh words it could be → a typing-habit model and a **word-bigram language model** score them → **Viterbi** picks the best sentence; a **character 5-gram model** handles unknown words, a one-edit search handles typos, and **forward-backward** gives each word a probability (below 90% → suggestion).
@@ -23,12 +23,13 @@ Our own idea. Our own data and questions: a generator of six real typing styles 
 | Russian keyboard + 15% typos: messages fully right | – | 49% | **74%** (+25 pts, CI +21…+28) |
 | Latin, unseen spellings: messages fully right | – | 19% | **58%** (+40 pts, CI +36…+43) |
 | Meaning recovered for a translator, Russian keyboard + typos | 0% | 66% | **87%** |
-| Words shown as suggestions · share of its mistakes among them | – | cannot tell | **6% · 63%** |
+| Words shown as suggestions · share of its mistakes among them | – | cannot tell | **6% · 62%** |
+| **70 real messages by a native speaker** (slang, Russian words): words wrong | 61.4% | 20.1% | **15.0%** (16.1% before the last rule) |
 
 **Why a model and not a dictionary?** A chatbot needs whole messages right; Qalaisyn fixes 154 of the dictionary's word mistakes for 38 new ones, wins by 21–40 points on messy messages, and knows when to ask. **Honest notes:** on clean news text translation scores are equal (CI includes 0). Kyrgyz with the same code recovers 98% of the meaning in Latin and 86% on a Russian keyboard (where a dictionary is equally good). **Where it fails:** н/ң and і/и when both words exist, true ambiguity (*от*/*өт*), and some colloquial forms.
 
 ## What we'd do next
-1. Native-speaker messages and longer context (trigrams or a small neural re-ranker) for н/ң and і/и. 2. A plug-in API for support chatbots and a phone keyboard; more languages.
+1. Expand shortened chat forms (*болад* → *болады*, *жберш* → *жіберші*), the main error left in the native-speaker messages, and longer context for н/ң and і/и. 2. A plug-in API for support chatbots and a phone keyboard; more languages.
 
 ## Sources
 Tatoeba (CC BY 2.0 FR) · FLORES-200 (CC BY-SA 4.0) · Kazakh and Kyrgyz Wikipedia via Hugging Face (CC BY-SA) · OPUS OpenSubtitles · FrequencyWords Russian list (MIT/CC BY-SA) · NLLB-200 600M, Meta (CC BY-NC 4.0, evaluation only) · PyTorch, Transformers, sacrebleu, pandas, matplotlib, Gradio · Claude (Anthropic) helped with code and text.

@@ -28,6 +28,17 @@
   const SKEL = "abvgdejzik lmnoprstufhcCS".replace(" ", "").split("");
   const HABIT = Math.log(0.1), TYPO = Math.log(0.002), OOV = -12.0, TOP = 25, FUZZY_BELOW = 5;
 
+  const BACK = new Set("аоұы"), FRONT = new Set("әеөүіиэ");
+  function harmonize(words) {   // question particle vowel harmony: керек па -> керек пе
+    const out = words.slice();
+    for (let i = 1; i < out.length; i++) {
+      if (["ма","ме","ба","бе","па","пе"].includes(out[i])) {
+        const v = Array.from(out[i - 1]).filter(c => BACK.has(c) || FRONT.has(c));
+        if (v.length) out[i] = out[i][0] + (FRONT.has(v[v.length - 1]) ? "е" : "а");
+      }
+    }
+    return out;
+  }
   const clean = t => t.toLowerCase().replace(/['`’]/g, "");
   const canonWord = w => Array.from(w).map(ch => (ch in CANON ? CANON[ch] : ch)).join("");
   const count = (s, ch) => s.split(ch).length - 1;
@@ -292,12 +303,12 @@
     }
     restore(text) {
       const { lat } = this.lattice(text);
-      return lat.length ? this.viterbi(lat).join(" ") : "";
+      return lat.length ? harmonize(this.viterbi(lat)).join(" ") : "";
     }
     restoreWithConfidence(text, topK = 3) {
       const { toks, lat } = this.lattice(text);
       if (!lat.length) return [];
-      const words = this.viterbi(lat);
+      const raw = this.viterbi(lat), words = harmonize(raw);
       const fwd = [new Map([["<s>", 0]])];
       for (const opts of lat) {
         const cur = new Map(), prevs = [...fwd[fwd.length - 1].entries()];
@@ -315,8 +326,9 @@
       return toks.map((tok, i) => {
         const post = lat[i].map(([v]) => [v, Math.exp(fwd[i + 1].get(v) + bwd[i].get(v) - z)]);
         post.sort((a, b) => b[1] - a[1]);
-        const conf = (post.find(p => p[0] === words[i]) || [0, 0])[1];
-        return { typed: tok, word: words[i], confidence: conf, alternatives: post.slice(0, topK) };
+        const conf = (post.find(p => p[0] === raw[i]) || [0, 0])[1];
+        const alts = post.slice(0, topK).map(([a, p]) => [a === raw[i] ? words[i] : a, p]);
+        return { typed: tok, word: words[i], confidence: conf, alternatives: alts };
       });
     }
   }

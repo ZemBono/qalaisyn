@@ -1,7 +1,7 @@
 {
   "restored_test_tatoeba_cyr.jsonl": {
-    "browser_wer": 0.03512558869701727,
-    "python_wer": 0.0347331240188383,
+    "browser_wer": 0.03551805337519623,
+    "python_wer": 0.03512558869701727,
     "identical": 0.9534510433386838
   },
   "restored_test_flores_cyr.jsonl": {
@@ -10,13 +10,13 @@
     "identical": 0.875
   },
   "restored_test_tatoeba.jsonl": {
-    "browser_wer": 0.036401098901098904,
-    "python_wer": 0.03630298273155416,
+    "browser_wer": 0.03679356357927786,
+    "python_wer": 0.03669544740973312,
     "identical": 0.9542536115569823
   },
   "restored_test_tatoeba_cyr-typos-15.jsonl": {
-    "browser_wer": 0.07810047095761381,
-    "python_wer": 0.07888540031397175,
+    "browser_wer": 0.07849293563579278,
+    "python_wer": 0.07927786499215071,
     "identical": 0.8876404494382022
   }
 }

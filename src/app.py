@@ -29,6 +29,8 @@ INTENTS = [
     (["delay payment", "delay my payment", "postpone", "can't pay", "can 't pay", "cannot pay"],
      "I can move your loan payment date by up to 30 days at no cost. Shall I do it?"),
     (["cash out", "withdraw"], "To withdraw cash from your loan account, visit any of our ATMs with your card."),
+    (["my money", "money back", "refund"], "Sorry about the missing order. Your refund is on its way: 3–5 working days."),
+    (["return the order", "return an order"], "To return an order, pack the item and book a courier pickup in the app."),
     (["plane", "flight", "aircraft"], "Flight KC 852 to Astana is delayed by 40 minutes. New departure: 18:40."),
     (["lost my id", "lost id", "id card", "identity card", "lost my passport"],
      "You can order a new ID card on eGov: Services → Documents → Lost ID. It takes about 10 days."),
@@ -285,7 +287,7 @@ HOW = """
 <div class="facts">
   <div class="fact"><div class="big">88% vs 80%</div><p>messages with every word right on a Russian keyboard: Qalaisyn vs a dictionary lookup; with typos 74% vs 49% (held-out test)</p></div>
   <div class="fact"><div class="big">47% → 3.5%</div><p>misspelled words on a Russian keyboard, before and after Qalaisyn</p></div>
-  <div class="fact"><div class="big">63%</div><p>of Qalaisyn's mistakes are among the 6% of words it marks as unsure</p></div>
+  <div class="fact"><div class="big">62%</div><p>of Qalaisyn's mistakes are among the 6% of words it marks as unsure</p></div>
 </div>
 <p class="note">Prototype for the Veritas AI High School Hackathon 2026, Languages track. Translator: NLLB-200 (Meta).
 The support bot on this page is a simple keyword bot for demonstration only, and the examples were chosen to show

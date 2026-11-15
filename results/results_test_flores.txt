@@ -1,4 +1,4 @@
-test_flores: 4048 messages, 85s
+test_flores: 4048 messages, 74s
   B0 raw chat      WER 0.983  CER 0.892
   B1 rules         WER 0.548  CER 0.106
   B2 dictionary    WER 0.048  CER 0.010

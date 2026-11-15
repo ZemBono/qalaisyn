@@ -4,10 +4,10 @@
     "at_threshold": {
       "threshold": 0.95,
       "words": 10030,
-      "error_rate": 0.03280159521435693,
+      "error_rate": 0.03320039880358923,
       "flagged_share": 0.06360917248255234,
-      "errors_caught": 0.6413373860182371,
-      "error_rate_unflagged": 0.01256388415672913,
+      "errors_caught": 0.6336336336336337,
+      "error_rate_unflagged": 0.012989778534923339,
       "fixed_by_top3_among_flagged_errors": 0.7630331753554502
     },
     "calibration": [
@@ -34,7 +34,7 @@
       {
         "confidence": "0.99-1.00",
         "words": 8788,
-        "actually_correct": 0.9883932635411925
+        "actually_correct": 0.987938097405553
       }
     ]
   },
@@ -42,10 +42,10 @@
     "at_threshold": {
       "threshold": 0.95,
       "words": 5020,
-      "error_rate": 0.030677290836653385,
+      "error_rate": 0.031075697211155377,
       "flagged_share": 0.05976095617529881,
-      "errors_caught": 0.6298701298701299,
-      "error_rate_unflagged": 0.012076271186440678,
+      "errors_caught": 0.6217948717948718,
+      "error_rate_unflagged": 0.0125,
       "fixed_by_top3_among_flagged_errors": 0.7628865979381443
     },
     "calibration": [
@@ -72,7 +72,7 @@
       {
         "confidence": "0.99-1.00",
         "words": 4430,
-        "actually_correct": 0.9893905191873589
+        "actually_correct": 0.9889390519187359
       }
     ]
   },
@@ -89,13 +89,13 @@
     "calibration": [
       {
         "confidence": "0.00-0.50",
-        "words": 94,
-        "actually_correct": 0.3829787234042553
+        "words": 93,
+        "actually_correct": 0.3870967741935484
       },
       {
         "confidence": "0.50-0.70",
-        "words": 131,
-        "actually_correct": 0.6946564885496184
+        "words": 132,
+        "actually_correct": 0.6893939393939394
       },
       {
         "confidence": "0.70-0.90",

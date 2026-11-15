@@ -14,7 +14,7 @@ body = body.replace("<h2>What we added</h2>",
                     f'<img src="data:image/png;base64,{img}" class="chart"><h2>What we added</h2>', 1)
 html = f"""<!doctype html><html><head><meta charset="utf-8"><style>
 @page {{ size: A4; margin: 10mm 12mm; }}
-body {{ font-family: 'Segoe UI', Arial, sans-serif; font-size: 8.45pt; line-height: 1.32; color: #1B2433; }}
+body {{ font-family: 'Segoe UI', Arial, sans-serif; font-size: 8.3pt; line-height: 1.3; color: #1B2433; }}
 h1 {{ font-size: 15.5pt; line-height: 1.15; margin: 0 0 2px; color: #1B2433; letter-spacing: -.01em; }}
 h1 + p {{ color: #5F6B7A; margin-bottom: 6px; }}
 h2 {{ font-size: 10pt; margin: 7px 0 2px; color: #00737D; }}
@@ -26,7 +26,7 @@ th, td {{ border-bottom: 1px solid #DCE1E7; padding: 2.5px 5px; text-align: left
 th {{ color: #5F6B7A; font-weight: 600; border-bottom: 1.5px solid #B9C3CE; }}
 td:last-child {{ color: #00737D; }}
 ol {{ margin: 2px 0 2px 16px; padding: 0; }}
-img.chart {{ width: 52%; display: block; margin: 0 auto; }}
+img.chart {{ width: 46%; display: block; margin: 0 auto; }}
 code {{ font-family: Consolas, monospace; font-size: 7.8pt; background: #F1F4F7; padding: 0 3px; border-radius: 3px; }}
 </style></head><body>{body}</body></html>"""
 (ROOT / "WRITEUP.html").write_text(html, encoding="utf-8")

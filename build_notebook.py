@@ -41,6 +41,8 @@ REPO_URL = "https://github.com/ZemBono/qalaisyn"
 DEMO_URL = "https://zembono.github.io/qalaisyn/web/"
 val = json.loads((ROOT / "results/value.json").read_text(encoding="utf-8"))
 vr, vt, vl = val["Russian keyboard, everyday"], val["Russian keyboard + 15% typos"], val["Latin, unseen spellings"]
+real = json.loads((ROOT / "results/real.json").read_text(encoding="utf-8"))
+rw = real["wer"]
 kyr = ky.get("recovered_by_style", {"ru-keyboard": ky["recovered"]})["ru-keyboard"]
 
 md(f"""
@@ -80,6 +82,7 @@ incoming message and the AI that answers — like a spell-checker inside a keybo
 | Meaning recovered, Latin with unseen spellings | 0% | {rec(chrf['test_tatoeba_unseen-habits'], 'unseen-habits', 'B2 dictionary'):.0%} | **{rec(chrf['test_tatoeba_unseen-habits'], 'unseen-habits'):.0%}** |
 | Words shown as suggestions · share of its mistakes among them | — | cannot tell | **{cc['flagged_share']:.0%} · {cc['errors_caught']:.0%}** |
 | Same code on Kyrgyz (Russian keyboard), meaning recovered | — | — | **{kyr:.0%}** |
+| **{real["n"]} real messages written by a native speaker**: words wrong | {rw["B0 raw chat"]:.0%} | {rw["B2 dictionary"]:.1%} | **{rw["M2 Qalaisyn+typos"]:.1%}** ({rw["M2 before native check"]:.1%} before the last rule) |
 
 **4 · Why a model and not just a dictionary?** On clean, carefully typed text a dictionary of the most common
 spelling is already good, so we tested where it matters:
@@ -488,6 +491,12 @@ Simulated messages follow rules we wrote, so the real test is messages written b
 exactly as they would in a chat, then wrote its correct spelling (`data/real/ДЛЯ_ДРУГА.csv`). These messages were
 never used for development or tuning. No English references exist for them, so meaning is measured against the
 translation of the *correct* spelling.
+
+Two numbers are reported. **"M2 before native check"** is the model exactly as it was when these messages first
+arrived: the truly unseen result. After reading the errors we added one general rule (vowel harmony of the
+question particle: *керек па* → *керек пе*), so the final M2 number on this set is slightly optimistic. We also
+tried expanding dropped final vowels (*болад* → *болады*); it did not help and is switched off. Shortened chat
+forms remain the main error source and the next step.
 """)
 writefile("src/real_eval.py")
 code("""

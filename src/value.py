@@ -32,14 +32,16 @@ def ci(values):
 
 
 def message_level(data, rng):
+    # per-message numbers computed once; the bootstrap only re-sums them
+    okm_l = [r[M] == r["gold"] for r in data]
+    okd_l = [r[D] == r["gold"] for r in data]
+    em_l, n_l = zip(*[word_errors(r[M], r["gold"]) for r in data])
+    ed_l = [word_errors(r[D], r["gold"])[0] for r in data]
+
     def stats(idx):
-        okm = sum(data[i][M] == data[i]["gold"] for i in idx) / len(idx)
-        okd = sum(data[i][D] == data[i]["gold"] for i in idx) / len(idx)
-        em = ed = n = 0
-        for i in idx:
-            a, k = word_errors(data[i][M], data[i]["gold"]); b, _ = word_errors(data[i][D], data[i]["gold"])
-            em += a; ed += b; n += k
-        return okm, okd, em / n, ed / n
+        n = sum(n_l[i] for i in idx)
+        return (sum(okm_l[i] for i in idx) / len(idx), sum(okd_l[i] for i in idx) / len(idx),
+                sum(em_l[i] for i in idx) / n, sum(ed_l[i] for i in idx) / n)
     base = stats(range(len(data)))
     boots = [stats([rng.randrange(len(data)) for _ in data]) for _ in range(B)]
     raw = [word_errors(r["chat"], r["gold"]) for r in data]
