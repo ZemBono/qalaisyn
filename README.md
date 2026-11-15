@@ -14,6 +14,42 @@ On held-out data (Russian keyboard): words misspelled 47% → 3.5% (dictionary b
 right 88% vs 80% (+9 pts, 95% CI +7…+11), with typos 74% vs 49%. 6% of words become suggestions and they contain 63%
 of its mistakes. The same code works for Kyrgyz.
 
+On **70 real messages written by a native speaker** (slang, Russian words, shortened forms) the share of wrong words
+goes 61.4% → 15.0% (dictionary 20.1%; free ChatGPT 12.9%, see below).
+
+## See it working inside other websites: browser extension
+The same engine is packed into a **Chrome / Edge extension** (`extension/`, download
+[`qalaisyn-extension.zip`](web/qalaisyn-extension.zip)). Click into any text field (Google Translate, Gmail,
+WhatsApp Web, a search box), type the way you normally do, press **Alt+Q** (or click the Q icon) and the letters are put
+back right in that field. It runs fully offline in a few milliseconds.
+
+1. Unzip `qalaisyn-extension.zip`.
+2. Open `chrome://extensions` (or `edge://extensions`), turn on **Developer mode**.
+3. **Load unpacked** → choose the `qalaisyn-extension` folder.
+4. Open Google Translate (Kazakh → English), type `ушак кашан конады`, press **Alt+Q**.
+
+| Typed (Russian keyboard) | Google Translate reads | After Qalaisyn (Alt+Q) | Google Translate reads |
+|---|---|---|---|
+| ушак кашан конады | "When will the rumor land?" | ұшақ қашан қонады | "When does the plane land?" |
+| менин жугим жогалып кетти | "I lost my charm" | менің жүгім жоғалып кетті | "My luggage is lost" |
+| жеке куалигимди жогалтып алдым | "I lost my personal license" | жеке куәлігімді жоғалтып алдым | "I lost my identity card" |
+| balamnyn kyzuy koterildi (Latin) | not translated, text returned as is | баламның қызуы көтерілді | "My child has a fever" |
+
+## Why not just ask ChatGPT?
+We sent the same 70 native-speaker messages to the free ChatGPT web version (15 Nov 2026, one prompt, instruction to
+restore the letters only):
+
+| System | Words still wrong | Messages fully right | Runs |
+|---|---|---|---|
+| As typed | 61.4% | 3% | — |
+| Dictionary lookup | 20.1% | 33% | offline |
+| **Qalaisyn** | **15.0%** | 37% | offline, ~ms per message, 21 MB in the browser, free |
+| ChatGPT (free) | 12.9% | 59% | online, paid per message at scale, messages leave the company |
+
+A giant online model is a little more accurate; Qalaisyn gets within about two points while being tiny, instant,
+private and free, so it can run on every single message. The two also combine well: Qalaisyn for everything,
+a large model only for the ~6% of words Qalaisyn marks as unsure. Raw outputs: `data/llm/`, `results/chatgpt_compare.json`.
+
 ![messages](figures/messages.png)
 
 * **Live demo (runs in your browser):** https://zembono.github.io/qalaisyn/web/
@@ -37,6 +73,9 @@ of its mistakes. The same code works for Kyrgyz.
 | `src/eval_translate.py` | NLLB-200 translation + chrF |
 | `src/analysis.py`, `src/charts.py` | failure analysis and figures |
 | `src/app.py` | Gradio demo |
+| `web/` | the live demo site; `web/qalaisyn.js` is the engine ported to JavaScript |
+| `extension/` | browser extension (Alt+Q in any text field); tests: `extension_test.py`, `extension_gt.py` |
+| `data/llm/` | the ChatGPT comparison prompt and its answers |
 
 ## Reproduce
 ```bash

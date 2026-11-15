@@ -1,0 +1,15 @@
+{
+ "n": 70,
+ "source": "ChatGPT free web version (chatgpt.com, not logged in), 15 Nov 2026, one prompt with all 70 messages",
+ "wer": {
+  "as typed": 0.614,
+  "dictionary": 0.201,
+  "qalaisyn": 0.15,
+  "chatgpt": 0.129
+ },
+ "fully_correct": {
+  "dictionary": 0.33,
+  "qalaisyn": 0.37,
+  "chatgpt": 0.59
+ }
+}

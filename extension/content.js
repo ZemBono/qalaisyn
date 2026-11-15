@@ -61,20 +61,21 @@
   function toast(html, ms = 4000) {
     if (!host) {
       host = document.createElement("div");
-      host.style.cssText = "position:fixed;right:20px;bottom:20px;z-index:2147483647";
+      host.style.cssText = "position:fixed;right:28px;bottom:120px;z-index:2147483647";
       const sh = host.attachShadow({ mode: "open" });
       sh.innerHTML = `<style>
-        .b{font:15px/1.5 "Segoe UI",system-ui,sans-serif;background:#fff;color:#1A1F24;border:1px solid #D9DEE3;
-           border-radius:10px;padding:12px 16px 13px;width:max-content;max-width:480px;box-shadow:0 10px 28px rgba(16,24,32,.12)}
-        .h{display:flex;align-items:center;gap:8px;font-size:13px;color:#4F5A64;padding-bottom:9px;margin-bottom:9px;border-bottom:1px solid #EEF1F3}
-        .h b{color:#1A1F24;font-weight:600}
-        .q{width:18px;height:18px;border-radius:5px;background:#0B7A80;color:#fff;font:700 12px/18px "Segoe UI",sans-serif;text-align:center}
-        .h .ms{margin-left:auto;color:#7A848D;padding-left:18px}
-        .row{display:grid;grid-template-columns:68px 1fr;gap:10px;align-items:baseline}
-        .row+.row{margin-top:4px}
-        .lbl{font-size:12px;color:#8A939B}
-        .was{color:#7A848D} .now{color:#1A1F24;font-size:16px}
-        u{text-decoration:none;background:#CFEDEA;color:#05575C;font-weight:700;border-radius:3px;padding:0 1px}</style>
+        .b{font:16px/1.5 "Segoe UI",system-ui,sans-serif;background:#fff;color:#1A1F24;border:1px solid #D9DEE3;
+           border-top:4px solid #0B7A80;border-radius:10px;padding:12px 18px 14px;width:max-content;max-width:560px;
+           box-shadow:0 14px 36px rgba(16,24,32,.16)}
+        .h{display:flex;align-items:center;gap:9px;font-size:14px;color:#4F5A64;padding-bottom:10px;margin-bottom:10px;border-bottom:1px solid #EEF1F3}
+        .h b{color:#0B7A80;font-weight:700;font-size:16px}
+        .q{width:22px;height:22px;border-radius:6px;background:#0B7A80;color:#fff;font:700 14px/22px "Segoe UI",sans-serif;text-align:center}
+        .h .ms{margin-left:auto;color:#7A848D;padding-left:22px}
+        .row{display:grid;grid-template-columns:76px 1fr;gap:12px;align-items:baseline}
+        .row+.row{margin-top:5px}
+        .lbl{font-size:13px;color:#8A939B}
+        .was{color:#7A848D;font-size:16px} .now{color:#1A1F24;font-size:18px}
+        u{text-decoration:none;background:#BFE7E3;color:#04484C;font-weight:700;border-radius:3px;padding:0 1px}</style>
         <div class="b"></div>`;
       box = sh.querySelector(".b");
       document.documentElement.appendChild(host);

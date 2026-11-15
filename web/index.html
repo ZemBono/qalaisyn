@@ -179,6 +179,7 @@ nav .links{gap:16px;font-size:14px} nav .links a{white-space:nowrap}
 .gt>div{border-radius:12px;padding:10px 12px;font-size:16px} .gt small{display:block;font-size:14px;margin-top:3px}
 .gt .bad{background:#F8E6E1} .gt .bad small{color:#9A3A24} .gt .good{background:#E1F2F1} .gt .good small{color:#0B6E73}
 @media (max-width:900px){.ext,.gt{grid-template-columns:1fr}}
+.llm-cmp{margin-top:22px} .llm-cmp h3{margin:0 0 6px;font-size:18px} .llm-cmp .bars{margin:12px 0 8px;max-width:620px}
 </style>
 </head>
 <body>
@@ -308,7 +309,9 @@ const reply = supportBot.answer(text);</pre>
           <div class="good">ұшақ қашан қонады<small>“When does the plane land?”</small></div></div>
         <div class="gt"><div class="bad">менин жугим жогалып кетти<small>“I lost my charm”</small></div>
           <div class="good">менің жүгім жоғалып кетті<small>“My luggage is lost”</small></div></div>
-        <p class="analogy">Even Google Translate, one of the biggest translators, reads these as “rumor” and “charm”;
+        <div class="gt"><div class="bad">balamnyn kyzuy koterildi<small>not translated at all</small></div>
+          <div class="good">баламның қызуы көтерілді<small>“My child has a fever”</small></div></div>
+        <p class="analogy">Even Google Translate, one of the biggest translators, reads these as “rumor” and “charm”, and leaves Latin-typed Kazakh untranslated;
         with Qalaisyn inside it gets them right. Big services already cope with many messages; Qalaisyn fixes the words
         they still misread, and matters most for the smaller AI models inside everyday chatbots.</p>
       </div>
@@ -417,7 +420,19 @@ const reply = supportBot.answer(text);</pre>
       <div class="card"><h3>Private</h3><p>It runs on the company's own server, or even inside a web page like this one.
         Customers' messages are not sent to another company, and no internet connection is needed.</p></div>
       <div class="card"><h3>Works with them</h3><p>It can sit in front of any AI, large models included, and hand it clean
-        Kazakh. Honest note: we have not yet measured large models directly; that is our next test.</p></div>
+        Kazakh, or call it only for the few words Qalaisyn marks as unsure.</p></div>
+    </div>
+    <div class="card llm-cmp">
+      <h3>We measured it</h3>
+      <p>The same 70 real messages from our native speaker, sent to ChatGPT (free version) with the instruction to put the letters back:</p>
+      <div class="bars">
+        <div class="bar"><span>As typed</span><div class="track"><div class="fill" style="width:61.4%;background:#B24E36"></div></div><b>61%</b></div>
+        <div class="bar"><span>Dictionary</span><div class="track"><div class="fill" style="width:20.1%;background:#D99A1E"></div></div><b>20%</b></div>
+        <div class="bar"><span>Qalaisyn</span><div class="track"><div class="fill" style="width:15.0%;background:#00909C"></div></div><b>15%</b></div>
+        <div class="bar"><span>ChatGPT</span><div class="track"><div class="fill" style="width:12.9%;background:#6B7785"></div></div><b>13%</b></div>
+      </div>
+      <p class="analogy">Share of words still wrong. A 21 MB engine that runs offline in milliseconds comes within about
+      two points of a giant online model, and costs nothing per message.</p>
     </div>
     <p class="analogy" style="margin-top:12px">Putting dropped letters back has been studied before, for languages such as
     Vietnamese and Romanian. What is new here is Kazakh the way people really chat: a Russian keyboard or Latin letters,
