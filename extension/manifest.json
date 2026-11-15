@@ -1,0 +1,11 @@
+{
+  "manifest_version": 3,
+  "name": "Qalaisyn: Kazakh letters back",
+  "version": "1.0",
+  "description": "Press Alt+Q in any text field: Kazakh letters dropped on a Russian keyboard or in Latin are put back. Runs fully offline.",
+  "icons": { "16": "icons/16.png", "48": "icons/48.png", "128": "icons/128.png" },
+  "action": { "default_title": "Qalaisyn: put Kazakh letters back in the focused field (Alt+Q)", "default_icon": { "16": "icons/16.png", "48": "icons/48.png" } },
+  "background": { "service_worker": "background.js" },
+  "content_scripts": [{ "matches": ["<all_urls>"], "js": ["qalaisyn.js", "content.js"], "run_at": "document_idle" }],
+  "web_accessible_resources": [{ "resources": ["model/*"], "matches": ["<all_urls>"] }]
+}
