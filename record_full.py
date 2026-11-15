@@ -21,8 +21,9 @@ addEventListener('mousemove',e=>{c.style.left=e.clientX+'px';c.style.top=e.clien
 addEventListener('mousedown',()=>{c.style.width=c.style.height='12px'},true);
 addEventListener('mouseup',()=>{c.style.width=c.style.height='18px'},true);
 """
-SCROLL = """([y,ms])=>new Promise(r=>{const s=scrollY,d=y-s,t0=performance.now();
-function f(t){const k=Math.min(1,(t-t0)/ms),e=k<.5?2*k*k:1-Math.pow(-2*k+2,2)/2;scrollTo(0,s+d*e);k<1?requestAnimationFrame(f):r()}
+SCROLL = """([y,ms])=>new Promise(r=>{document.documentElement.style.scrollBehavior='auto';
+const s=scrollY,d=y-s,t0=performance.now(),dur=Math.max(ms,Math.min(3200,1100+Math.abs(d)*0.85));
+function f(t){const k=Math.min(1,(t-t0)/dur),e=-(Math.cos(Math.PI*k)-1)/2;scrollTo(0,s+d*e);k<1?requestAnimationFrame(f):r()}
 requestAnimationFrame(f)})"""
 
 
@@ -53,8 +54,8 @@ def main():
         # ---------- part 1: the site, only the key parts ----------
         pg.goto(SITE, wait_until="networkidle"); cursor()
         pg.wait_for_function("document.body.innerText.includes('Engine loaded')", timeout=60000)
-        pg.mouse.move(700, 500); w(8)                 # headline + airline example animates
-        by(420); w(5)                                  # "It works inside other systems"
+        pg.mouse.move(700, 500); w(9)                 # headline + airline example animates
+        by(560); w(5)                                  # "It works inside other systems"
         to("#why"); w(7)                               # Gulnar
         to("#where"); w(6)                             # where it lives
         to("#bot"); w(1.5)
