@@ -55,6 +55,13 @@ Most phones in Kazakhstan have a **Russian keyboard**, which has no keys for the
 that now answer bank, airline, clinic and government chats misread them. **Qalaisyn** is a small engine that runs
 *inside* those systems and puts the letters back before the AI reads the message.
 
+> **Try it in 30 seconds.** Open the **[live demo](https://zembono.github.io/qalaisyn/web/)** and type any Kazakh
+> message the way people text: it is restored right in your browser. To see it working *inside another website*,
+> install the **[browser extension](https://zembono.github.io/qalaisyn/web/#extension)** (Chrome / Edge, 1 minute),
+> open Google Translate and press **Alt+Q**: *ушак кашан конады* → "When will the rumor land?" becomes
+> *ұшақ қашан қонады* → "When does the plane land?". On real messages from a native speaker Qalaisyn makes
+> **fewer word errors than free ChatGPT (11.9% vs 12.9%)**, offline and for free (section 9).
+
 ## Start here — the project in two minutes
 
 **1 · Why one missing letter matters.** On a Russian keyboard *өт* ("go through") is typed as *от* ("fire").
