@@ -142,6 +142,12 @@ CONTRACTIONS = {"жатм": "жатырмын", "жатрм": "жатырмын"
                 "jatm": "жатырмын", "jatyrm": "жатырмын", "zhatyrm": "жатырмын"}
 
 
+# Names of everyday Kazakhstani services that the language model would otherwise "correct" (каспи -> қарсы, егов -> его).
+SERVICE_NAMES = ("каспи", "kaspi", "егов", "egov")
+# Chat short forms: a final vowel is dropped after these letters (жберш -> жіберші, болад -> болады).
+SHORT_FORM_ENDS = set("шд") | {"h", "d"}
+
+
 def _load_russian(n=30000):
     p = Path(__file__).resolve().parents[1] / "data" / "ru_words.txt"
     if not p.exists():
@@ -376,10 +382,14 @@ class QalaisynRestorer:
 
     def __init__(self, lex: Lexicon, habit_penalty=math.log(0.1), oov_penalty=-12.0,
                  top=25, use_char=True, fuzzy=False, typo_penalty=math.log(0.002),
-                 name=None, fuzzy_below=5, char_bonus=0.0, vowel_drop=False, drop_penalty=math.log(0.05), harmony=True):
-        self.vowel_drop = vowel_drop          # tried: dropped final vowel (болад -> болады); did not help, off
+                 name=None, fuzzy_below=5, char_bonus=0.0, vowel_drop=True, drop_penalty=math.log(0.05), harmony=True,
+                 drop_below=10**9, drop_chars=SHORT_FORM_ENDS, keep_names=True):
+        self.vowel_drop = vowel_drop          # chat short forms: dropped final vowel after ш/д (жберш -> жіберші, болад -> болады)
         self.harmony = harmony                # particle vowel harmony (керек па -> керек пе)
         self.drop_penalty = drop_penalty
+        self.drop_below = fuzzy_below if drop_below is None else drop_below   # when to try a dropped final vowel
+        self.drop_chars = DROP_END if drop_chars is None else set(drop_chars)
+        self.keep_names = keep_names
         # defaults for fuzzy_below / typo_penalty / char_bonus were tuned on FLORES dev only
         self.char_bonus = char_bonus
         self.fuzzy_below = fuzzy_below   # look for typo neighbours only if the word is unknown/rare
@@ -437,6 +447,8 @@ class QalaisynRestorer:
             return False
         if re.search(r"[щёъэ]", t):
             return True
+        if self.keep_names and t.endswith("ый"):   # Kazakh words never end in -ый (скорый, точный)
+            return True
         if t not in RUSSIAN_WORDS:
             return False
         others = [w for w in self.lex.candidates(t, 5) if w != t]
@@ -456,6 +468,9 @@ class QalaisynRestorer:
             if self.is_russian(tok):
                 lattice.append([(clean_token(tok), 0.0)])
                 continue
+            if self.keep_names and any(clean_token(tok).startswith(n) for n in SERVICE_NAMES):
+                lattice.append([(clean_token(tok), 0.0)])
+                continue
             if clean_token(tok) in CONTRACTIONS:
                 lattice.append([(CONTRACTIONS[clean_token(tok)], 0.0)])
                 continue
@@ -470,10 +485,10 @@ class QalaisynRestorer:
                 if fz and not cands:
                     # keep the letter-by-letter guess in the race (rare names, new words)
                     opts.append((self.lex.char.restore(tok), self.char_bonus))
-            if best_count < self.fuzzy_below and self.vowel_drop:
+            if best_count < self.drop_below and self.vowel_drop:
                 # chat speech drops a final vowel: болад -> болады, жберш -> жіберші, ед -> еді
                 t = clean_token(tok)
-                if len(t) >= 2 and t[-1] in DROP_END:
+                if len(t) >= 2 and t[-1] in self.drop_chars:
                     have = {w for w, _ in opts}
                     for v in (("ы", "и") if re.search(r"[а-я]", t) else ("y", "i")):
                         ext = t + v

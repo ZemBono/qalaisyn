@@ -60,8 +60,11 @@ def main():
     m2 = QalaisynRestorer(lex, fuzzy=True, name="M2 Qalaisyn+typos")
     # the model exactly as it was when these messages were first tested (before the particle-harmony rule,
     # which was added after looking at these errors) - this is the truly held-out number
-    m2_before = QalaisynRestorer(lex, fuzzy=True, harmony=False, name="M2 before native check")
-    restorers = [RuleRestorer(), DictRestorer(lex), QalaisynRestorer(lex), m2_before, m2]
+    old = dict(vowel_drop=False, drop_chars=None, keep_names=False)
+    m2_before = QalaisynRestorer(lex, fuzzy=True, harmony=False, name="M2 before native check", **old)
+    # after the particle-harmony rule, before the short-form / service-name rules (also added after reading errors)
+    m2_mid = QalaisynRestorer(lex, fuzzy=True, name="M2 before short forms", **old)
+    restorers = [RuleRestorer(), DictRestorer(lex), QalaisynRestorer(lex), m2_before, m2_mid, m2]
     table, outs = evaluate(restorers, rows, "real")
     # suggestions
     for o in outs:

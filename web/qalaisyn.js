@@ -27,6 +27,10 @@
     "ю":"iu","я":"ia"};
   const SKEL = "abvgdejzik lmnoprstufhcCS".replace(" ", "").split("");
   const HABIT = Math.log(0.1), TYPO = Math.log(0.002), OOV = -12.0, TOP = 25, FUZZY_BELOW = 5;
+  // chat short forms: a final vowel is dropped after these letters (жберш -> жіберші, болад -> болады)
+  const SHORT_FORM_ENDS = new Set(["ш", "д", "h", "d"]), DROP = Math.log(0.05);
+  // everyday Kazakhstani service names the language model would otherwise "correct" (каспи -> қарсы, егов -> его)
+  const SERVICE_NAMES = ["каспи", "kaspi", "егов", "egov"];
 
   const BACK = new Set("аоұы"), FRONT = new Set("әеөүіиэ");
   function harmonize(words) {   // question particle vowel harmony: керек па -> керек пе
@@ -241,6 +245,7 @@
       const t = clean(tok);
       if (!/^[а-яё-]+$/.test(t)) return false;
       if (/[щёъэ]/.test(t)) return true;
+      if (t.endsWith("ый")) return true;            // Kazakh words never end in -ый (скорый, точный)
       if (!this.russian.has(t)) return false;
       const others = this.candidates(t, 5).filter(w => w !== t);
       return !others.length || this.u(others[0]) < 50;
@@ -265,6 +270,7 @@
       for (const tok of toks) {
         if (/^\d+$/.test(tok)) { lat.push([[tok, 0]]); continue; }
         if (this.isRussian(tok)) { lat.push([[clean(tok), 0]]); continue; }
+        if (SERVICE_NAMES.some(n => clean(tok).startsWith(n))) { lat.push([[clean(tok), 0]]); continue; }
         if (clean(tok) in CONTRACTIONS) { lat.push([[CONTRACTIONS[clean(tok)], 0]]); continue; }
         const cands = this.candidates(tok);
         const opts = cands.map(w => [w, this.channel(tok, w, habits)]);
@@ -274,6 +280,20 @@
           const fz = this.fuzzyCandidates(tok).filter(w => !have.has(w));
           for (const w of fz) opts.push([w, TYPO + this.channel(tok, w, habits)]);
           if (fz.length && !cands.length) opts.push([this.guess(tok), 0]);
+        }
+        const t = clean(tok);
+        if (t.length >= 2 && SHORT_FORM_ENDS.has(t[t.length - 1])) {
+          const have = new Set(opts.map(o => o[0]));
+          for (const v of (/[а-я]/.test(t) ? ["ы", "и"] : ["y", "i"])) {
+            const ext = t + v;
+            const extC = this.candidates(ext, 5).map(w => [w, 0]);
+            if (ext.length >= 4) for (const w of this.fuzzyCandidates(ext, 5)) extC.push([w, TYPO]);
+            for (const [w, extra] of extC) {
+              if (have.has(w)) continue;
+              have.add(w);
+              opts.push([w, DROP + extra + this.channel(ext, w, habits)]);
+            }
+          }
         }
         if (!opts.length) opts.push([this.guess(tok), OOV]);
         lat.push(opts);

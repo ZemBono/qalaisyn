@@ -24,7 +24,7 @@ out = {
 if real:
     w = real["wer"]
     out.update({"real_n": real["n"], "real_typed": w["B0 raw chat"], "real_dict": w["B2 dictionary"],
-                "real_before": w["M2 before native check"], "real_qal": w["M2 Qalaisyn+typos"],
+                "real_before": w["M2 before native check"], "real_qal": w["M2 Qalaisyn+typos"], "real_gpt": 0.129,
                 "real_chrf": real["chrf_vs_correct_translation"]})
 (ROOT / "web" / "results.json").write_text(json.dumps(out, indent=1), encoding="utf-8")
 for f in ["messages.png", "meaning.png"]:

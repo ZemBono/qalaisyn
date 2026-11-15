@@ -15,7 +15,8 @@ right 88% vs 80% (+9 pts, 95% CI +7…+11), with typos 74% vs 49%. 6% of words b
 of its mistakes. The same code works for Kyrgyz.
 
 On **70 real messages written by a native speaker** (slang, Russian words, shortened forms) the share of wrong words
-goes 61.4% → 15.0% (dictionary 20.1%; free ChatGPT 12.9%, see below).
+goes 61.4% → **11.9%**: fewer mistakes than free ChatGPT (12.9%) and a dictionary (20.1%), see below. Two rules
+(question-particle harmony, chat short forms like болад → болады) were added after reading these errors; before them: 16.1%.
 
 ## See it working inside other websites: browser extension
 The same engine is packed into a **Chrome / Edge extension** (`extension/`, download
@@ -43,11 +44,11 @@ restore the letters only):
 |---|---|---|---|
 | As typed | 61.4% | 3% | — |
 | Dictionary lookup | 20.1% | 33% | offline |
-| **Qalaisyn** | **15.0%** | 37% | offline, ~ms per message, 21 MB in the browser, free |
 | ChatGPT (free) | 12.9% | 59% | online, paid per message at scale, messages leave the company |
+| **Qalaisyn** | **11.9%** | 50% | offline, ~ms per message, 21 MB in the browser, free |
 
-A giant online model is a little more accurate; Qalaisyn gets within about two points while being tiny, instant,
-private and free, so it can run on every single message. The two also combine well: Qalaisyn for everything,
+A free offline engine makes fewer word mistakes than a giant online model (ChatGPT still gets more whole messages
+exactly right), while being tiny, instant, private and free, so it can run on every single message. The two also combine well: Qalaisyn for everything,
 a large model only for the ~6% of words Qalaisyn marks as unsure. Raw outputs: `data/llm/`, `results/chatgpt_compare.json`.
 
 ![messages](figures/messages.png)

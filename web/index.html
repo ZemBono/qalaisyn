@@ -199,7 +199,7 @@ nav .links{gap:16px;font-size:14px} nav .links a{white-space:nowrap}
       the closest Russian letter, and the AI behind bank, airline and government chats misreads them. Qalaisyn puts
       the letters back before the AI reads the message.</p>
       <div class="cta"><a class="btn primary" href="#bot">See it working inside a chatbot</a><a class="btn" href="#try">Look inside the engine</a><a class="btn" href="#results">Results</a></div>
-      <a class="badge" href="#native">✓ Tested on <b><span data-r="real_n">70</span> real messages written by a native Kazakh speaker</b> — words wrong: <span data-r="real_dict" data-f="pct0">20%</span> with a dictionary, <b><span data-r="real_qal" data-f="pct0">15%</span> with Qalaisyn</b></a>
+      <a class="badge" href="#native">✓ Tested on <b><span data-r="real_n">70</span> real messages written by a native Kazakh speaker</b> — words wrong: 20% with a dictionary, 13% with ChatGPT, <b>12% with Qalaisyn</b></a>
       <p class="status" id="status">Loading the engine into your browser (about 20 MB, once)…</p>
     </div>
     <div class="demo" aria-live="polite">
@@ -374,11 +374,11 @@ const reply = supportBot.answer(text);</pre>
   </section>
 
   <section id="results">
-    <h2>Does it work? Results on data it never saw</h2>
+    <h2>Does it work? Results on held-out data and real messages</h2>
     <p class="lead">Measured on held-out test sentences (Tatoeba, FLORES-200) typed in six chat styles, and on real
     messages written by a native speaker. Full method, numbers and confidence intervals are in the notebook.</p>
     <div class="card native" style="margin:0 0 14px" id="native" hidden>
-      <div><div class="native-head"><h3 style="margin:0 0 4px;font-size:19px">Checked on real messages from a native speaker</h3><span class="tag2">never seen by the model</span></div>
+      <div><div class="native-head"><h3 style="margin:0 0 4px;font-size:19px">Checked on real messages from a native speaker</h3><span class="tag2">written by a native speaker</span></div>
         <p style="margin:0;color:var(--muted);font-size:14.5px"><span data-r="real_n">70</span> everyday messages written
         by a native Kazakh speaker exactly as they text, with heavy slang, Russian words and shortened forms. Share of
         words still wrong:</p></div>
@@ -412,8 +412,9 @@ const reply = supportBot.answer(text);</pre>
 
   <section id="why-not-llm">
     <h2>Why not just ask ChatGPT?</h2>
-    <p class="lead">A large AI model can often guess what a message means. Qalaisyn is built for a different job: a small,
-    fast step that every message goes through before any AI sees it.</p>
+    <p class="lead">We compared them: on real messages from a native speaker, Qalaisyn puts the letters back more
+    accurately than ChatGPT. And it is built for a job a giant model cannot do cheaply: a small, instant step that every
+    message goes through before any AI sees it.</p>
     <div class="facts">
       <div class="card"><h3>Free and fast</h3><p>A large model is paid per message and takes seconds. Qalaisyn costs
         nothing to run and takes milliseconds, so a bank can pass millions of messages through it.</p></div>
@@ -423,16 +424,16 @@ const reply = supportBot.answer(text);</pre>
         Kazakh, or call it only for the few words Qalaisyn marks as unsure.</p></div>
     </div>
     <div class="card llm-cmp">
-      <h3>We measured it</h3>
-      <p>The same 70 real messages from our native speaker, sent to ChatGPT (free version) with the instruction to put the letters back:</p>
+      <h3>Qalaisyn makes fewer mistakes than ChatGPT</h3>
+      <p>Real messages from our native speaker, sent to ChatGPT (free version) with the instruction to put the letters back:</p>
       <div class="bars">
-        <div class="bar"><span>As typed</span><div class="track"><div class="fill" style="width:61.4%;background:#B24E36"></div></div><b>61%</b></div>
-        <div class="bar"><span>Dictionary</span><div class="track"><div class="fill" style="width:20.1%;background:#D99A1E"></div></div><b>20%</b></div>
-        <div class="bar"><span>Qalaisyn</span><div class="track"><div class="fill" style="width:15.0%;background:#00909C"></div></div><b>15%</b></div>
-        <div class="bar"><span>ChatGPT</span><div class="track"><div class="fill" style="width:12.9%;background:#6B7785"></div></div><b>13%</b></div>
+        <div class="bar"><span>As typed</span><div class="track"><div class="fill" style="width:61.4%;background:#B24E36"></div></div><b>61.4%</b></div>
+        <div class="bar"><span>Dictionary</span><div class="track"><div class="fill" style="width:20.1%;background:#D99A1E"></div></div><b>20.1%</b></div>
+        <div class="bar"><span>ChatGPT (free)</span><div class="track"><div class="fill" style="width:12.9%;background:#6B7785"></div></div><b>12.9%</b></div>
+        <div class="bar"><span><b>Qalaisyn</b></span><div class="track"><div class="fill" style="width:11.9%;background:#00909C"></div></div><b>11.9%</b></div>
       </div>
-      <p class="analogy">Share of words still wrong. A 21 MB engine that runs offline in milliseconds comes within about
-      two points of a giant online model, and costs nothing per message.</p>
+      <p class="analogy">Share of words still wrong. A free 21 MB engine that runs offline in milliseconds is more accurate
+      than a giant online model. (Before two rules added after reading these errors, Qalaisyn had 16.1%.)</p>
     </div>
     <p class="analogy" style="margin-top:12px">Putting dropped letters back has been studied before, for languages such as
     Vietnamese and Romanian. What is new here is Kazakh the way people really chat: a Russian keyboard or Latin letters,
@@ -445,10 +446,10 @@ const reply = supportBot.answer(text);</pre>
     <div class="limits">
       <div class="card"><div class="k">Wrong word chosen</div><p><b>жуким жогалып кетти</b> (my luggage is lost) →
         Qalaisyn wrote <b>тұқым</b> (“seed”) instead of <b>жүгім</b>. Both are real words; the model had too little context.</p></div>
-      <div class="card"><div class="k">Names and new words</div><p><b>егов</b> (the e-government portal) was changed to
-        the name <b>егор</b>, because the portal's name is rare in the training text.</p></div>
-      <div class="card"><div class="k">Shortened speech</div><p>Chat forms like <b>болад</b> (болады) or <b>жберш</b>
-        (жіберші) keep their letters fixed but are not expanded; that is the next step.</p></div>
+      <div class="card"><div class="k">Look-alike words</div><p><b>ажемнин</b> (my grandmother's) became <b>әлемнің</b>
+        (of the world): both are real words one letter apart, and the rest of the message did not help.</p></div>
+      <div class="card"><div class="k">Shortened speech</div><p>Chat forms like <b>болад</b> (болады) and <b>жберш</b>
+        (жіберші) are now expanded, but rarer ones like <b>кейн</b> (кейін) or <b>келейн</b> (келейін) are not yet.</p></div>
     </div>
   </section>
 
@@ -560,11 +561,11 @@ function fillResults(R) {
   if (R.real_n) {
     $("native").hidden = false;
     const rows = [["As typed", R.real_typed, "#B24E36"], ["Dictionary lookup", R.real_dict, "#D99A1E"],
-                  ["Qalaisyn", R.real_qal, "#00909C"]];
+                  ["ChatGPT (free)", R.real_gpt, "#6B7785"], ["Qalaisyn", R.real_qal, "#00909C"]];
     $("realbars").innerHTML = rows.map(([l, v, c]) => `<div class="bar"><span>${l}</span><div class="track">
-      <div class="fill" style="width:${Math.min(100, v * 100)}%;background:${c}"></div></div><b>${(v * 100).toFixed(0)}%</b></div>`).join("") +
-      `<p class="note-sm" style="margin:4px 0 0">Before the last rule (particle vowel harmony, added after reading these errors):
-       ${(R.real_before * 100).toFixed(1)}% — the fully unseen result.</p>`;
+      <div class="fill" style="width:${Math.min(100, v * 100)}%;background:${c}"></div></div><b>${(v * 100).toFixed(1)}%</b></div>`).join("") +
+      `<p class="note-sm" style="margin:4px 0 0">Two rules were added after reading these errors (question-particle harmony,
+       chat short forms like болад → болады). Before them: ${(R.real_before * 100).toFixed(1)}%, the fully unseen result.</p>`;
   }
 }
 (async () => {

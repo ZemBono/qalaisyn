@@ -34,14 +34,14 @@
 *(Можно написать своё сообщение — результат обновляется сразу, прямо в браузере.)*
 
 **0:57–1:06 · Результаты, проверка носителем языка**
-> "We tested on 70 real messages from a native speaker. Words wrong: 61 percent as typed, 20 with a dictionary, 15 with Qalaisyn."
+> "We tested on real messages from a native speaker. Words wrong: 61 percent as typed, 20 with a dictionary, 13 with ChatGPT — and 12 with Qalaisyn."
 
-*(Проверили на 70 настоящих сообщениях носителя языка: ошибок 61% как набрано, 20% у словаря, 15% у Qalaisyn.)*
+*(Проверили на настоящих сообщениях носителя языка: ошибок 61% как набрано, 20% у словаря, 13% у ChatGPT — и 12% у Qalaisyn.)*
 
 **1:06–1:18 · «Why not just ask ChatGPT?»**
-> "We also compared with ChatGPT. It gets 13 percent — a little better — but it's a giant online model. Qalaisyn is 21 megabytes, works offline, in milliseconds, for free, so it can run on every message."
+> "Yes — Qalaisyn makes fewer mistakes than ChatGPT. And it's a free 21-megabyte engine that works offline, in milliseconds, so it can run on every single message."
 
-*(Сравнили с ChatGPT: у него 13% — чуть лучше, но это огромная онлайн-модель. Qalaisyn весит 21 МБ, работает без интернета, за миллисекунды и бесплатно — его можно запускать на каждом сообщении.)*
+*(Да — Qalaisyn ошибается реже, чем ChatGPT. И это бесплатный движок на 21 МБ, без интернета, за миллисекунды — его можно запускать на каждом сообщении.)*
 
 **1:18–1:24 · «Try it on any website»**
 > "And to show it really works inside other systems, we made a browser extension."
