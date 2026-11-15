@@ -9,9 +9,9 @@
 ## Часть 1. Сайт
 
 **0:00–0:12 · Главный экран**
-> "Most phones in Kazakhstan have a Russian keyboard with no keys for Kazakh letters. So people drop them, and AI misreads the message. Here, an airline bot reads 'is the plane late?' as 'is there a rumor going on?'."
+> "Phones in Kazakhstan often have no Kazakh letters, so people skip them, and AI misreads the message: 'is the plane late?' becomes 'is there a rumor?'"
 
-*(На большинстве телефонов нет казахских букв, люди их пропускают, и ИИ понимает неправильно. Бот авиакомпании читает «самолёт опаздывает?» как «ходят слухи?».)*
+*(На телефонах в Казахстане часто нет казахских букв, люди их пропускают, и ИИ понимает неправильно: «самолёт опаздывает?» превращается в «ходят слухи?»)*
 
 **0:12–0:27 · «It works inside other systems» и история Гульнар**
 > "Qalaisyn is an engine that companies build into their chatbots and translators. Gulnar, a grandmother, texts a clinic bot about her grandson's fever. Without Qalaisyn the AI reads nonsense."
@@ -34,14 +34,14 @@
 *(Можно написать своё сообщение — результат обновляется сразу, прямо в браузере.)*
 
 **1:00–1:09 · Результаты, проверка носителем языка**
-> "We tested on real messages from a native speaker. Words wrong: 61 percent as typed, 20 with a dictionary, 13 with ChatGPT — and 12 with Qalaisyn."
+> "On real messages from a native speaker: 61 percent of words wrong as typed, 20 with a dictionary, 12 with Qalaisyn."
 
-*(Проверили на настоящих сообщениях носителя языка: ошибок 61% как набрано, 20% у словаря, 13% у ChatGPT — и 12% у Qalaisyn.)*
+*(На настоящих сообщениях носителя языка: 61% слов с ошибками как набрано, 20% у словаря, 12% у Qalaisyn.)*
 
 **1:09–1:24 · «Why not just ask ChatGPT?»**
-> "Yes — Qalaisyn makes fewer mistakes than ChatGPT. And it's a free 21-megabyte engine that works offline, in milliseconds, so it can run on every single message."
+> "And ChatGPT? It gets 13 percent. So Qalaisyn makes fewer mistakes, and it's a free 21-megabyte engine that works offline, in milliseconds."
 
-*(Да — Qalaisyn ошибается реже, чем ChatGPT. И это бесплатный движок на 21 МБ, без интернета, за миллисекунды — его можно запускать на каждом сообщении.)*
+*(А ChatGPT? У него 13%. Значит, Qalaisyn ошибается реже, и это бесплатный движок на 21 МБ, без интернета, за миллисекунды.)*
 
 **1:24–1:32 · «Try it on any website»**
 > "And to show it really works inside other systems, we made a browser extension."
@@ -51,9 +51,9 @@
 ## Часть 2. Расширение в Google Translate
 
 **1:32–1:47 · «ушак кашан конады»**
-> "This is Google Translate. I type 'when does the plane land?' the way people type in Kazakhstan. Google asks when the rumor will land. I press Alt+Q — Qalaisyn puts the letters back right in the box — and now it's the plane."
+> "This is Google Translate. I type 'when does the plane land?' the way people type here. Google asks when the rumor will land. I press Alt+Q, and now it's the plane."
 
-*(Это Google Translate. Пишу «когда приземлится самолёт?» как пишут в Казахстане. Google спрашивает, когда приземлится слух. Жму Alt+Q — Qalaisyn возвращает буквы прямо в поле — и теперь это самолёт.)*
+*(Это Google Translate. Пишу «когда приземлится самолёт?» так, как пишут у нас. Google спрашивает, когда приземлится слух. Жму Alt+Q — и теперь это самолёт.)*
 
 **1:47–2:03 · «менин жугим жогалып кетти»**
 > "'My luggage is lost' becomes 'I lost my charm'. After Qalaisyn: 'my luggage is lost'."
