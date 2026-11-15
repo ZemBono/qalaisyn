@@ -263,6 +263,22 @@ const text  = qalaisyn.restore(message);   <span class="c">// "ушак кеши
 const reply = supportBot.answer(text);</pre>
   </section>
 
+  <section id="beyond">
+    <h2>Not only Kazakh</h2>
+    <p class="lead">Kyrgyz, Uzbek, Azerbaijani, Turkish and Tatar speakers drop their own letters in the same way.
+    Qalaisyn learns a language from ordinary text and needs no hand-written rules, so we ran the same code, unchanged,
+    on Kyrgyz (ң, ө, ү), trained on 677,030 sentences from Kyrgyz Wikipedia.</p>
+    <div class="facts">
+      <div class="card"><div class="big-stat">70% → 4%</div>
+        <p style="margin-top:4px">of Kyrgyz words are wrong as typed in chat, and after Qalaisyn. A simple dictionary gets 6%.</p></div>
+      <div class="card"><div class="big-stat">98%</div>
+        <p style="margin-top:4px">of meaning recovered from Kyrgyz typed in Latin letters, measured with a translator.</p></div>
+      <div class="card"><div class="big-stat">86%</div>
+        <p style="margin-top:4px">on a Russian keyboard. Here, honestly, a simple dictionary does about as well. Real Kyrgyz
+        chat messages are our next test.</p></div>
+    </div>
+  </section>
+
   <section id="bot">
     <h2>See it inside a support chatbot</h2>
     <p class="lead">The same simple support bot twice. On the left it reads the message as typed; on the right
