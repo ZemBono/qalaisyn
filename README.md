@@ -18,7 +18,7 @@ of its mistakes. The same code works for Kyrgyz.
 
 * **Live demo (runs in your browser):** https://zembono.github.io/qalaisyn/web/
 
-* **Notebook with all results:** [`Qalaisyn.ipynb`](Qalaisyn.ipynb)
+* **Notebook with all results:** [`Qalaisyn.ipynb`](Qalaisyn.ipynb) · [open in Colab](https://colab.research.google.com/github/ZemBono/qalaisyn/blob/main/Qalaisyn.ipynb)
 * **One-page write-up:** [`WRITEUP.md`](WRITEUP.md) / `WRITEUP.pdf`
 
 ## Repository
