@@ -56,6 +56,7 @@ a large model only for the ~6% of words Qalaisyn marks as unsure. Raw outputs: `
 ![messages](figures/messages.png)
 
 * **Live demo (runs in your browser):** https://zembono.github.io/qalaisyn/web/
+* **2-minute demo video:** https://youtu.be/P67_lnXsvtE
 
 * **Notebook with all results:** [`Qalaisyn.ipynb`](Qalaisyn.ipynb) · [open in Colab](https://colab.research.google.com/github/ZemBono/qalaisyn/blob/main/Qalaisyn.ipynb)
 * **One-page write-up:** [`WRITEUP.md`](WRITEUP.md) / `WRITEUP.pdf`
