@@ -23,7 +23,7 @@ addEventListener('mousemove',e=>{c.style.left=e.clientX+'px';c.style.top=e.clien
 def main():
     OUT.mkdir(exist_ok=True)
     with sync_playwright() as p:
-        ctx = launch(p, video_dir=str(OUT))
+        ctx = launch(p, video_dir=str(OUT), view=(1024, 576))
         pg = ctx.pages[0] if ctx.pages else ctx.new_page()
         w = lambda s: time.sleep(s)
 
@@ -39,25 +39,27 @@ def main():
         # 2. Google Translate, Kazakh -> English
         pg.goto(GT, wait_until="domcontentloaded"); w(3); show_cursor()
         box = pg.locator(SRC)
-        click(box); w(1)
+        click(box); pg.mouse.move(250, 560, steps=15); w(1)
         for i, text in enumerate(EXAMPLES):
             if i:
                 box.fill(""); w(1.5)
             pg.keyboard.type(text, delay=85)
-            w(4.5)                      # the wrong English translation stays on screen
+            w(6.5)                      # the wrong English translation stays on screen
             pg.keyboard.press("Alt+KeyQ")
             w(6.5)                      # letters restored, translation updates
 
         # 3. Kazakh Wikipedia search box: another site, same extension
         pg.goto("https://kk.wikipedia.org/", wait_until="domcontentloaded"); w(2); show_cursor()
-        s = pg.locator("input[name=search]").first
-        click(s); w(0.6)
+        s = pg.locator("input[name=search]:visible").first
+        if not s.count():
+            pg.locator("a.search-toggle, #p-search a, label[for=searchInput]").first.click(); w(0.8); s = pg.locator("input[name=search]:visible").first
+        click(s); pg.mouse.move(960, 320, steps=15); w(0.6)
         pg.keyboard.type("казакстан тарихы", delay=90); w(2.5)
         pg.keyboard.press("Alt+KeyQ"); w(4.5)
-        pg.keyboard.press("Enter"); w(5)
+        w(3)  # the search suggestions now show real Kazakh articles
 
         # 4. where to get it
-        pg.goto(SITE, wait_until="networkidle"); w(7)
+        pg.wait_for_load_state("load"); pg.goto(SITE, wait_until="commit", timeout=60000); pg.wait_for_selector("#extension", timeout=60000); w(2); pg.evaluate("document.getElementById('extension').scrollIntoView({behavior:'instant'})"); w(7)
 
         vid = pg.video.path()
         ctx.close()

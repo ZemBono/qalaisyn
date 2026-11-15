@@ -64,9 +64,17 @@
       host.style.cssText = "position:fixed;right:20px;bottom:20px;z-index:2147483647";
       const sh = host.attachShadow({ mode: "open" });
       sh.innerHTML = `<style>
-        .b{font:14px/1.45 system-ui,Segoe UI,sans-serif;background:#16303A;color:#EAF2F4;border-radius:14px;
-           padding:12px 16px;max-width:420px;box-shadow:0 8px 30px rgba(0,0,0,.25)}
-        .t{font-weight:700;color:#7FD6DC;margin-bottom:2px} .w{opacity:.8} b{color:#FFD27A;font-weight:600}</style>
+        .b{font:15px/1.5 "Segoe UI",system-ui,sans-serif;background:#fff;color:#1A1F24;border:1px solid #D9DEE3;
+           border-radius:10px;padding:12px 16px 13px;width:max-content;max-width:480px;box-shadow:0 10px 28px rgba(16,24,32,.12)}
+        .h{display:flex;align-items:center;gap:8px;font-size:13px;color:#4F5A64;padding-bottom:9px;margin-bottom:9px;border-bottom:1px solid #EEF1F3}
+        .h b{color:#1A1F24;font-weight:600}
+        .q{width:18px;height:18px;border-radius:5px;background:#0B7A80;color:#fff;font:700 12px/18px "Segoe UI",sans-serif;text-align:center}
+        .h .ms{margin-left:auto;color:#7A848D;padding-left:18px}
+        .row{display:grid;grid-template-columns:68px 1fr;gap:10px;align-items:baseline}
+        .row+.row{margin-top:4px}
+        .lbl{font-size:12px;color:#8A939B}
+        .was{color:#7A848D} .now{color:#1A1F24;font-size:16px}
+        u{text-decoration:none;background:#CFEDEA;color:#05575C;font-weight:700;border-radius:3px;padding:0 1px}</style>
         <div class="b"></div>`;
       box = sh.querySelector(".b");
       document.documentElement.appendChild(host);
@@ -77,11 +85,18 @@
     if (ms) timer = setTimeout(() => { host.style.display = "none"; }, ms);
   }
 
+  const head = (title = "", right = "") =>
+    `<div class="h"><span class="q">Q</span><b>Qalaisyn</b><span>${title}</span><span class="ms">${right}</span></div>`;
   const esc = s => s.replace(/[&<>]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;" }[c]));
-  function diffHtml(a, b) {
+  function diffHtml(a, b) {          // underline only the letters Qalaisyn put back
     const pa = a.split(/(\s+)/), pb = b.split(/(\s+)/);
     if (pa.length !== pb.length) return esc(b);
-    return pb.map((w, i) => (w !== pa[i] ? `<b>${esc(w)}</b>` : esc(w))).join("");
+    return pb.map((w, i) => {
+      const o = pa[i];
+      if (w === o) return esc(w);
+      if (w.length !== o.length) return `<u>${esc(w)}</u>`;
+      return [...w].map((ch, k) => (ch !== o[k] ? `<u>${esc(ch)}</u>` : esc(ch))).join("");
+    }).join("");
   }
 
   // ---- reading and writing the focused field
@@ -103,12 +118,12 @@
 
   async function run() {
     const t = target();
-    if (!t) { toast('<div class="t">Qalaisyn</div>Click into a text field first, then press <b>Alt+Q</b>.'); return; }
+    if (!t) { toast(head() + 'Click into a text field first, then press Alt+Q.'); return; }
     let eng;
     try {
-      if (!enginePromise) toast('<div class="t">Qalaisyn</div>Loading the engine (once per page)…', 0);
+      if (!enginePromise) toast(head() + 'Loading the engine (once per page)…', 0);
       eng = await engine();
-    } catch (e) { toast('<div class="t">Qalaisyn</div>Could not load the engine: ' + esc(String(e))); return; }
+    } catch (e) { toast(head() + 'Could not load the engine: ' + esc(String(e))); return; }
 
     const t0 = performance.now();
     let before, after;
@@ -134,9 +149,10 @@
     }
     const ms = (performance.now() - t0).toFixed(1), n = countChanged(before, after);
     toast(after === before
-      ? '<div class="t">Qalaisyn</div>Nothing to fix here.'
-      : `<div class="t">Qalaisyn put back ${n} Kazakh letter${n === 1 ? "" : "s"} · ${ms} ms</div>` +
-        `<div class="w">${esc(before)}</div><div>${diffHtml(before, after)}</div>`, 6000);
+      ? head() + "Nothing to fix here."
+      : head(`put back ${n} Kazakh letter${n === 1 ? "" : "s"}`, `${ms} ms`) +
+        `<div class="row"><span class="lbl">Typed</span><span class="was">${esc(before)}</span></div>` +
+        `<div class="row"><span class="lbl">Restored</span><span class="now">${diffHtml(before, after)}</span></div>`, 6500);
   }
 
   document.addEventListener("keydown", e => {

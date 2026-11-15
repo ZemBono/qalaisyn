@@ -13,9 +13,9 @@ CASES = ["ушак кешигип жатыр ма", "Баламнын кызуы
          "salem qalaisyn erten mektepke barasyn ba"]
 
 
-def launch(p, video_dir=None):
+def launch(p, video_dir=None, view=(1280, 720)):
     kw = dict(headless=False, args=[f"--disable-extensions-except={EXT}", f"--load-extension={EXT}", "--lang=en-US"],
-              viewport={"width": 1280, "height": 720}, locale="en-US")
+              viewport={"width": view[0], "height": view[1]}, locale="en-US")
     if video_dir:
         kw.update(record_video_dir=video_dir, record_video_size={"width": 1280, "height": 720})
     return p.chromium.launch_persistent_context(tempfile.mkdtemp(), channel=CHANNEL, **kw)
