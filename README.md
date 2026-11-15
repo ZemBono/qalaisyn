@@ -16,7 +16,7 @@ of its mistakes. The same code works for Kyrgyz.
 
 ![messages](figures/messages.png)
 
-* **Live demo:** Hugging Face Space (link added after publishing)
+* **Live demo (runs in your browser):** https://zembono.github.io/qalaisyn/web/
 
 * **Notebook with all results:** [`Qalaisyn.ipynb`](Qalaisyn.ipynb)
 * **One-page write-up:** [`WRITEUP.md`](WRITEUP.md) / `WRITEUP.pdf`

@@ -37,8 +37,8 @@ def writefile(path):
         SOURCES.append(path)
 
 
-REPO_URL = "https://github.com/USER/qalaisyn"          # filled in after the repository is published
-DEMO_URL = "https://huggingface.co/spaces/USER/qalaisyn"  # filled in after the Space is published
+REPO_URL = "https://github.com/ZemBono/qalaisyn"
+DEMO_URL = "https://zembono.github.io/qalaisyn/web/"
 val = json.loads((ROOT / "results/value.json").read_text(encoding="utf-8"))
 vr, vt, vl = val["Russian keyboard, everyday"], val["Russian keyboard + 15% typos"], val["Latin, unseen spellings"]
 kyr = ky.get("recovered_by_style", {"ru-keyboard": ky["recovered"]})["ru-keyboard"]
@@ -92,7 +92,8 @@ spelling is already good, so we tested where it matters:
 (c) **messy messages** — with typos the gap grows (table above);
 (d) **knowing when it is unsure** — a dictionary always guesses silently; Qalaisyn flags its doubtful words.
 
-**5 · Try it.** Live demo: {DEMO_URL} · or run this notebook in Colab (all results are already saved below).
+**5 · Try it.** **Live demo, running in your browser: {DEMO_URL}** (type any message). Code: {REPO_URL}.
+This notebook can also be run in Colab; all results are already saved below.
 
 *Prototype — not for medical, financial or emergency use.*
 

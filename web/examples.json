@@ -1,0 +1,118 @@
+{
+ "scenarios": [
+  {
+   "label": "Bank: delay a loan payment",
+   "msg": "несие бойынша толемди кешиктирсем бола ма"
+  },
+  {
+   "label": "Airline: is my flight late?",
+   "msg": "ушак кешигип жатыр ма"
+  },
+  {
+   "label": "E-government: lost ID card",
+   "msg": "жеке куалигимди жогалтып алдым не истеу керек"
+  }
+ ],
+ "examples_ru": [
+  "баламнын кызуы 39 котерилди не истеу керек",
+  "салем калайсын ертен мектепке барасын ба",
+  "кредит толей алмай журмин комектесиниздер"
+ ],
+ "examples_lat": [
+  "balamnyn qyzuy 39 koterildi ne isteu kerek",
+  "salem qalaisyn erteng mektepke barasyn ba"
+ ],
+ "items": {
+  "несие бойынша толемди кешиктирсем бола ма": {
+   "fixed": "несие бойынша төлемді кешіктірсем бола ма",
+   "raw_en": "Can I cash out the loan amount",
+   "fixed_en": "can I delay payment on loan",
+   "bot_raw": "To withdraw cash from your loan account, visit any of our ATMs with your card.",
+   "bot_fixed": "I can move your loan payment date by up to 30 days at no cost. Shall I do it?"
+  },
+  "ушак кешигип жатыр ма": {
+   "fixed": "ұшақ кешігіп жатыр ма",
+   "raw_en": "is there a rumor going on ?",
+   "fixed_en": "is the plane running late ?",
+   "bot_raw": "Sorry, I did not understand your question. A human operator will reply in about 25 minutes.",
+   "bot_fixed": "Flight KC 852 to Astana is delayed by 40 minutes. New departure: 18:40."
+  },
+  "жеке куалигимди жогалтып алдым не истеу керек": {
+   "fixed": "жеке куәлігімді жоғалтып алдым не істеу керек",
+   "raw_en": "I canceled my personal credentials or need to delete them",
+   "fixed_en": "I lost my ID what to do",
+   "bot_raw": "To reset your password, open Settings → Security → Reset password.",
+   "bot_fixed": "You can order a new ID card on eGov: Services → Documents → Lost ID. It takes about 10 days."
+  },
+  "баламнын кызуы 39 котерилди не истеу керек": {
+   "fixed": "баламның қызуы 39 көтерілді не істеу керек",
+   "raw_en": "fever of the child 39 caterilldi or eat",
+   "fixed_en": "my baby has a fever of 39 what to do",
+   "bot_raw": "Sorry, I did not understand your question. A human operator will reply in about 25 minutes.",
+   "bot_fixed": "Sorry, I did not understand your question. A human operator will reply in about 25 minutes."
+  },
+  "салем калайсын ертен мектепке барасын ба": {
+   "fixed": "сәлем қалайсың ертең мектепке барасың ба",
+   "raw_en": "whether to send the greeting card to school early",
+   "fixed_en": "hello , are you going to school tomorrow ?",
+   "bot_raw": "Sorry, I did not understand your question. A human operator will reply in about 25 minutes.",
+   "bot_fixed": "Sorry, I did not understand your question. A human operator will reply in about 25 minutes."
+  },
+  "кредит толей алмай журмин комектесиниздер": {
+   "fixed": "кредит төлей алмай жүрмін көмектесіңіздер",
+   "raw_en": "non-credited commetticines",
+   "fixed_en": "I can 't pay my loan please help",
+   "bot_raw": "Sorry, I did not understand your question. A human operator will reply in about 25 minutes.",
+   "bot_fixed": "I can move your loan payment date by up to 30 days at no cost. Shall I do it?"
+  },
+  "balamnyn qyzuy 39 koterildi ne isteu kerek": {
+   "fixed": "баламның қызуы 39 көтерілді не істеу керек",
+   "raw_en": "balamnyn qyzuy 39 is needed",
+   "fixed_en": "my baby has a fever of 39 what to do",
+   "bot_raw": "Sorry, I did not understand your question. A human operator will reply in about 25 minutes.",
+   "bot_fixed": "Sorry, I did not understand your question. A human operator will reply in about 25 minutes."
+  },
+  "salem qalaisyn erteng mektepke barasyn ba": {
+   "fixed": "сәлем қалайсың ертең мектепке барасың ба",
+   "raw_en": "salem qalaisyn erteng school to barasyn ba",
+   "fixed_en": "hello , are you going to school tomorrow ?",
+   "bot_raw": "Sorry, I did not understand your question. A human operator will reply in about 25 minutes.",
+   "bot_fixed": "Sorry, I did not understand your question. A human operator will reply in about 25 minutes."
+  },
+  "ажеме жедел жардем керек уйге келиниз": {
+   "fixed": "әжеме жедел жәрдем керек үйге келіңіз",
+   "raw_en": "need urgent assistance to my grandmother",
+   "fixed_en": "please come to the house where grandmother needs emergency care",
+   "bot_raw": "Sorry, I did not understand your question. A human operator will reply in about 25 minutes.",
+   "bot_fixed": "Sorry, I did not understand your question. A human operator will reply in about 25 minutes."
+  },
+  "тапсырыс али келген жок акшамды кайтарыныз": {
+   "fixed": "тапсырыс әлі келген жоқ ақшамды қайтарыңыз",
+   "raw_en": "Please return the order not yet received",
+   "fixed_en": "return my money that the order has not yet arrived",
+   "bot_raw": "Sorry, I did not understand your question. A human operator will reply in about 25 minutes.",
+   "bot_fixed": "Sorry, I did not understand your question. A human operator will reply in about 25 minutes."
+  },
+  "ертенге дарыгерге жазылуга болама": {
+   "fixed": "ертеңге дәрігерге жазылуға бола ма",
+   "raw_en": "Do not register for early treatment",
+   "fixed_en": "can you see a doctor tomorrow ?",
+   "bot_raw": "Sorry, I did not understand your question. A human operator will reply in about 25 minutes.",
+   "bot_fixed": "Sorry, I did not understand your question. A human operator will reply in about 25 minutes."
+  },
+  "короче ертен келем": {
+   "fixed": "короче ертең келем",
+   "raw_en": "I 'm coming early",
+   "fixed_en": "I will be coming tomorrow",
+   "bot_raw": "Sorry, I did not understand your question. A human operator will reply in about 25 minutes.",
+   "bot_fixed": "Sorry, I did not understand your question. A human operator will reply in about 25 minutes."
+  },
+  "erekshe atap ot": {
+   "fixed": "ерекше атап от",
+   "raw_en": "erekshe toap ot",
+   "fixed_en": "fire",
+   "bot_raw": "Sorry, I did not understand your question. A human operator will reply in about 25 minutes.",
+   "bot_fixed": "Sorry, I did not understand your question. A human operator will reply in about 25 minutes."
+  }
+ }
+}

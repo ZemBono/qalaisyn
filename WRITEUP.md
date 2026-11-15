@@ -1,6 +1,6 @@
 # Qalaisyn: an engine that lets AI understand Kazakh the way people really type it
 
-**Track:** Languages · **Team:** Zhasulan B.
+**Track:** Languages · **Team:** Zhasulan B. · **Try it live (in your browser):** [zembono.github.io/qalaisyn/web](https://zembono.github.io/qalaisyn/web/) · **Code:** [github.com/ZemBono/qalaisyn](https://github.com/ZemBono/qalaisyn)
 
 ## The problem
 Most phones in Kazakhstan have a Russian keyboard with no keys for the Kazakh letters ә ғ қ ң ө ұ ү һ і, so people type the closest Russian letter: *калайсын* for *қалайсың*. One letter can change the meaning: *өт* "go through" becomes *от* "fire". In our tests almost every second word typed this way is misspelled, and the AI that now answers bank, airline, clinic and government chats misreads it. An airline bot's translator reads *ушак кешигип жатыр ма* ("is the plane late?") as "is there a rumour going on?". A bank bot asked *несие бойынша толемди кешиктирсем бола ма* ("can I delay my loan payment?") explains how to withdraw cash.
