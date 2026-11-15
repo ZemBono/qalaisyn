@@ -84,6 +84,11 @@ incoming message and the AI that answers — like a spell-checker inside a keybo
 | Same code on Kyrgyz (Russian keyboard), meaning recovered | — | — | **{kyr:.0%}** |
 | **{real["n"]} real messages written by a native speaker**: words wrong | {rw["B0 raw chat"]:.0%} | {rw["B2 dictionary"]:.1%} | **{rw["M2 Qalaisyn+typos"]:.1%}** ({rw["M2 before native check"]:.1%} before the last rule) |
 
+**Checked by a native speaker.** Beyond the simulated test sets, a native Kazakh speaker wrote {real["n"]} real
+messages exactly as they text (slang, Russian words, shortened forms) together with the correct spelling. On these
+never-seen messages {rw["B0 raw chat"]:.0%} of words are wrong as typed, {rw["B2 dictionary"]:.0%} after a dictionary
+lookup and **{rw["M2 Qalaisyn+typos"]:.0%} after Qalaisyn** (section 9).
+
 **4 · Why a model and not just a dictionary?** On clean, carefully typed text a dictionary of the most common
 spelling is already good, so we tested where it matters:
 (a) **whole messages** — a chatbot needs every word right: Qalaisyn gets

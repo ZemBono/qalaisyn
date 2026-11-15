@@ -36,7 +36,16 @@ nav .right{margin-left:auto;display:flex;gap:8px}
 h1{font-size:44px;line-height:1.1;letter-spacing:-.025em;margin:0 0 16px}
 .sub{font-size:18px;color:var(--muted);margin:0 0 22px;max-width:560px}
 .cta{display:flex;flex-wrap:wrap;gap:10px}
-.status{font-size:13.5px;color:var(--muted);margin-top:16px} .status.ready{color:var(--sea)}
+.status{font-size:13.5px;color:var(--muted);margin-top:10px} .status.ready{color:var(--sea)}
+.badge{display:inline-block;margin-top:18px;background:#fff;border:1px solid #C4E0E0;border-radius:12px;padding:9px 14px;font-size:14px;color:var(--ink);text-decoration:none;line-height:1.45}
+.badge:hover{border-color:var(--sea)} .badge b{color:var(--sea-dark)}
+.story{display:grid;grid-template-columns:auto 1fr;gap:18px;align-items:start;margin-bottom:14px}
+.story .who{width:54px;height:54px;border-radius:50%;background:var(--sea-soft);color:var(--sea-dark);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:20px}
+.story p{font-size:15.5px;margin:0 0 8px}
+.story .chat{display:flex;flex-direction:column;gap:6px;margin-top:6px} .story .chat .me{align-self:flex-start}
+.story .reads{font-size:14.5px;border-radius:10px;padding:7px 12px}
+.native-head{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap}
+.native-head .tag2{font-size:12.5px;background:var(--sea-soft);color:var(--sea-dark);border-radius:999px;padding:2px 10px}
 .demo{background:#fff;border:1px solid var(--line);border-radius:20px;padding:20px;box-shadow:0 20px 40px -24px rgba(27,36,51,.25)}
 .demo .lab{font-size:12.5px;color:var(--muted);margin:0 0 6px}
 .me{display:inline-block;background:var(--bubble);border:1px solid #CFE3E1;border-radius:16px 16px 16px 4px;padding:9px 14px;font-size:18px;min-height:44px}
@@ -150,6 +159,7 @@ footer .links{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:12px}
       the closest Russian letter, and the AI behind bank, airline and government chats misreads them. Qalaisyn puts
       the letters back before the AI reads the message.</p>
       <div class="cta"><a class="btn primary" href="#try">Try it with your own message</a><a class="btn" href="#bot">See it inside a chatbot</a><a class="btn" href="#results">Results</a></div>
+      <a class="badge" href="#native">✓ Tested on <b><span data-r="real_n">70</span> real messages written by a native Kazakh speaker</b> — words wrong: <span data-r="real_dict" data-f="pct0">20%</span> with a dictionary, <b><span data-r="real_qal" data-f="pct0">15%</span> with Qalaisyn</b></a>
       <p class="status" id="status">Loading the engine into your browser (about 20 MB, once)…</p>
     </div>
     <div class="demo" aria-live="polite">
@@ -165,6 +175,20 @@ footer .links{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:12px}
     <h2>Why one missing letter matters</h2>
     <p class="lead">For a Kazakh speaker the meaning is obvious. For an AI trained on standard Kazakh, a missing letter
     can turn one word into another.</p>
+    <div class="card story">
+      <div class="who" aria-hidden="true">Г</div>
+      <div>
+        <p><b>Gulnar, 62, lives in a village in Turkistan region.</b> One night her grandson has a fever. Her phone has
+        only a Russian keyboard, so she texts the clinic's chatbot the only way she can:</p>
+        <div class="chat">
+          <div class="me" style="font-size:16.5px">баламнын кызуы 39 котерилди не истеу керек</div>
+          <div class="reads row bad" style="margin:0">The clinic's AI reads: “fever of the child 39 caterilldi or eat”</div>
+          <div class="reads row good" style="margin:0">With Qalaisyn inside, it reads: “my baby has a fever of 39, what to do”</div>
+        </div>
+        <p class="analogy" style="margin-top:8px">She did nothing wrong. She typed the way millions of people type every day.
+        Qalaisyn makes sure the AI hears her.</p>
+      </div>
+    </div>
     <div class="why">
       <div class="card">
         <div class="words">
@@ -252,6 +276,13 @@ const reply = supportBot.answer(text);</pre>
     <h2>Does it work? Results on data it never saw</h2>
     <p class="lead">Measured on held-out test sentences (Tatoeba, FLORES-200) typed in six chat styles, and on real
     messages written by a native speaker. Full method, numbers and confidence intervals are in the notebook.</p>
+    <div class="card native" style="margin:0 0 14px" id="native" hidden>
+      <div><div class="native-head"><h3 style="margin:0 0 4px;font-size:19px">Checked on real messages from a native speaker</h3><span class="tag2">never seen by the model</span></div>
+        <p style="margin:0;color:var(--muted);font-size:14.5px"><span data-r="real_n">70</span> everyday messages written
+        by a native Kazakh speaker exactly as they text, with heavy slang, Russian words and shortened forms. Share of
+        words still wrong:</p></div>
+      <div class="bars" id="realbars"></div>
+    </div>
     <div class="facts">
       <div class="fact"><div class="big"><span data-r="ru_msgs_right_qal" data-f="pct0">88%</span> <span style="color:var(--muted);font-weight:500;font-size:20px">vs <span data-r="ru_msgs_right_dict" data-f="pct0">80%</span></span></div>
         <p>messages with every word right on a Russian keyboard: Qalaisyn vs a dictionary lookup</p></div>
@@ -259,13 +290,6 @@ const reply = supportBot.answer(text);</pre>
         <p>the same with typos, where a dictionary breaks down</p></div>
       <div class="fact"><div class="big" data-r="caught" data-f="pct0">62%</div>
         <p>of Qalaisyn's mistakes are among the <span data-r="flagged" data-f="pct0">6%</span> of words it marks as unsure</p></div>
-    </div>
-    <div class="card native" id="native" hidden>
-      <div><h3 style="margin:0 0 4px;font-size:18px">Real messages from a native speaker</h3>
-        <p style="margin:0;color:var(--muted);font-size:14.5px"><span data-r="real_n">70</span> everyday messages written
-        by a native Kazakh speaker exactly as they text, with heavy slang, Russian words and shortened forms. Share of
-        words still wrong:</p></div>
-      <div class="bars" id="realbars"></div>
     </div>
     <div class="charts">
       <figure><img src="img/messages.png" alt="Messages with every word right: dictionary vs Qalaisyn across six test conditions"><figcaption>Whole messages right, dictionary vs Qalaisyn, with 95% confidence intervals.</figcaption></figure>
