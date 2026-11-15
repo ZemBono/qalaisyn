@@ -294,7 +294,7 @@ const reply = supportBot.answer(text);</pre>
         <label class="k" for="msg">A message as a customer would type it</label>
         <textarea id="msg" spellcheck="false">астанага ушатын рейс кешигип жатырма айтып жиберинизши</textarea>
         <button class="go" id="go">Run the engine on this message</button>
-        <p class="note-sm">Ctrl + Enter also works. Everything runs on your device; nothing is sent anywhere.</p>
+        <p class="note-sm">It updates live as you type. Everything runs on your device; nothing is sent anywhere.</p>
         <div class="k" style="margin-top:14px">Real messages written by our native speaker</div>
         <div class="pills" id="native-ex"></div>
       </div>
@@ -498,6 +498,9 @@ document.querySelectorAll('a[href^="#"]').forEach(a => a.addEventListener("click
 }));
 $("go").onclick = run;
 $("msg").addEventListener("keydown", e => { if (e.key === "Enter" && (e.ctrlKey || e.metaKey)) run(); });
+// live: restore while typing, like autocorrect
+let liveTimer = null;
+$("msg").addEventListener("input", () => { clearTimeout(liveTimer); liveTimer = setTimeout(run, 120); });
 </script>
 </body>
 </html>
