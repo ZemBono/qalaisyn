@@ -491,8 +491,10 @@ document.querySelectorAll('a[href^="#"]').forEach(a => a.addEventListener("click
   const id = a.getAttribute("href").slice(1), el = id && document.getElementById(id);
   if (!el) return;
   e.preventDefault();
-  const y = el.getBoundingClientRect().top + window.pageYOffset - 64;
-  window.scrollTo({ top: y, behavior: REDUCED ? "auto" : "smooth" });
+  const y = el.getBoundingClientRect().top + window.pageYOffset - 64, start = window.pageYOffset;
+  window.scrollTo({ top: y, behavior: REDUCED ? "instant" : "smooth" });
+  // some in-app browsers never run smooth scrolling: jump instead if nothing happened
+  setTimeout(() => { if (Math.abs(window.pageYOffset - start) < 5) window.scrollTo({ top: y, behavior: "instant" }); }, 450);
 }));
 $("go").onclick = run;
 $("msg").addEventListener("keydown", e => { if (e.key === "Enter" && (e.ctrlKey || e.metaKey)) run(); });
