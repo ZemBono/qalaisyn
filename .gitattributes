@@ -1,0 +1,3 @@
+*.bin binary
+*.pkl binary
+web/model/*.txt text eol=lf
