@@ -5,6 +5,12 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Qalaisyn</title>
 <meta name="description" content="An engine inside chatbots and translators that understands Kazakh the way people really type it.">
+<meta property="og:title" content="Qalaisyn — AI that understands Kazakh the way people really type it">
+<meta property="og:description" content="An engine inside chatbots and translators: it puts back the Kazakh letters that Russian keyboards drop. Veritas AI High School Hackathon 2026.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://zembono.github.io/qalaisyn/web/">
+<meta name="theme-color" content="#1F6F78">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%231F6F78'/%3E%3Ctext x='32' y='45' font-family='Arial' font-size='38' font-weight='700' text-anchor='middle' fill='%23fff'%3E%D2%9B%3C/text%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Golos+Text:wght@400;500;600;700&display=swap">
@@ -37,6 +43,8 @@ nav .links{display:flex;gap:18px;font-size:14.5px} nav .links a{color:var(--mute
 nav .right{margin-left:auto;display:flex;gap:8px}
 .btn{display:inline-flex;align-items:center;gap:6px;border-radius:10px;padding:8px 14px;font-size:14.5px;font-weight:500;text-decoration:none;border:1px solid var(--line);background:#fff;color:var(--ink)}
 .btn:hover{border-color:var(--sea);color:var(--sea)}
+.btn{white-space:nowrap}
+@media (max-width:560px){nav .wrap{gap:10px} nav .right{gap:6px} nav .right .btn{padding:6px 9px;font-size:13px}}
 .btn.primary{background:var(--sea);border-color:var(--sea);color:#fff} .btn.primary:hover{background:var(--sea-dark);color:#fff}
 
 /* hero */
@@ -155,7 +163,7 @@ footer .links{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:12px}
   <a class="brand" href="#top">Qalaisyn<b>.</b></a>
   <div class="links"><a href="#why">The problem</a><a href="#where">Where it lives</a><a href="#bot">In a chatbot</a>
     <a href="#examples">Examples</a><a href="#try">Inside the engine</a><a href="#results">Results</a></div>
-  <div class="right"><a class="btn" href="https://colab.research.google.com/github/ZemBono/qalaisyn/blob/main/Qalaisyn.ipynb" target="_blank" rel="noopener">Notebook</a>
+  <div class="right"><a class="btn" href="WRITEUP.pdf" target="_blank" rel="noopener">Write-up</a><a class="btn" href="https://colab.research.google.com/github/ZemBono/qalaisyn/blob/main/Qalaisyn.ipynb" target="_blank" rel="noopener">Notebook</a>
     <a class="btn" href="https://github.com/ZemBono/qalaisyn" target="_blank" rel="noopener">Code</a></div>
 </div></nav>
 
@@ -182,11 +190,10 @@ footer .links{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:12px}
 
 
   <div class="notsite">
-    <div class="ns-t">Not a website to visit.</div>
-    <div class="ns-d">Qalaisyn is an <b>engine</b>: a small language model plus a few hundred lines of code that a bank,
-    airline, clinic or government service builds into its own chatbot, translator or search. Customers keep typing
-    the way they always do; the company's AI simply starts understanding them. This page is only a window to watch the
-    engine work.</div>
+    <div class="ns-t">It works inside<br>other systems.</div>
+    <div class="ns-d">Qalaisyn is an <b>engine</b> that banks, airlines, clinics and government services build into their
+    own chatbots, translators and search. Customers keep typing the way they always do, and the company's AI simply
+    starts understanding them. This page is a window to watch it work.</div>
     <div class="ns-flow"><span>Customer types as usual</span><i>→</i><span class="q">Qalaisyn, inside the company's system</span><i>→</i><span>Company's AI answers correctly</span></div>
   </div>
 
@@ -232,8 +239,8 @@ footer .links{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:12px}
 
   <section id="where">
     <h2>Where Qalaisyn lives</h2>
-    <p class="lead">Not a website and not an app. Customers never see it: it runs inside a company's system, between
-    the incoming message and the AI that answers, like a spell-checker inside a keyboard.</p>
+    <p class="lead">Qalaisyn runs inside a company's system, between the incoming message and the AI that answers,
+    like a spell-checker inside a keyboard. Customers never see it, and they don't have to change anything.</p>
     <div class="flow">
       <div class="node"><div class="t">Customer's phone</div><div class="d">types as usual:<br>“ушак кешигип жатыр ма”</div></div>
       <div class="arrow">→</div>
@@ -285,9 +292,11 @@ const reply = supportBot.answer(text);</pre>
     <div class="try">
       <div>
         <label class="k" for="msg">A message as a customer would type it</label>
-        <textarea id="msg" spellcheck="false">ертен физикадан бакылау болама дайындалдынба</textarea>
+        <textarea id="msg" spellcheck="false">астанага ушатын рейс кешигип жатырма айтып жиберинизши</textarea>
         <button class="go" id="go">Run the engine on this message</button>
         <p class="note-sm">Ctrl + Enter also works. Everything runs on your device; nothing is sent anywhere.</p>
+        <div class="k" style="margin-top:14px">Real messages written by our native speaker</div>
+        <div class="pills" id="native-ex"></div>
       </div>
       <div id="out" class="res"></div>
     </div>
@@ -464,6 +473,9 @@ function fillResults(R) {
   EX = ex; fillResults(res);
   EX.scenarios.forEach((s, i) => pill(s.label, $("scen"), () => showScenario(i)));
   Object.keys(EX.categories).forEach(c => pill(c, $("cats"), () => showCategory(c)));
+  ["астанага ушатын рейс кешигип жатырма айтып жиберинизши", "несие бойынша толемди кешиктирсем кандай айыппул болад",
+   "баланс салып ем интернет али косылмай тур неге", "кешке далага шыгамызба жигиттер"]
+    .forEach(m => pill(m, $("native-ex"), () => { $("msg").value = m; run(); }));
   showScenario(1); showCategory(Object.keys(EX.categories)[0]);
   try {
     ENG = await Qalaisyn.load("model/", fetch);

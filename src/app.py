@@ -1,5 +1,5 @@
 """Qalaisyn demo.
-Qalaisyn is not a website: it is an engine that sits *inside* other systems (support chatbots, translators,
+Qalaisyn is an engine that sits *inside* other systems (support chatbots, translators,
 search). This page is only a window into it: (1) a support chatbot with and without Qalaisyn inside,
 (2) a look inside the engine for any message."""
 import difflib
@@ -251,8 +251,8 @@ WHY = """
 
 WHERE = """
 <div class="sec"><h2>Where Qalaisyn lives</h2>
-<p class="lead">Not a website and not an app. Customers never see it: it runs inside a company's system, between the
-incoming message and the AI that answers, like a spell-checker inside a keyboard.</p>
+<p class="lead">Qalaisyn runs inside a company's system, between the incoming message and the AI that answers,
+like a spell-checker inside a keyboard. Customers never see it and don't have to change anything.</p>
 <div class="flow">
   <div class="node"><div class="t">Customer's phone</div><div class="d">types as usual:<br>“ушак кешигип жатыр ма”</div></div>
   <div class="arrow">→</div>

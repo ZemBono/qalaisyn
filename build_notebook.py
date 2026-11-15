@@ -62,7 +62,7 @@ A passenger asks an airline bot *ушак кешигип жатыр ма* — "i
 "is there a rumour going on?". It is like Spanish without accents, where *papá* (dad) and *papa* (potato) merge,
 except that it happens in almost every second Kazakh word.
 
-**2 · What Qalaisyn is.** Not a website and not an app. It is a layer inside a company's system, between the
+**2 · What Qalaisyn is.** An engine that works inside other systems: a layer in a company's system, between the
 incoming message and the AI that answers — like a spell-checker inside a keyboard. Customers never see it.
 
 1. The customer types on a phone as usual: *ушак кешигип жатыр ма*
@@ -525,7 +525,7 @@ else:
 md("""
 ## 10 · Try it yourself
 
-Qalaisyn is not a website or an app: it is an engine that runs **inside** other systems, between an incoming
+Qalaisyn is an engine that runs **inside** other systems, between an incoming
 message and the AI that answers it. The demo page is only a window into it:
 
 1. *Why one missing letter matters* — explained for people who do not speak Kazakh;
